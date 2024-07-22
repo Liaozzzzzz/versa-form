@@ -8,7 +8,7 @@ export const formOptions = [
         label: '基础信息模块',
         prop: 'basic',
         // inline: true,
-        element: 'oms-form',
+        element: 'versa-form',
         labelType: {
             type: 'card',
             toolPosition: 'header',
@@ -88,7 +88,7 @@ export const formOptions = [
     {
         label: '日期模块',
         prop: 'nest-form',
-        element: 'oms-form',
+        element: 'versa-form',
         labelType: 'card',
         options: [
             {
@@ -130,7 +130,7 @@ export const formOptions = [
             }],
             toolPosition: 'header',
         },
-        element: 'oms-repeater',
+        element: 'versa-repeater',
         fixedMode: 9,
         options: [
             {

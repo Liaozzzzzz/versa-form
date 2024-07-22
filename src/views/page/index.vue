@@ -1,6 +1,6 @@
 <template>
   <div class="default">
-    <oms-page
+    <versa-page
       ref="omsPageRef"
       rowKey="id"
       listKey="data.list11"
@@ -22,14 +22,14 @@
       fillNull=""
     >
       <template #slotTest="{ data, prop }">
-        <el-radio v-model="data[prop]" label="1">备选项</el-radio>
+        <versa-radio v-model="data[prop]" label="1">备选项</versa-radio>
       </template>
       <template #itemLevel="{ row, index }">
         <div>这是插槽{{ index }}</div>
       </template>
       <template #modalFooter="{ model, actionType }">
         <template v-if="actionType === 'detail21212'">
-          <oms-table
+          <versa-table
             :options="[
               {
                 label: '手机号',
@@ -40,10 +40,10 @@
             :autoLoad="false"
             :tableData="model.list"
           >
-          </oms-table>
+          </versa-table>
         </template>
         <template v-if="actionType === 'nestPage'">
-          <oms-page
+          <versa-page
             rowKey="id"
             listKey="data.list11"
             totalKey="data.total11"
@@ -54,12 +54,12 @@
             :query-func="queryFunc"
           >
             <template #slotTest="{ data, prop }">
-              <el-radio v-model="data[prop]" label="1">备选项</el-radio>
+              <versa-radio v-model="data[prop]" label="1">备选项</versa-radio>
             </template>
             <template #itemLevel="{ row, index }">
               <div>这是插槽{{ index }}</div>
             </template>
-          </oms-page>
+          </versa-page>
         </template>
       </template>
       <template #tools>
@@ -71,7 +71,7 @@
       <!-- <template #btns="a">
                 <div @click="onTTT(a)">12312{{ a.filterValues }}</div>
             </template> -->
-    </oms-page>
+    </versa-page>
     <OmsButton
       popconfirm="有了这些知识，我们现在可以完成我们最开始想实现的组件"
       @click="onClickWithLoading"

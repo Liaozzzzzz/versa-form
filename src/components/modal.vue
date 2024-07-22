@@ -7,9 +7,9 @@
     :before-close="beforeClose"
     v-if="dialogVisible"
   >
-    <oms-form
+    <VersaForm
       v-bind="mergedFormProps"
-      class="oms-modal__form"
+      class="versa-modal__form"
       v-loading="loading"
       ref="formRef"
       :autoInitValue="false"
@@ -30,10 +30,10 @@
       >
         <slot :name="slotName" v-bind="attrs"></slot>
       </template>
-    </oms-form>
+    </VersaForm>
     <el-space
       :size="20"
-      class="flex shrink-0 items-center justify-end oms-modal__footer"
+      class="flex shrink-0 items-center justify-end versa-modal__footer"
       v-if="dialogActions.length"
     >
       <template v-for="action in dialogActions" :key="action.actionType">
@@ -56,7 +56,7 @@
 
 <script>
 import { mergeProps } from "vue";
-import OmsForm from "./form.vue";
+import VersaForm from "./form.vue";
 import VersaButton from "./button.vue";
 import { formPropsMixins } from "./mixins/props";
 import { hasOwnProperty, isObject, noop } from "./utils";
@@ -75,7 +75,7 @@ const presetActions = {
 
 export default {
   components: {
-    OmsForm,
+    VersaForm,
     VersaButton,
   },
   mixins: [formPropsMixins],
@@ -188,7 +188,7 @@ export default {
     /** 透传的props */
     undefProps() {
       return mergeProps(
-        { class: "oms-modal" },
+        { class: "versa-modal" },
         {
           size: this.$attrs.width,
         },
@@ -280,7 +280,7 @@ export default {
 </script>
 
 <style lang="scss">
-.oms-modal {
+.versa-modal {
   &.el-dialog {
     padding: 0;
   }
@@ -319,11 +319,11 @@ export default {
     padding: 0 30px 30px;
   }
 
-  .oms-modal__footer .oms-button {
+  .versa-modal__footer .versa-button {
     padding: 10px 30px;
   }
 
-  .oms-repeater {
+  .versa-repeater {
     padding: 0;
   }
 

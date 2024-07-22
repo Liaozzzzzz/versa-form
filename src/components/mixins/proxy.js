@@ -10,7 +10,7 @@ export const instanceProxy = {
             default: {}
         },
         formCore: {
-            from: 'omsForm',
+            from: 'VersaForm',
             default: () => ({})
         }
     },

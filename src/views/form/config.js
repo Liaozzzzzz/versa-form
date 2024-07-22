@@ -104,7 +104,7 @@ export const formOptions = [
         label: '嵌套表单',
         prop: 'nest-form',
         inline: true,
-        element: 'oms-form',
+        element: 'versa-form',
         'label-position': 'left',
         // required: true,
         rules: [{ required: true, trigger: 'blur', }],
@@ -142,7 +142,7 @@ export const formOptions = [
         label: '插槽文本框',
         prop: 'omsRepeater',
         type: 'inline',
-        element: 'oms-repeater',
+        element: 'versa-repeater',
         fixedMode: 9,
         options: [
             {

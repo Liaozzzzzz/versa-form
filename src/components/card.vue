@@ -7,7 +7,7 @@
       <div class="versa-card__action">
         <slot name="headerRight">
           <el-space :size="20">
-            <template v-for="action in actions">
+            <template v-for="action in toolActions">
               <component
                 :is="action.is"
                 v-if="action.is"
@@ -21,7 +21,9 @@
                 size="small"
                 v-bind="action"
                 @click="(e, instance) => onAction(action, instance)"
-              />
+              >
+                {{ action.actionName }}
+              </VersaButton>
             </template>
           </el-space>
         </slot>

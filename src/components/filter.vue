@@ -8,7 +8,7 @@
     ]"
     :title="filterTitle"
   >
-    <oms-form
+    <VersaForm
       ref="formRef"
       v-model="formValues"
       :options="options"
@@ -51,7 +51,7 @@
           </el-space>
         </section>
       </template>
-    </oms-form>
+    </VersaForm>
     <div class="versa-filter__footer"><slot name="footer"></slot></div>
   </VersaCard>
 </template>
@@ -59,7 +59,7 @@
 <script>
 import omit from "lodash/omit";
 import pick from "lodash/pick";
-import OmsForm from "./form.vue";
+import VersaForm from "./form.vue";
 import VersaCard from "./card.vue";
 import VersaButton from "./button.vue";
 import { filterPropsMixins } from "./mixins/props";
@@ -73,7 +73,7 @@ const filterPresetActions = pick(presetActions, ["reset", "create", "search"]);
 export default {
   name: "versa-filter",
   components: {
-    OmsForm,
+    VersaForm,
     VersaCard,
     VersaButton,
   },
@@ -208,8 +208,8 @@ export default {
           break;
         case "create":
           this.dispatch(
-            "oms-page",
-            "OmsFormPageOnCreate",
+            "versa-page",
+            "VersaFormPageOnCreate",
             this.formValues,
             omit(action, ["actionType", "actionName", "action", "usePageModal"])
           );
@@ -244,11 +244,11 @@ $input-width-single-line: 280px;
     margin-bottom: 20px;
   }
 
-  .oms-form {
+  .versa-form {
     display: flex;
     flex-wrap: wrap;
 
-    .oms-form-item {
+    .versa-form-item {
       margin-right: 60px;
 
       &:last-of-type {
@@ -256,7 +256,7 @@ $input-width-single-line: 280px;
       }
     }
 
-    .oms-form-item-element {
+    .versa-form-item-element {
       width: $input-width;
     }
   }

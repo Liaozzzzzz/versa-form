@@ -935,6 +935,52 @@ export default {
     width: 100%;
     overflow-x: scroll;
 
+    &::-webkit-scrollbar {
+      height: 8px;
+      width: 8px;
+      margin-right: 4px;
+      //   @apply h-2 w-[7px] -mr-1;
+    }
+
+    &::-webkit-scrollbar-track {
+      //   @apply bg-transparent rounded-full;
+      border-radius: 9999px;
+      background-color: transparent;
+
+      &:hover {
+        background-color: rgba(148, 163, 184, 0.25);
+        // @apply bg-slate-400/25;
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border: 1px solid transparent;
+      border-radius: 9999px;
+      background-color: rgba(71, 85, 105, 0.5);
+
+      //   @apply border border-transparent rounded-full bg-slate-600/50;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(148, 163, 184, 1);
+      //   @apply bg-slate-400;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      visibility: hidden;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      visibility: visible;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+
     &-pinged--left {
       .versa-repeater__table-row-fixed--left {
         border-right: none;

@@ -27,7 +27,7 @@ export const filterOptions = () => [
     {
         label: '启用状态',
         prop: 'status',
-        element: 'el-select',
+        element: 'versa-select',
         placeholder: '请选择',
         mapSource: statusMap,
         initValue: 'T'
@@ -147,7 +147,7 @@ export const tableOptions = [
         label: '测试自定义按钮',
         width: 160,
         actions: [{
-            is: 'oms-dropdown',
+            is: 'versa-dropdown',
             // labelInValue: {
             //     label: 'name',
             //     value: 'code'
@@ -267,7 +267,7 @@ export const detailProps = {
         {
             label: '单选框组',
             prop: 'radio-group',
-            element: 'el-radio-group',
+            element: 'versa-radio-group',
             // button: true,
             labelInValue: {
                 label: 'name',
@@ -294,7 +294,7 @@ export const detailProps = {
         {
             label: '多选框组',
             prop: 'checkbox-group',
-            element: 'el-checkbox-group',
+            element: 'versa-checkbox-group',
             // button: true,
             labelInValue: {
                 label: 'name',
@@ -320,7 +320,7 @@ export const detailProps = {
         {
             label: '启用状态',
             prop: 'status',
-            element: 'el-select',
+            element: 'versa-select',
             mapSource: statusMap,
             // multiple: true,
             // labelInValue: {
@@ -358,7 +358,7 @@ export const detailProps = {
             label: '嵌套表单',
             prop: 'nest-form',
             inline: true,
-            element: 'oms-form',
+            element: 'versa-form',
             'label-position': 'right',
             options: [
                 {
