@@ -9,8 +9,8 @@
       },
     ]"
   >
-    <el-row v-if="layout" :gutter="20">
-      <el-col
+    <ElRow v-if="layout" :gutter="20">
+      <ElSpace
         v-for="item in deployOptions"
         :key="item.prop"
         :span="item.colSpan"
@@ -36,8 +36,8 @@
             v-model="model[item.prop]"
           ></component>
         </VersaFormItem>
-      </el-col>
-    </el-row>
+      </ElSpace>
+    </ElRow>
     <VersaFormItem
       v-else
       v-for="item in deployOptions"
@@ -71,6 +71,9 @@ import { defineAsyncComponent } from "vue";
 import TinyEmitter from "tiny-emitter";
 import omit from "lodash/omit";
 import cloneDeep from "lodash/cloneDeep";
+import { ElSpace, ElRow } from "element-plus";
+import "element-plus/es/components/space/style/css";
+import "element-plus/es/components/row/style/css";
 import VersaSelect from "./select.vue";
 import VersaFormItem from "./item.vue";
 import VersaRadioGroup from "./radio-group.vue";
@@ -94,6 +97,8 @@ const ElementMap = {
 export default {
   name: "versa-form",
   components: {
+    ElRow,
+    ElSpace,
     VersaSelect,
     VersaFormItem,
     VersaRadioGroup,

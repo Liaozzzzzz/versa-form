@@ -29,7 +29,7 @@
         <!-- 套一层不一样的标签，让form的伪类样式生效 -->
         <section class="versa-filter__action">
           <!-- 提交按钮 -->
-          <el-space class="versa-filter__action--wrap" :size="20">
+          <ElSpace class="versa-filter__action--wrap" :size="20">
             <template v-for="action in filterActions">
               <component
                 v-if="action.is"
@@ -48,7 +48,7 @@
               </VersaButton>
             </template>
             <slot name="btns" v-bind="proxyPageCore({ formValues })"> </slot>
-          </el-space>
+          </ElSpace>
         </section>
       </template>
     </VersaForm>
@@ -59,6 +59,8 @@
 <script>
 import omit from "lodash/omit";
 import pick from "lodash/pick";
+import { ElSpace } from "element-plus";
+import "element-plus/es/components/space/style/css";
 import VersaForm from "./form.vue";
 import VersaCard from "./card.vue";
 import VersaButton from "./button.vue";
@@ -76,6 +78,7 @@ export default {
     VersaForm,
     VersaCard,
     VersaButton,
+    ElSpace,
   },
   mixins: [filterPropsMixins, formEmitter, instanceProxy],
   props: {

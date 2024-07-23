@@ -31,11 +31,7 @@
         <slot :name="slotName" v-bind="attrs"></slot>
       </template>
     </VersaForm>
-    <el-space
-      :size="20"
-      class="versa-modal__footer"
-      v-if="dialogActions.length"
-    >
+    <ElSpace :size="20" class="versa-modal__footer" v-if="dialogActions.length">
       <template v-for="action in dialogActions" :key="action.actionType">
         <component
           v-if="action.is"
@@ -50,12 +46,15 @@
           {{ action.actionName }}
         </VersaButton>
       </template>
-    </el-space>
+    </ElSpace>
   </component>
 </template>
 
 <script>
 import { mergeProps } from "vue";
+import { ElSpace, ElLoading } from "element-plus";
+import "element-plus/es/components/space/style/css";
+import "element-plus/es/components/loading/style/css";
 import VersaForm from "./form.vue";
 import VersaButton from "./button.vue";
 import { formPropsMixins } from "./mixins/props";
@@ -77,6 +76,10 @@ export default {
   components: {
     VersaForm,
     VersaButton,
+    ElSpace,
+  },
+  directives: {
+    loading: ElLoading.directive,
   },
   mixins: [formPropsMixins],
   props: {

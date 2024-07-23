@@ -84,11 +84,18 @@ import omit from "lodash/omit";
 import get from "lodash/get";
 import isFunction from "lodash/isFunction";
 import upperCase from "lodash/upperCase";
-import { ElTable, ElEmpty, ElPagination, ElSpace } from "element-plus";
+import {
+  ElTable,
+  ElEmpty,
+  ElPagination,
+  ElSpace,
+  ElLoading,
+} from "element-plus";
 import "element-plus/es/components/table/style/css";
 import "element-plus/es/components/empty/style/css";
 import "element-plus/es/components/pagination/style/css";
 import "element-plus/es/components/space/style/css";
+import "element-plus/es/components/loading/style/css";
 import VersaCard from "./card.vue";
 import VersaNestedTable from "./nested-table.vue";
 import VersaButton from "./button.vue";
@@ -105,6 +112,9 @@ export default {
       from: ProvideInjectionKey,
       default: {},
     },
+  },
+  directives: {
+    loading: ElLoading.directive,
   },
   components: {
     VersaCard,

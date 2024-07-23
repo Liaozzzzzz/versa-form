@@ -6,7 +6,7 @@
       </div>
       <div class="versa-card__action">
         <slot name="headerRight">
-          <el-space :size="20">
+          <ElSpace :size="20">
             <template v-for="action in toolActions">
               <component
                 :is="action.is"
@@ -25,7 +25,7 @@
                 {{ action.actionName }}
               </VersaButton>
             </template>
-          </el-space>
+          </ElSpace>
         </slot>
       </div>
     </div>
@@ -34,12 +34,15 @@
 </template>
 
 <script>
+import { ElSpace } from "element-plus";
+import "element-plus/es/components/space/style/css";
 import { hasOwnProperty, isObject } from "./utils";
 import VersaButton from "./button.vue";
 
 export default {
   components: {
     VersaButton,
+    ElSpace,
   },
   name: "versa-card",
   props: {
