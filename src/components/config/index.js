@@ -3,6 +3,8 @@ import IconSearch from '../assets/search.svg';
 
 export const PageCoreInjectionKey = Symbol('PageCore');
 
+export const ProvideInjectionKey = Symbol('Provide');
+
 /** 内置操作 */
 export const presetActions = {
     reset: {

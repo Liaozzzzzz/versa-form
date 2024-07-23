@@ -51,7 +51,7 @@
             :filterOptions="filterOptions"
             :tableOptions="tableOptions"
             :detailProps="detailProps"
-            :api="queryFunc"
+            api="/"
           >
             <template #slotTest="{ data, prop }">
               <el-radio v-model="data[prop]" label="1">备选项</el-radio>

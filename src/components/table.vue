@@ -96,9 +96,16 @@ import { tablePropsMixins } from "./mixins/props";
 import { formEmitter } from "./mixins/methods";
 import { instanceProxy } from "./mixins/proxy";
 import { isObject, hasOwnProperty } from "./utils";
+import { ProvideInjectionKey } from "./config";
 
 export default {
   name: "versa-table",
+  inject: {
+    globalConfig: {
+      from: ProvideInjectionKey,
+      default: {},
+    },
+  },
   components: {
     VersaCard,
     VersaNestedTable,
@@ -208,7 +215,7 @@ export default {
           res = await this.api(params);
         } else {
           const isGet = upperCase(this.apiMethod) === "GET";
-          res = await this.axios({
+          res = await this.globalConfig?.$$axios({
             url: this.api,
             method: this.apiMethod,
             [isGet ? "params" : "data"]: params,

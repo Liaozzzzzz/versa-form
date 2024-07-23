@@ -10,3 +10,4 @@ export { default as VersaDropdown } from './dropdown.vue';
 export { default as VersaSelect } from './select.vue';
 export { default as VersaRepeater } from './repeater.vue';
 export { default as VersaCard } from './card.vue';
+export { default as VersaProvide } from './provide.vue';
