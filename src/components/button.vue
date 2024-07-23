@@ -236,16 +236,20 @@ export default {
 }
 
 .versa-message-box {
+  padding: 0;
+
   &.el-message-box {
     min-width: 470px;
     padding: 0;
-
+  }
+  .el-message-box {
     &__message {
       width: 100%;
     }
 
-    .el-message-box__btns {
+    &__btns {
       margin: 0 30px 20px 0;
+
       & .el-button {
         height: 35px;
         padding: 10px 30px;
@@ -266,7 +270,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
+    margin-bottom: 40px;
     width: 100%;
     background: url("./assets/header.svg") top center no-repeat;
 
@@ -278,6 +282,7 @@ export default {
   &__content {
     display: flex;
     padding: 56px 85px 0;
+    width: 100%;
   }
 
   &__icon {
@@ -296,7 +301,7 @@ export default {
   }
 
   &__message {
-    font-size: 14px;
+    font-size: 13px;
     color: #999999;
   }
 }

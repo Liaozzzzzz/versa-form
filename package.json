@@ -1,6 +1,6 @@
 {
-    "name": "@versa/form",
-    "version": "0.0.1",
+    "name": "versa-form",
+    "version": "0.0.2",
     "main": "lib/index.umd.js",
     "module": "lib/index.es.js",
     "files": [

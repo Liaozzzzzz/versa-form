@@ -25,7 +25,8 @@ export const presetActions = {
         actionName: '删除',
         popconfirm: {
             title: '确定删除吗？',
-            confirmType: 'popconfirm'
+            confirmType: 'messageBox',
+            message: '数据删除后不可恢复'
         }
     },
     edit: {
