@@ -1,7 +1,8 @@
 <script>
 import { h } from "vue";
 import TinyEmitter from "tiny-emitter";
-import { get, upperFirst } from "lodash-es";
+import get from "lodash/get";
+import upperFirst from "lodash/upperFirst";
 import dayjs from "dayjs";
 import AsyncValidator from "async-validator";
 import { isEmpty, toArray, noop, isObject } from "./utils";

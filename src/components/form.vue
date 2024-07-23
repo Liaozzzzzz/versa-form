@@ -69,7 +69,8 @@
 <script>
 import { defineAsyncComponent } from "vue";
 import TinyEmitter from "tiny-emitter";
-import { omit, cloneDeep } from "lodash-es";
+import omit from "lodash/omit";
+import cloneDeep from "lodash/cloneDeep";
 import VersaSelect from "./select.vue";
 import VersaFormItem from "./item.vue";
 import VersaRadioGroup from "./radio-group.vue";

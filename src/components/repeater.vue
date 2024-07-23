@@ -115,7 +115,8 @@
 
 <script>
 import { defineAsyncComponent } from "vue";
-import { pick, cloneDeep } from "lodash-es";
+import pick from "lodash/pick";
+import cloneDeep from "lodash/cloneDeep";
 import VersaButton from "./button.vue";
 import VersaModal from "./modal.vue";
 import VersaMeasureCell from "./measure-cell.vue";
