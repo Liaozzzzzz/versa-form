@@ -1,7 +1,7 @@
 <template>
   <div class="default">
     <versa-page
-      ref="omsPageRef"
+      ref="VersaPageRef"
       rowKey="id"
       listKey="data.list11"
       totalKey="data.total11"
@@ -22,7 +22,7 @@
       fillNull=""
     >
       <template #slotTest="{ data, prop }">
-        <versa-radio v-model="data[prop]" label="1">备选项</versa-radio>
+        <el-radio v-model="data[prop]" label="1">备选项</el-radio>
       </template>
       <template #itemLevel="{ row, index }">
         <div>这是插槽{{ index }}</div>
@@ -51,10 +51,10 @@
             :filterOptions="filterOptions"
             :tableOptions="tableOptions"
             :detailProps="detailProps"
-            :query-func="queryFunc"
+            :api="queryFunc"
           >
             <template #slotTest="{ data, prop }">
-              <versa-radio v-model="data[prop]" label="1">备选项</versa-radio>
+              <el-radio v-model="data[prop]" label="1">备选项</el-radio>
             </template>
             <template #itemLevel="{ row, index }">
               <div>这是插槽{{ index }}</div>
@@ -72,14 +72,14 @@
                 <div @click="onTTT(a)">12312{{ a.filterValues }}</div>
             </template> -->
     </versa-page>
-    <OmsButton
+    <VersaButton
       popconfirm="有了这些知识，我们现在可以完成我们最开始想实现的组件"
       @click="onClickWithLoading"
       @cancel="onCancel"
     >
       popConfirm按钮
-    </OmsButton>
-    <OmsButton
+    </VersaButton>
+    <VersaButton
       :popconfirm="{
         confirmType: 'messageBox',
         message: '有了这些知识，我们现在可以完成我们最开始想实现的组件',
@@ -90,8 +90,8 @@
       @cancel="onCancel"
     >
       MessageBox按钮
-    </OmsButton>
-    <OmsButton @click="onClickWithLoading">带loading状态</OmsButton>
+    </VersaButton>
+    <VersaButton @click="onClickWithLoading">带loading状态</VersaButton>
   </div>
 </template>
 <script>
@@ -120,7 +120,7 @@ export default {
       // toolOptions: [],
       toolOptions: [
         {
-          actionType: "newCreate",
+          actionType: "create",
           actionName: "新建",
           disabled: (selection, instance) => {
             return !instance.filterValues.typeCode;
@@ -204,7 +204,7 @@ export default {
     },
     onFilterChange(val) {
       console.log("onFilterChange", val);
-      // this.$refs.omsPageRef?.refresh(val);
+      // this.$refs.VersaPageRef?.refresh(val);
     },
     onSelectChange(val) {
       console.log("onSelectChange", val);

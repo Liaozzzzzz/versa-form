@@ -1,7 +1,7 @@
 <template>
   <div>
     <versa-form
-      ref="omsForm"
+      ref="VersaForm"
       labelWidth="90px"
       :defaultValues="defaultValues"
       :options="formOptions"
@@ -54,7 +54,7 @@ export default {
           // date: '2023-07-12',
           year: "2022",
         },
-        omsRepeater: [
+        VersaRepeater: [
           {
             "radio-group": "test2",
             telphone: 15527137531,
@@ -87,24 +87,24 @@ export default {
       // console.log('onValidated', args);
     },
     onReset() {
-      this.$refs.omsForm.resetField();
+      this.$refs.VersaForm.resetField();
     },
     onClearValidate() {
-      this.$refs.omsForm.clearValidate();
+      this.$refs.VersaForm.clearValidate();
     },
     onValidateAll() {
-      this.$refs.omsForm.validate();
+      this.$refs.VersaForm.validate();
     },
     onValidateAllCallback() {
-      this.$refs.omsForm.validate((errors, ...reset) => {
+      this.$refs.VersaForm.validate((errors, ...reset) => {
         console.log(errors, reset);
       });
     },
     async onValidatePartial() {
-      this.$refs.omsForm.validateField(["telphone1", "radio-group"]);
+      this.$refs.VersaForm.validateField(["telphone1", "radio-group"]);
     },
     onValidatePartialCallback() {
-      this.$refs.omsForm.validateField(
+      this.$refs.VersaForm.validateField(
         ["telphone1", "nest-form"],
         (errors, ...reset) => {
           console.log(errors, reset);

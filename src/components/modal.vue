@@ -33,7 +33,7 @@
     </VersaForm>
     <el-space
       :size="20"
-      class="flex shrink-0 items-center justify-end versa-modal__footer"
+      class="versa-modal__footer"
       v-if="dialogActions.length"
     >
       <template v-for="action in dialogActions" :key="action.actionType">
@@ -289,7 +289,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
     width: 100%;
     height: 68px;
     background: linear-gradient(to right, #0477fd 0%, #65defd 100%) no-repeat,
@@ -319,8 +318,15 @@ export default {
     padding: 0 30px 30px;
   }
 
-  .versa-modal__footer .versa-button {
-    padding: 10px 30px;
+  .versa-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+
+    .versa-button {
+      padding: 10px 30px;
+    }
   }
 
   .versa-repeater {

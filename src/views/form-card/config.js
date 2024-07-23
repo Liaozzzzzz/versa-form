@@ -110,7 +110,7 @@ export const formOptions = [
     },
     {
         label: 'repeater',
-        prop: 'omsRepeater',
+        prop: 'VersaRepeater',
         type: 'inline',
         labelType: {
             type: 'card',
@@ -118,11 +118,11 @@ export const formOptions = [
                 actionType: 'preview',
                 actionName: '预览',
                 action: (_, instance) => {
-                    if (instance.formCore.getStatus('omsRepeater') === 'edit') {
-                        instance.formCore.setStatus?.({ 'omsRepeater': 'preview' });
+                    if (instance.formCore.getStatus('VersaRepeater') === 'edit') {
+                        instance.formCore.setStatus?.({ 'VersaRepeater': 'preview' });
                         instance.text = '修改'
                     } else {
-                        instance.formCore.setStatus?.('omsRepeater', 'edit');
+                        instance.formCore.setStatus?.('VersaRepeater', 'edit');
                         instance.text = '预览'
                     }
 

@@ -140,7 +140,7 @@ export const formOptions = [
     },
     {
         label: '插槽文本框',
-        prop: 'omsRepeater',
+        prop: 'VersaRepeater',
         type: 'inline',
         element: 'versa-repeater',
         fixedMode: 9,
