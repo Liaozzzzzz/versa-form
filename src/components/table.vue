@@ -102,17 +102,11 @@ import VersaButton from "./button.vue";
 import { tablePropsMixins } from "./mixins/props";
 import { formEmitter } from "./mixins/methods";
 import { instanceProxy } from "./mixins/proxy";
+import { injectedConfig } from "./mixins/config";
 import { isObject, hasOwnProperty } from "./utils";
-import { ProvideInjectionKey } from "./config";
 
 export default {
   name: "versa-table",
-  inject: {
-    globalConfig: {
-      from: ProvideInjectionKey,
-      default: {},
-    },
-  },
   directives: {
     loading: ElLoading.directive,
   },
@@ -125,7 +119,7 @@ export default {
     ElPagination,
     ElSpace,
   },
-  mixins: [tablePropsMixins, formEmitter, instanceProxy],
+  mixins: [tablePropsMixins, formEmitter, instanceProxy, injectedConfig],
   props: {
     /** 列表配置项 */
     options: {
