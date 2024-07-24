@@ -91,7 +91,7 @@
     >
       MessageBox按钮
     </VersaButton>
-    <VersaButton @click="onClickWithLoading">带loading状态</VersaButton>
+    <versa-button @click="onClickWithLoading">带loading状态</versa-button>
   </div>
 </template>
 <script>

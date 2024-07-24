@@ -1,13 +1,54 @@
-export { default as VersaPage } from './page.vue';
-export { default as VersaFilter } from './filter.vue';
-export { default as VersaTable } from './table.vue';
-export { default as VersaForm } from './form.vue';
-export { default as VersaModal } from './modal.vue';
-export { default as VersaButton } from './button.vue';
-export { default as VersaCheckboxGroup } from './checkbox-group.vue';
-export { default as VersaRadioGroup } from './radio-group.vue';
-export { default as VersaDropdown } from './dropdown.vue';
-export { default as VersaSelect } from './select.vue';
-export { default as VersaRepeater } from './repeater.vue';
-export { default as VersaCard } from './card.vue';
-export { default as VersaProvide } from './provide.vue';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
+import VersaPage  from './page.vue';
+import VersaFilter  from './filter.vue';
+import VersaTable  from './table.vue';
+import VersaForm  from './form.vue';
+import VersaModal  from './modal.vue';
+import VersaButton  from './button.vue';
+import VersaCheckboxGroup  from './checkbox-group.vue';
+import VersaRadioGroup  from './radio-group.vue';
+import VersaDropdown  from './dropdown.vue';
+import VersaSelect  from './select.vue';
+import VersaRepeater  from './repeater.vue';
+import VersaCard  from './card.vue';
+import VersaProvide  from './provide.vue';
+
+const components = [
+    VersaPage,
+    VersaFilter,
+    VersaTable,
+    VersaForm,
+    VersaModal,
+    VersaButton,
+    VersaCheckboxGroup,
+    VersaRadioGroup,
+    VersaDropdown,
+    VersaSelect,
+    VersaRepeater,
+    VersaCard,
+    VersaProvide
+]
+
+const install = (app) => {
+    components.forEach(element => {
+        app.component(upperFirst(camelCase(element.name)), element)
+    });
+}
+
+export {
+    VersaPage,
+    VersaFilter,
+    VersaTable,
+    VersaForm,
+    VersaModal,
+    VersaButton,
+    VersaCheckboxGroup,
+    VersaRadioGroup,
+    VersaDropdown,
+    VersaSelect,
+    VersaRepeater,
+    VersaCard,
+    VersaProvide,
+    install
+}
