@@ -1,87 +1,8 @@
-<template>
-  <VersaCard class="versa-table" v-loading="loading" :title="headline">
-    <template #headerRight>
-      <ElSpace
-        :class="[
-          'versa-table__tools',
-          'versa-table__tools--header',
-          {
-            'versa-table__tools--empty': !tools.length && !$slots.tools,
-          },
-        ]"
-        :size="20"
-      >
-        <template v-for="tool in tools">
-          <component
-            v-if="tool.is"
-            v-bind="tool"
-            :is="tool.is"
-            v-on="tool.on || {}"
-          />
-          <VersaButton
-            v-else
-            v-bind="tool"
-            @click="(e, instance) => onToolAction(tool, instance)"
-          >
-            {{ tool.actionName }}
-          </VersaButton>
-        </template>
-        <slot
-          name="tools"
-          v-bind="proxyPageCore({ multipleSelection, clearRowSelection })"
-        >
-        </slot>
-      </ElSpace>
-    </template>
-    <ElTable
-      style="width: 100%"
-      ref="table"
-      v-bind="extraTableProps"
-      :data="dataSource"
-      :row-key="rowKey"
-      @selection-change="handleSelectionChange"
-    >
-      <template v-if="$slots.empty" #empty>
-        <slot name="empty"> </slot>
-      </template>
-      <template v-else #empty>
-        <ElEmpty description="暂无数据"></ElEmpty>
-      </template>
-      <VersaNestedTable
-        v-for="item in options"
-        :option="item"
-        :rowKey="rowKey"
-        :fillNull="fillNull"
-      >
-        <template
-          v-for="slotName in Object.keys($slots).filter(
-            (item) => item !== 'empty'
-          )"
-          v-slot:[slotName]="attrs"
-        >
-          <slot :name="slotName" v-bind="attrs"></slot>
-        </template>
-      </VersaNestedTable>
-    </ElTable>
-    <ElPagination
-      v-if="needPagination && innerParams.total > 0"
-      background
-      class="versa-table__pagination"
-      v-bind="paginationConfigs"
-      :total="innerParams.total"
-      :current-page="innerParams.pageNum"
-      :page-sizes="[10, 20, 30]"
-      :page-size="innerParams.pageSize"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
-    <slot name="footer"></slot>
-  </VersaCard>
-</template>
-
 <script>
+import { h, resolveComponent, withDirectives } from "vue";
 import omit from "lodash/omit";
 import get from "lodash/get";
+import pick from "lodash/pick";
 import isFunction from "lodash/isFunction";
 import upperCase from "lodash/upperCase";
 import {
@@ -90,35 +11,27 @@ import {
   ElPagination,
   ElSpace,
   ElLoading,
+  ElTableColumn,
 } from "element-plus";
 import "element-plus/es/components/table/style/css";
+import "element-plus/es/components/table-column/style/css";
 import "element-plus/es/components/empty/style/css";
 import "element-plus/es/components/pagination/style/css";
 import "element-plus/es/components/space/style/css";
 import "element-plus/es/components/loading/style/css";
 import VersaCard from "./card.vue";
-import VersaNestedTable from "./nested-table.vue";
 import VersaButton from "./button.vue";
 import { tablePropsMixins } from "./mixins/props";
 import { formEmitter } from "./mixins/methods";
 import { instanceProxy } from "./mixins/proxy";
 import { injectedConfig } from "./mixins/config";
-import { isObject, hasOwnProperty } from "./utils";
+import { isObject, isEmpty, hasOwnProperty, formatEventName } from "./utils";
+import { presetActions } from "./config";
+
+const tablePresetAction = pick(presetActions, ["remove", "edit", "detail"]);
 
 export default {
   name: "versa-table",
-  directives: {
-    loading: ElLoading.directive,
-  },
-  components: {
-    VersaCard,
-    VersaNestedTable,
-    VersaButton,
-    ElTable,
-    ElEmpty,
-    ElPagination,
-    ElSpace,
-  },
   mixins: [tablePropsMixins, formEmitter, instanceProxy, injectedConfig],
   props: {
     /** 列表配置项 */
@@ -175,6 +88,7 @@ export default {
           ) {
             return {
               ...action,
+              on: formatEventName(action.on),
               disabled:
                 typeof action.disabled === "function"
                   ? action.disabled.bind(this, this.multipleSelection)
@@ -184,6 +98,37 @@ export default {
           return null;
         })
         .filter(Boolean);
+    },
+    renderOptions() {
+      return (
+        this.options?.map((option) => {
+          const copyOption = { ...option };
+          if (!copyOption.formatter) {
+            copyOption.formatter = (val) => {
+              if (isEmpty(val[copyOption.prop])) {
+                return copyOption.filterNull || (this.fillNull ?? "");
+              }
+
+              if (isObject(copyOption.mapSource)) {
+                return copyOption.mapSource[val[copyOption.prop]];
+              }
+              return val[copyOption.prop];
+            };
+          }
+
+          if (copyOption.type === "index" && !copyOption.index) {
+            copyOption.index = (index) => `${index < 9 ? "0" : ""}${index + 1}`;
+          }
+
+          if (copyOption.type === "index" && !copyOption.align) {
+            copyOption.align = "center";
+          }
+
+          delete copyOption.children;
+
+          return copyOption;
+        }) ?? []
+      );
     },
   },
   watch: {
@@ -263,45 +208,275 @@ export default {
     clearRowSelection(rows) {
       if (Array.isArray(rows)) {
         rows.forEach((row) => {
-          this.$refs.table.toggleRowSelection(row);
+          this.$refs.table?.toggleRowSelection(row);
         });
       } else {
-        this.$refs.table.clearSelection();
+        this.$refs.table?.clearSelection();
       }
     },
     /** 操作栏回调 */
-    onToolAction(tool, instance) {
-      const options = omit(tool, [
+    onAction(action, data, instance) {
+      const options = omit(action, [
         "actionType",
         "actionName",
         "action",
         "usePageModal",
       ]);
       // 使用内置的弹窗
-      if (tool.usePageModal) {
+      if (action.usePageModal) {
         this.dispatch(
           "versa-page",
           "VersaFormPageUsePageModal",
           {},
           {
             ...options,
-            actionType: tool.actionType,
+            actionType: action.actionType,
           }
         );
         return;
       }
-      switch (tool.actionType) {
+      switch (action.actionType) {
         case "create":
           this.dispatch("versa-page", "VersaFormPageOnCreate", {});
           break;
+        case "remove":
+          this.dispatch(
+            "versa-page",
+            "VersaFormPageOnRemove",
+            data[this.rowKey],
+            data
+          );
+          break;
+        case "edit":
+          this.dispatch("versa-page", "VersaFormPageOnUpdate", data, options);
+          break;
+        case "detail":
+          this.dispatch("versa-page", "VersaFormPageOnDetail", data, options);
+          break;
         default:
-          tool.action?.(this.multipleSelection, instance, {
-            ...tool,
+          action.action?.(data, instance, {
+            ...action,
             clearRowSelection: this.clearRowSelection,
           });
           break;
       }
     },
+    /** 操作栏编辑 */
+    filterActions(actions, ...rest) {
+      let actionsToArr =
+        typeof actions === "string" ? actions.split(",") : actions;
+      if (typeof actions === "function") {
+        actionsToArr = actions(...rest);
+      }
+
+      return actionsToArr
+        ?.map((action) => {
+          if (typeof action === "string") {
+            return tablePresetAction[action];
+          }
+
+          if (
+            (isObject(action) &&
+              hasOwnProperty(action, "actionName") &&
+              hasOwnProperty(action, "actionType")) ||
+            action?.is
+          ) {
+            return {
+              ...action,
+              on: formatEventName(action.on),
+              disabled:
+                typeof action.disabled === "function"
+                  ? action.disabled.bind(this, rest[0])
+                  : action.disabled,
+            };
+          }
+          return null;
+        })
+        .filter(Boolean);
+    },
+  },
+  render() {
+    // 递归渲染列表组件
+    const renderColumns = (columns) => {
+      return columns.map((currentColumn) => {
+        // 自定义插槽
+        if (currentColumn.slotName) {
+          return h(
+            ElTableColumn,
+            {
+              "show-overflow-tooltip": true,
+              ...currentColumn,
+            },
+            {
+              default: ({ row, column, $index }) =>
+                this.$slots[currentColumn.slotName]?.(
+                  this.proxyPageCore({ row, column, $index })
+                ),
+            }
+          );
+        }
+
+        // 选中框
+        if (currentColumn.type === "selection") {
+          return h(ElTableColumn, {
+            "reserve-selection": true,
+            ...currentColumn,
+          });
+        }
+
+        // 操作栏
+        if (currentColumn.actions) {
+          return h(ElTableColumn, currentColumn, {
+            default: ({ row, column, $index }) => {
+              return h(
+                ElSpace,
+                {},
+                {
+                  default: () =>
+                    this.filterActions(
+                      currentColumn.actions,
+                      row,
+                      column,
+                      $index
+                    ).map((tool) => {
+                      return tool.is
+                        ? h(resolveComponent(tool.is), {
+                            ...tool,
+                            ...tool.on,
+                          })
+                        : h(
+                            VersaButton,
+                            {
+                              type: "primary",
+                              link: true,
+                              ...tool,
+                              onClick: (e, instance) =>
+                                this.onAction(tool, row, instance),
+                            },
+                            { default: () => tool.actionName }
+                          );
+                    }),
+                }
+              );
+            },
+          });
+        }
+
+        // 嵌套表头
+        if (currentColumn.children?.length > 0) {
+          return h(ElTableColumn, ...omit(currentColumn, ["children"]), {
+            default: () => renderColumns(currentColumn.children),
+          });
+        }
+
+        // 默认渲染
+        return h(ElTableColumn, {
+          "show-overflow-tooltip": true,
+          ...currentColumn,
+        });
+      });
+    };
+
+    return withDirectives(
+      h(
+        VersaCard,
+        {
+          class: "versa-table",
+          title: this.headline,
+        },
+        {
+          headerRight: () => [
+            h(
+              ElSpace,
+              {
+                class: [
+                  "versa-table__tools",
+                  "versa-table__tools--header",
+                  {
+                    "versa-table__tools--empty":
+                      !this.tools.length && !this.$slots.tools,
+                  },
+                ],
+                size: 20,
+              },
+              {
+                default: () => [
+                  ...this.tools.map((tool) => {
+                    return tool.is
+                      ? h(resolveComponent(tool.is), {
+                          ...tool,
+                          ...tool.on,
+                        })
+                      : h(
+                          VersaButton,
+                          {
+                            ...tool,
+                            onClick: (e, instance) =>
+                              this.onAction(
+                                tool,
+                                this.multipleSelection,
+                                instance
+                              ),
+                          },
+                          { default: () => tool.actionName }
+                        );
+                  }),
+                  this.$slots.tools?.(
+                    this.proxyPageCore({
+                      multipleSelection: this.multipleSelection,
+                      clearRowSelection: this.clearRowSelection,
+                    })
+                  ),
+                ],
+              }
+            ),
+          ],
+          default: () => [
+            h(
+              ElTable,
+              {
+                style: { width: "100%" },
+                ...this.extraTableProps,
+                data: this.dataSource,
+                "row-key": this.rowKey,
+                onSelectionChange: this.handleSelectionChange,
+                ref: "table",
+              },
+              {
+                empty: () =>
+                  this.$slots.empty?.(
+                    this.proxyPageCore({
+                      multipleSelection: this.multipleSelection,
+                      clearRowSelection: this.clearRowSelection,
+                    })
+                  ) ?? h(ElEmpty, { description: "暂无数据" }),
+                default: () => renderColumns(this.renderOptions),
+              }
+            ),
+            this.needPagination && this.innerParams.total > 0
+              ? h(ElPagination, {
+                  class: "versa-table__pagination",
+                  background: true,
+                  ...this.paginationConfigs,
+                  total: this.innerParams.total,
+                  "current-page": this.innerParams.pageNum,
+                  "page-sizes": [10, 20, 30],
+                  "page-size": this.innerParams.pageSize,
+                  onSizeChange: this.handleSizeChange,
+                  onCurrentChange: this.handleCurrentChange,
+                })
+              : null,
+            this.$slots.footer?.(
+              this.proxyPageCore({
+                multipleSelection: this.multipleSelection,
+                clearRowSelection: this.clearRowSelection,
+              })
+            ),
+          ],
+        }
+      ),
+      [[ElLoading.directive, this.loading]]
+    );
   },
 };
 </script>

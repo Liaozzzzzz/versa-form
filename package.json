@@ -1,14 +1,20 @@
 {
     "name": "versa-form",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "main": "lib/index.umd.js",
     "module": "lib/index.es.js",
+    "description": "a configable form for vue3 and element-ui",
     "files": [
         "lib",
         "src",
         "README.md",
         "package.json"
     ],
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/Liaozzzzzz/versa-form.git"
+    },
+    "homepage": "https://github.com/Liaozzzzzz/versa-form",
     "scripts": {
         "dev": "vite",
         "build": "vite build",

@@ -24,8 +24,8 @@
       <template #slotTest="{ data, prop }">
         <el-radio v-model="data[prop]" label="1">备选项</el-radio>
       </template>
-      <template #itemLevel="{ row, index }">
-        <div>这是插槽{{ index }}</div>
+      <template #itemLevel="{ row, $index }">
+        <div>这是插槽{{ $index }}</div>
       </template>
       <template #modalFooter="{ model, actionType }">
         <template v-if="actionType === 'detail21212'">
@@ -56,8 +56,8 @@
             <template #slotTest="{ data, prop }">
               <el-radio v-model="data[prop]" label="1">备选项</el-radio>
             </template>
-            <template #itemLevel="{ row, index }">
-              <div>这是插槽{{ index }}</div>
+            <template #itemLevel="{ row, $index }">
+              <div>这是插槽{{ $index }}h</div>
             </template>
           </versa-page>
         </template>
@@ -290,6 +290,60 @@ export default {
                   item.telphone?.toString().indexOf("-") !== -1
                     ? "telephone"
                     : "cellphone",
+                children:
+                  Math.random() > 0.5
+                    ? []
+                    : [
+                        {
+                          id: "position: static: search",
+                          itemCode: "字典key",
+                          itemValue: "字典value",
+                          itemDesc:
+                            "字典描述超级超级超级长的文本哦字典描述超级超级超级长的文本哦字典描述超级超级超级长的文本哦字典描述超级超级超",
+                          itemSort: "排序",
+                          ext: "扩展字段",
+                          itemLevel: "层级",
+                          typeCode: "类型代码",
+                          typeCode1: "类型代码1",
+                          status: "T",
+                          telphone: 155231,
+                          // telphone: '0768-8889994',
+                          list: [
+                            {
+                              telphone: 15527137531,
+                            },
+                          ],
+                          "radio-group": {
+                            name: "测试2",
+                            code: "test2",
+                          },
+                          "el-input-textarea":
+                            "雨下来已下来 雨丝 断线成诗 每个字 泪流不止 忧郁 想你 暗示 忘词的傻子 我想要写的诗 抛在天空没位置 落到尘世 从此 坚持 心事 为你 保湿",
+                          "checkbox-group": [
+                            {
+                              code: "test2",
+                            },
+                            {
+                              code: "test3",
+                            },
+                          ],
+                          "el-input-number": 100,
+                          date: "2023-07-12",
+                          daterange: ["2023-07-20", "2023-08-21"],
+                          dates: ["2023-07-20", "2023-07-21"],
+                          month: "2023-06",
+                          year: "2022",
+                          datetime: "2023-07-12 00-00-00",
+                          datetimerange: [
+                            "2023-07-14 00-00-00",
+                            "2023-08-15 23-59-59",
+                          ],
+                          "nest-form": {
+                            date: "2023-07-12",
+                            year: "2022",
+                          },
+                        },
+                      ],
               })),
             },
           });

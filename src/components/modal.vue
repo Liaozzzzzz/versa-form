@@ -52,9 +52,11 @@
 
 <script>
 import { mergeProps } from "vue";
-import { ElSpace, ElLoading } from "element-plus";
+import { ElSpace, ElLoading, ElDialog, ElDrawer } from "element-plus";
 import "element-plus/es/components/space/style/css";
 import "element-plus/es/components/loading/style/css";
+import "element-plus/es/components/dialog/style/css";
+import "element-plus/es/components/drawer/style/css";
 import VersaForm from "./form.vue";
 import VersaButton from "./button.vue";
 import { formPropsMixins } from "./mixins/props";
@@ -77,6 +79,7 @@ export default {
     VersaForm,
     VersaButton,
     ElSpace,
+    ElDialog,
   },
   directives: {
     loading: ElLoading.directive,

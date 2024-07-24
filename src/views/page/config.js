@@ -101,19 +101,29 @@ export const tableOptions = [
         width: 60,
         fixed: 'left',
     },
+    // {
+    //     prop: 'typeCode',
+    //     label: '配置项代码',
+    //     children: [
+    //         // {
+    //         //     prop: 'typeCode1',
+    //         //     width: 200,
+    //         //     label: '配置项代码1',
+    //         // },
+    //         // {
+    //         //     prop: 'typeCode2',
+    //         //     label: '配置项代码2',
+    //         // }
+    //     ]
+    // },
+    {
+        prop: 'typeCode1',
+        width: 200,
+        label: '配置项代码1',
+    },
     {
         prop: 'typeCode',
-        label: '配置项代码',
-        children: [
-            {
-                prop: 'typeCode1',
-                label: '配置项代码1',
-            },
-            {
-                prop: 'typeCode2',
-                label: '配置项代码2',
-            }
-        ]
+        label: '配置项代码2',
     },
     {
         label: '手机号',
@@ -189,13 +199,14 @@ export const tableOptions = [
     {
         prop: 'itemSort',
         label: '明细顺序',
-        width: 200
+        // width: 200
     },
     {
         prop: 'status',
         label: '启用状态',
-        width: 200,
-        formatter: (row, column, cellValue) => statusMap[cellValue]
+        // width: 200,
+        mapSource: statusMap
+        // formatter: (row, column, cellValue) => statusMap[cellValue]
     },
     {
         actions: [{
