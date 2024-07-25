@@ -448,24 +448,26 @@ export default {
       }
     );
 
-    if (!isCard && this.tips && !showErrorMsg) {
+    if (!isCard && this.tips) {
       return h("div", {}, [
         instance,
-        h("div", {
-          class: [
-            "versa-form-item__tips",
-            {
-              "versa-form-item--mb": showTips,
-            },
-          ],
-          style: {
-            "margin-left":
-              this.labelStyle.width === "auto"
-                ? this.VersaForm?.autoLabelWidth
-                : this.labelStyle.width,
-          },
-          innerHTML: this.tips,
-        }),
+        !showErrorMsg
+          ? h("div", {
+              class: [
+                "versa-form-item__tips",
+                {
+                  "versa-form-item--mb": showTips,
+                },
+              ],
+              style: {
+                "margin-left":
+                  this.labelStyle.width === "auto"
+                    ? this.VersaForm?.autoLabelWidth
+                    : this.labelStyle.width,
+              },
+              innerHTML: this.tips,
+            })
+          : null,
       ]);
     }
 

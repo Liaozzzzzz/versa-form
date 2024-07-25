@@ -209,54 +209,83 @@ export const tableOptions = [
         // formatter: (row, column, cellValue) => statusMap[cellValue]
     },
     {
-        actions: [{
-            actionType: 'edit',
-            actionName: '编辑1',
-            'append-to-body': true,
-            actions: (values) => {
-                return [values['el-switch'] ? 'cancel' : undefined, 'confirm', {
-                    actionType: 'edit111',
-                    actionName: '测试按钮',
-                    popconfirm: { title: '测试', confirmType: 'popconfirm' },
-                    action: (formValues, instance, { close }) => {
-                        instance.isLoading = true;
-                        setTimeout(() => {
-                            instance.isLoading = false;
-                            close();
-                        }, 3000);
-                    }
-                }]
-            },
-        }, 'detail', 'remove', {
-            actionType: 'nestPage',
-            actionName: '测试嵌套page',
-            title: '测试嵌套page',
-            usePageModal: true,
-            width: '80%',
-            'append-to-body': true,
-            options: [
-                {
-                    label: "所属企业",
-                    prop: "itemDesc",
-                    element: "el-input",
+        actions: [
+            {
+                actionType: 'edit',
+                actionName: '编辑1',
+                'append-to-body': true,
+                actions: (values) => {
+                    return [values['el-switch'] ? 'cancel' : undefined, 'confirm', {
+                        actionType: 'edit111',
+                        actionName: '测试按钮',
+                        popconfirm: { title: '测试', confirmType: 'popconfirm' },
+                        action: (formValues, instance, { close }) => {
+                            instance.isLoading = true;
+                            setTimeout(() => {
+                                instance.isLoading = false;
+                                close();
+                            }, 3000);
+                        }
+                    }]
                 },
-            ],
-        }, {
-            actionType: 'edit111',
-            actionName: '测试按钮',
-            popconfirm: { title: '测试', confirmType: 'popconfirm' },
-            // disabled: (row, instance) => !instance.selectionValues.length,
-            action: (formValues, instance, options) => {
-                instance.isLoading = true;
-                setTimeout(() => {
-                    instance.isLoading = false;
-                }, 3000);
-            }
-        }],
+            },
+         'detail', 
+         'remove', 
+            {
+                actionType: 'nestPage',
+                actionName: '测试嵌套page',
+                title: '测试嵌套page',
+                usePageModal: true,
+                width: '80%',
+                'append-to-body': true,
+                options: [
+                    {
+                        label: "所属企业",
+                        prop: "itemDesc",
+                        element: "el-input",
+                    },
+                ],
+            },
+            {
+                actionType: 'edit111',
+                actionName: '测试按钮',
+                popconfirm: { title: '测试', confirmType: 'popconfirm' },
+                // disabled: (row, instance) => !instance.selectionValues.length,
+                action: (formValues, instance, options) => {
+                    instance.isLoading = true;
+                    setTimeout(() => {
+                        instance.isLoading = false;
+                    }, 3000);
+                },
+            },
+            {
+                title: "测试formatBefore",
+                actionType: "createSecondary",
+                actionName: "测试formatBefore",
+                status: "edit",
+                disabled: true,
+                formatBefore: (row) => {
+                  console.log(row);
+                  return {
+                    'checkbox-group': row['checkbox-group'],
+                    parentId: row.menuId,
+                  };
+                },
+                usePageModal: true,
+                actions: [
+                  "cancel",
+                  {
+                    actionType: "confirm",
+                    actionName: "确认",
+                    action: console.log,
+                  },
+                ],
+            },
+        ],
         label: '操作',
         align: 'center',
         fixed: 'right',
-        width: 300
+        width: 400
     }
 ];
 

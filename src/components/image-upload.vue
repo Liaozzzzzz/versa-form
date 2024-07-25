@@ -35,7 +35,7 @@
         z-index: -999;
       "
       type="file"
-      :accept="mergedAccept"
+      :accept="accept"
       @change="handleChange"
     />
   </div>
@@ -47,17 +47,19 @@ import ceil from "lodash/ceil";
 import { ElIcon, ElImage } from "element-plus";
 import "element-plus/es/components/icon/style/css";
 import "element-plus/es/components/image/style/css";
+import { injectedConfig } from "./mixins/config";
 
 export default {
   name: "versa-image-upload",
   components: { Plus, Delete, ElIcon, ElImage },
+  mixins: [injectedConfig],
   props: {
     modelValue: {
       type: [Object, String],
     },
     maxSize: {
       type: Number,
-      default: 5 * 1024 * 12024,
+      default: 5 * 1024 * 1024,
     },
     status: {
       type: String,
@@ -65,7 +67,7 @@ export default {
     },
     accept: {
       type: String,
-      default: "",
+      default: ".png;.jpg;.jpeg",
     },
   },
   emits: ["update:modelValue"],
@@ -75,9 +77,6 @@ export default {
     };
   },
   computed: {
-    mergedAccept() {
-      return this.accept || ".png;.jpg;.jpeg";
-    },
     previewSrcList() {
       if (this.status === "edit") {
         return [];
@@ -100,43 +99,40 @@ export default {
   },
   methods: {
     onClickUpload() {
+      this.$refs.inputRef.value = "";
       this.$refs.inputRef.click();
       this.$refs.inputRef.blur();
     },
     handleChange(e) {
       const files = e.target?.files ?? [];
-      e.target.files = null;
+
       if (files.length === 0) {
-        // 获取文件异常
+        // TODO:获取文件异常
         return;
       }
       if (files.length > 1) {
-        // 数量错误
+        // TODO: 数量错误
         return;
       }
       // 校验体积
       if (files[0].size > this.maxSize) {
-        // notify({
-        //     type: 'warning',
-        //     title: `最大支持${ceil(this.maxSize / 1000, 2)}kb大小的文件`,
-        // });
+        this.globalConfig?.toastError?.(
+          `最大支持${ceil(this.maxSize / 1000, 2)}kb大小的文件`
+        );
         return;
       }
 
       // 文件格式
-      const isSupport = this.mergedAccept
-        .split(";")
+      const isSupport = this.accept
+        ?.split(";")
         .some((item) => files[0].name.endsWith(item));
       if (!isSupport) {
-        // notify({
-        //   type: "warning",
-        //   title: `仅支持${this.mergedAccept}格式的文件`,
-        // });
+        this.globalConfig?.toastError?.(`仅支持${this.accept}格式的文件`);
         return;
       }
 
       this.previewSrc = URL.createObjectURL(files[0]);
-      this.$emit("update:modelValue", e.target.files[0]);
+      this.$emit("update:modelValue", files[0]);
     },
     onRemove() {
       this.$emit("update:modelValue", null);

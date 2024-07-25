@@ -13,6 +13,7 @@ import VersaSelect  from './select.vue';
 import VersaRepeater  from './repeater.vue';
 import VersaCard  from './card.vue';
 import VersaProvide  from './provide.vue';
+import VersaImageUpload from './image-upload.vue';
 
 const components = [
     VersaPage,
@@ -27,7 +28,8 @@ const components = [
     VersaSelect,
     VersaRepeater,
     VersaCard,
-    VersaProvide
+    VersaProvide,
+    VersaImageUpload
 ]
 
 const install = (app) => {

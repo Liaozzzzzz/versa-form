@@ -93,6 +93,7 @@
     </VersaButton>
     <versa-button @click="onClickWithLoading">带loading状态</versa-button>
   </div>
+  <versa-image-upload :maxSize="10 * 1024" accept=".svg"></versa-image-upload>
 </template>
 <script>
 import { detailProps, tableOptions, filterOptions } from "./config";

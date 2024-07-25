@@ -2,6 +2,8 @@
 
 <script>
 import { computed } from "vue";
+import { ElMessage } from "element-plus";
+import "element-plus/es/components/message/style/css";
 import { ProvideInjectionKey } from "./config";
 
 export default {
@@ -11,6 +13,7 @@ export default {
       [ProvideInjectionKey]: computed(() => {
         return {
           $$axios: this.axiosInstance,
+          toastError: this.toastError,
         };
       }),
     };
@@ -19,6 +22,10 @@ export default {
     axiosInstance: {
       type: Function,
       default: () => () => {},
+    },
+    toastError: {
+      type: Function,
+      default: (message) => ElMessage({ message, type: "error" }),
     },
   },
   data() {

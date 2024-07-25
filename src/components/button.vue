@@ -56,7 +56,7 @@ export default {
     /** 二次确认弹窗参数 */
     confirmProps() {
       return {
-        confirmType: "popconfirm",
+        confirmType: "messageBox",
         ...(typeof this.popconfirm === "string"
           ? { title: this.popconfirm }
           : this.popconfirm),
@@ -107,13 +107,10 @@ export default {
                             },
                             this.confirmProps.title
                           ),
-                      h(
-                        "div",
-                        {
-                          class: "versa-message-box__message",
-                        },
-                        this.confirmProps.message
-                      ),
+                      h("div", {
+                        class: "versa-message-box__message",
+                        innerHTML: this.confirmProps.message,
+                      }),
                     ]),
                   ]
                 ),
@@ -223,7 +220,12 @@ export default {
       &.is-link {
         color: #2f88ff;
         background-color: unset;
-        // height: unset;
+      }
+    }
+
+    &--primary:is(.is-disabled) {
+      &.is-link {
+        color: #b8b8b8;
       }
     }
   }

@@ -219,25 +219,21 @@ export default {
       const options = omit(action, [
         "actionType",
         "actionName",
+        "actionIcon",
         "action",
         "usePageModal",
       ]);
       // 使用内置的弹窗
       if (action.usePageModal) {
-        this.dispatch(
-          "versa-page",
-          "VersaFormPageUsePageModal",
-          {},
-          {
-            ...options,
-            actionType: action.actionType,
-          }
-        );
+        this.dispatch("versa-page", "VersaFormPageUsePageModal", data, {
+          ...options,
+          actionType: action.actionType,
+        });
         return;
       }
       switch (action.actionType) {
         case "create":
-          this.dispatch("versa-page", "VersaFormPageOnCreate", {});
+          this.dispatch("versa-page", "VersaFormPageOnCreate", {}, options);
           break;
         case "remove":
           this.dispatch(
