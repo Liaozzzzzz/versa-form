@@ -337,7 +337,8 @@ export default {
       this.showMessage &&
       this.VersaForm.showMessage;
     const isCard = this.labelConfig.type === "card";
-    const showTips = !!this.tips && !showErrorMsg && !isCard;
+    const showTips =
+      !!this.tips && !showErrorMsg && !isCard && this.status !== "preview";
 
     if (showErrorMsg) {
       children.push(
@@ -451,7 +452,7 @@ export default {
     if (!isCard && this.tips) {
       return h("div", {}, [
         instance,
-        !showErrorMsg
+        showTips
           ? h("div", {
               class: [
                 "versa-form-item__tips",

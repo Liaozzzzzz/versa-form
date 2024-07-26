@@ -229,7 +229,10 @@ export default {
           colSpan: item.single ? 24 : ~~(24 / this.columns),
           status:
             typeof item.status === "function"
-              ? item.status(this.model, item, { actionType: this.actionType })
+              ? item.status(this.model, item, {
+                  actionType: this.actionType,
+                  globalStatus: this.globalStatus,
+                })
               : item.status ||
                 this.innerStatusMap[item.prop] ||
                 this.globalStatus,
