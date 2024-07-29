@@ -446,10 +446,23 @@ export default {
 
       if (item.element === "el-date-picker") {
         Object.assign(obj, {
+          placeholder: `请选择${item.label || ""}`,
           "start-placeholder": "开始日期",
           "range-separator": "至",
           "end-placeholder": "结束日期",
           ...datePickerFormat[item.type || "date"],
+        });
+      }
+
+      if (typeof item.element === "string" && /select/i.test(item.element)) {
+        Object.assign(obj, {
+          placeholder: `请选择${item.label || ""}`,
+        });
+      }
+
+      if (typeof item.element === "string" && /input/i.test(item.element)) {
+        Object.assign(obj, {
+          placeholder: `请输入${item.label || ""}`,
         });
       }
 
@@ -545,6 +558,7 @@ export default {
 }
 
 .versa-form-item {
+  position: relative;
   display: flex;
   align-items: flex-start;
   margin-right: 0;
@@ -639,6 +653,15 @@ export default {
     font-size: 12px;
     line-height: 1.2;
     flex-shrink: 0;
+  }
+
+  &__tooltip {
+    position: absolute;
+    right: -26px;
+    width: 18px;
+    height: 18px;
+    margin-top: 8px;
+    cursor: pointer;
   }
 
   &__error {

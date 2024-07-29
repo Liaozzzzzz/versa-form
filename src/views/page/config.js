@@ -8,7 +8,6 @@ export const filterOptions = () => [
         label: '配置项代码',
         prop: 'typeCode',
         element: 'el-input',
-        placeholder: '请选择',
         initValue: '12312',
         rules: [{
             required: true
@@ -28,64 +27,55 @@ export const filterOptions = () => [
         label: '启用状态',
         prop: 'status',
         element: 'versa-select',
-        placeholder: '请选择',
         mapSource: statusMap,
-        initValue: 'T'
+        // initValue: 'T'
     },
     {
         label: '日期选择',
         prop: 'date',
         element: 'el-date-picker',
-        placeholder: '请选择',
         type: 'date'
     },
     {
         label: '选择年',
         prop: 'year',
         element: 'el-date-picker',
-        placeholder: '请选择',
         type: 'year'
     },
     {
         label: '选择月',
         prop: 'month',
         element: 'el-date-picker',
-        placeholder: '请选择',
         type: 'month'
     },
     {
         label: '选择月区间',
         prop: 'monthrange',
         element: 'el-date-picker',
-        placeholder: '请选择',
         type: 'monthrange'
     },
     {
         label: '日期多选',
         prop: 'dates',
         element: 'el-date-picker',
-        placeholder: '请选择',
         type: 'dates'
     },
     {
         label: '日期范围',
         prop: 'daterange',
         element: 'el-date-picker',
-        placeholder: '请选择',
         type: 'daterange'
     },
     {
         label: '时间点',
         prop: 'datetime',
         element: 'el-date-picker',
-        placeholder: '请选择',
         type: 'datetime'
     },
     {
         label: '时间点范围',
         prop: 'datetimerange',
         element: 'el-date-picker',
-        placeholder: '请选择',
         type: 'datetimerange'
     }
 ];
@@ -130,7 +120,7 @@ export const tableOptions = [
         prop: 'telphone',
         sensitive: true,
         sensitiveType: (row) => row.type,
-        width: 130
+        width: 150
     },
     {
         prop: 'itemCode',
@@ -374,20 +364,18 @@ export const detailProps = {
             prop: 'telphone',
             sensitive: true,
             element: 'el-input',
-            placeholder: '请输入'
         },
         {
             label: '文本域',
             prop: 'el-input-textarea',
             type: 'textarea',
             element: 'el-input',
-            placeholder: '请输入'
         },
         {
-            label: '计数器',
+            label: '排序',
             prop: 'el-input-number',
             element: 'el-input-number',
-            placeholder: '请输入'
+            style: {width: '180px'}
         },
         {
             label: 'Switch 开关',

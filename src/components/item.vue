@@ -5,9 +5,13 @@ import get from "lodash/get";
 import upperFirst from "lodash/upperFirst";
 import dayjs from "dayjs";
 import AsyncValidator from "async-validator";
+import { ElTooltip } from "element-plus";
+import "element-plus/es/components/tooltip/style/css";
 import { isEmpty, toArray, noop, isObject } from "./utils";
 import VersaLabelWrap from "./label-wrap.vue";
 import VersaCard from "./card.vue";
+import VersaSensitive from "./sensitive.vue";
+import IconTips from "./assets/tips.svg";
 
 export default {
   name: "versa-form-item",
@@ -18,6 +22,7 @@ export default {
       default: "edit",
     },
     tips: String,
+    tooltip: String,
     label: String,
     labelWidth: String,
     /** label样式 */
@@ -323,7 +328,18 @@ export default {
     const children = [];
 
     if (this.interceptPreview) {
-      children.push(this.previewText?.toString?.() ?? this.previewText);
+      const { sensitiveType, sensitive } = this.optionConfig;
+      children.push(
+        sensitive
+          ? h(VersaSensitive, {
+              value: this.previewText,
+              sensitiveType:
+                typeof sensitiveType === "function"
+                  ? sensitiveType(this.omsForm.model)
+                  : sensitiveType,
+            })
+          : this.previewText?.toString?.() ?? this.previewText
+      );
     } else {
       children.push(...this.$slots.default?.());
 
@@ -383,6 +399,30 @@ export default {
         }
       ),
     ];
+
+    if (this.tooltip) {
+      const tooltipOptions = {
+        placement: "right",
+        ...(typeof this.tooltip === "string"
+          ? {
+              content: this.tooltip,
+            }
+          : this.tooltip),
+      };
+      elements.push(
+        h(
+          ElTooltip,
+          { ...tooltipOptions },
+          {
+            default: () =>
+              h("img", {
+                src: IconTips,
+                class: "versa-form-item__tooltip",
+              }),
+          }
+        )
+      );
+    }
 
     if (!isCard) {
       elements.unshift(

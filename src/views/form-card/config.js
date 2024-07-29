@@ -57,7 +57,9 @@ export const formOptions = [
                     test1: '测试1',
                     test2: '测试2',
                     test3: '测试3'
-                }
+                },
+                tips: '测试',
+                tooltip: '我我我我我我嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄'
             },
             {
                 label: '启用状态',
@@ -69,7 +71,8 @@ export const formOptions = [
                 //     label: 'name',
                 //     value: 'code'
                 // },
-                hasAll: true
+                hasAll: true,
+                tooltip: '我我我我我我嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄'
             },
             {
                 label: '输入框',

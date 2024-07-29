@@ -243,11 +243,11 @@ export default {
         typeCode: "类型代码",
         typeCode1: "类型代码1",
         status: "T",
-        telphone: 155231,
+        telphone: 15527777531,
         // telphone: '0768-8889994',
         list: [
           {
-            telphone: 15527137531,
+            telphone: 15527777531,
           },
         ],
         "radio-group": {
@@ -307,11 +307,11 @@ export default {
                           typeCode: "类型代码",
                           typeCode1: "类型代码1",
                           status: "T",
-                          telphone: 155231,
+                          telphone: 15527777531,
                           // telphone: '0768-8889994',
                           list: [
                             {
-                              telphone: 15527137531,
+                              telphone: 15527777531,
                             },
                           ],
                           "radio-group": {

@@ -21,6 +21,7 @@ import "element-plus/es/components/space/style/css";
 import "element-plus/es/components/loading/style/css";
 import VersaCard from "./card.vue";
 import VersaButton from "./button.vue";
+import VersaSensitive from "./sensitive.vue";
 import { tablePropsMixins } from "./mixins/props";
 import { formEmitter } from "./mixins/methods";
 import { instanceProxy } from "./mixins/proxy";
@@ -362,6 +363,20 @@ export default {
         if (currentColumn.children?.length > 0) {
           return h(ElTableColumn, ...omit(currentColumn, ["children"]), {
             default: () => renderColumns(currentColumn.children),
+          });
+        }
+
+        // 加密展示
+        if (currentColumn.sensitive) {
+          return h(ElTableColumn, currentColumn, {
+            default: ({ row, column }) =>
+              h(VersaSensitive, {
+                value: row[column.property],
+                sensitiveType:
+                  typeof currentColumn.sensitiveType === "function"
+                    ? currentColumn.sensitiveType(row)
+                    : currentColumn.sensitiveType,
+              }),
           });
         }
 
