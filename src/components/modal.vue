@@ -75,6 +75,7 @@ const presetActions = {
 };
 
 export default {
+  name: "versa-modal",
   components: {
     VersaForm,
     VersaButton,

@@ -14,6 +14,7 @@ import VersaRepeater  from './repeater.vue';
 import VersaCard  from './card.vue';
 import VersaProvide  from './provide.vue';
 import VersaImageUpload from './image-upload.vue';
+import VersaMessageBox from './message-box';
 
 const components = [
     VersaPage,
@@ -52,5 +53,6 @@ export {
     VersaRepeater,
     VersaCard,
     VersaProvide,
+    VersaMessageBox,
     install
 }

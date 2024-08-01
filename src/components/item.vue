@@ -402,7 +402,7 @@ export default {
 
     if (this.tooltip) {
       const tooltipOptions = {
-        placement: "right",
+        placement: "top",
         ...(typeof this.tooltip === "string"
           ? {
               content: this.tooltip,

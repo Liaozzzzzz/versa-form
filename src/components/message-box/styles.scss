@@ -1,0 +1,71 @@
+.versa-message-box {
+    padding: 0;
+  
+    &.el-message-box {
+      min-width: 470px;
+      padding: 0;
+    }
+    .el-message-box {
+      &__message {
+        width: 100%;
+      }
+  
+      &__btns {
+        margin: 0 30px 20px 0;
+        padding-top: 0;
+  
+        & .el-button {
+          height: 35px;
+          padding: 10px 30px;
+        }
+      }
+    }
+  
+    &__close {
+      position: absolute;
+      top: 23px;
+      right: 15px;
+      width: 13px;
+      height: 13px;
+      cursor: pointer;
+    }
+  
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+      width: 100%;
+      background: url("./assets/header.svg") top center no-repeat;
+  
+      &.show-close {
+        padding-right: 0;
+      }
+    }
+  
+    &__content {
+      display: flex;
+      padding: 56px 85px 0;
+      width: 100%;
+    }
+  
+    &__icon {
+      margin-right: 14px;
+    }
+  
+    &__wrap {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    &__title {
+      font-size: 20px;
+      color: #333333;
+      margin-bottom: 12px;
+    }
+  
+    &__message {
+      font-size: 13px;
+      color: #999999;
+    }
+  }

@@ -2,14 +2,12 @@
 import debounce from "lodash/debounce";
 import omit from "lodash/omit";
 import { h } from "vue";
-import { ElMessageBox, ElButton, ElPopconfirm } from "element-plus";
-import "element-plus/es/components/message-box/style/css";
+import { ElButton, ElPopconfirm } from "element-plus";
 import "element-plus/es/components/button/style/css";
 import "element-plus/es/components/popconfirm/style/css";
-import { noop, isEmpty } from "./utils";
+import { noop } from "./utils";
 import { instanceProxy } from "./mixins/proxy";
-import IconWarning from "./assets/warning.svg";
-import IconClose from "./assets/close.svg";
+import VersaMessageBox from "./message-box";
 
 export default {
   name: "versa-button",
@@ -77,51 +75,7 @@ export default {
           if (!this.isMessageBox) {
             return this.$emit("click", e, this.proxyPageCore(this));
           }
-          ElMessageBox({
-            message: () => {
-              return h("div", { class: "versa-message-box__container" }, [
-                h("img", {
-                  src: IconClose,
-                  class: "versa-message-box__close",
-                  onClick: () => {
-                    ElMessageBox.close();
-                  },
-                }),
-                h(
-                  "div",
-                  {
-                    class: "versa-message-box__content",
-                  },
-                  [
-                    h("img", {
-                      src: IconWarning,
-                      class: "versa-message-box__icon",
-                    }),
-                    h("div", { class: "versa-message-box__wrap" }, [
-                      isEmpty(this.confirmProps.title)
-                        ? undefined
-                        : h(
-                            "div",
-                            {
-                              class: "versa-message-box__title",
-                            },
-                            this.confirmProps.title
-                          ),
-                      h("div", {
-                        class: "versa-message-box__message",
-                        innerHTML: this.confirmProps.message,
-                      }),
-                    ]),
-                  ]
-                ),
-              ]);
-            },
-            showCancelButton: true,
-            ...omit(this.confirmProps, ["title", "message", "type"]),
-            customClass: `versa-message-box ${
-              this.confirmProps.customClass || ""
-            }`,
-          })
+          VersaMessageBox(this.confirmProps)
             .then(() => {
               this.$emit("click", e, this.proxyPageCore(this));
             })
@@ -234,77 +188,6 @@ export default {
     width: 20px;
     height: 20px;
     margin-right: 6px;
-  }
-}
-
-.versa-message-box {
-  padding: 0;
-
-  &.el-message-box {
-    min-width: 470px;
-    padding: 0;
-  }
-  .el-message-box {
-    &__message {
-      width: 100%;
-    }
-
-    &__btns {
-      margin: 0 30px 20px 0;
-
-      & .el-button {
-        height: 35px;
-        padding: 10px 30px;
-      }
-    }
-  }
-
-  &__close {
-    position: absolute;
-    top: 23px;
-    right: 15px;
-    width: 13px;
-    height: 13px;
-    cursor: pointer;
-  }
-
-  &__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
-    width: 100%;
-    background: url("./assets/header.svg") top center no-repeat;
-
-    &.show-close {
-      padding-right: 0;
-    }
-  }
-
-  &__content {
-    display: flex;
-    padding: 56px 85px 0;
-    width: 100%;
-  }
-
-  &__icon {
-    margin-right: 14px;
-  }
-
-  &__wrap {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__title {
-    font-size: 20px;
-    color: #333333;
-    margin-bottom: 12px;
-  }
-
-  &__message {
-    font-size: 13px;
-    color: #999999;
   }
 }
 </style>
