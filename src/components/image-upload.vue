@@ -159,6 +159,7 @@ export default {
     width: 140px;
     height: 140px;
     background-color: #fff;
+    user-select: none;
 
     &--pic {
       width: 100%;
