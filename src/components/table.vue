@@ -498,6 +498,19 @@ export default {
   background: #fff;
   border: 0 solid #e0efff;
 
+  // fix: 修复列fixed定位后出现垂直滚动条导致页面滚动失效的问题
+  .el-table__body-wrapper
+    tr
+    td.el-table-fixed-column--right.is-first-column:before {
+    bottom: 0;
+  }
+
+  .el-table__body-wrapper
+    tr
+    td.el-table-fixed-column--left.is-first-column:before {
+    bottom: 0;
+  }
+
   &__tools {
     display: flex;
     flex-wrap: wrap;
