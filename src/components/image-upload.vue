@@ -151,18 +151,21 @@ export default {
     border-radius: 4px;
     font-size: 20px;
     cursor: pointer;
+    background-color: #fff;
   }
 
   &__preview {
     position: relative;
     width: 140px;
     height: 140px;
+    background-color: #fff;
 
     &--pic {
       width: 100%;
       height: 100%;
       border: 1px solid rgb(229, 231, 235);
       cursor: pointer;
+      border-radius: 4px;
     }
 
     &--mask {

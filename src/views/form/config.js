@@ -33,6 +33,11 @@ export const formOptions = [
         rules: [{ required: true }]
     },
     {
+        label: '图片上传',
+        prop: 'versa-image-upload',
+        element: 'versa-image-upload',
+    },
+    {
         label: '多选框组',
         prop: 'checkbox-group',
         element: 'versa-checkbox-group',
