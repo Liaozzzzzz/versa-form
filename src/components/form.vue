@@ -17,6 +17,7 @@
       >
         <VersaFormItem
           v-bind="bindFormItemProps(item)"
+          :hasToolTip="hasToolTip"
           :prop="item.prop"
           :label="item.label || ''"
           :rules="item.rules"
@@ -42,6 +43,7 @@
       v-else
       v-for="item in deployOptions"
       v-bind="bindFormItemProps(item)"
+      :hasToolTip="hasToolTip"
       :key="item.prop"
       :prop="item.prop"
       :label="item.label || ''"
@@ -237,6 +239,10 @@ export default {
                 this.innerStatusMap[item.prop] ||
                 this.globalStatus,
         }));
+    },
+    /** 是否需要处理tooltip提示占位 */
+    hasToolTip() {
+      return this.deployOptions.some((item) => !!item.tooltip);
     },
   },
   watch: {
@@ -468,7 +474,7 @@ export default {
 
       Object.assign(obj, {
         ...item,
-        class: `versa-form-item-element ${item.class || ""}`,
+        class: `versa-form-item__element ${item.class || ""}`,
       });
 
       // 移除冗余属性
@@ -656,11 +662,12 @@ export default {
   }
 
   &__tooltip {
-    position: absolute;
-    right: -26px;
+    position: relative;
+    align-self: flex-start;
+    margin: 9px 0 0 6px;
     width: 18px;
     height: 18px;
-    margin-top: 8px;
+    flex-shrink: 0;
     cursor: pointer;
   }
 

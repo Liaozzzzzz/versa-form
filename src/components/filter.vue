@@ -259,7 +259,7 @@ $input-width-single-line: 280px;
       }
     }
 
-    .versa-form-item-element {
+    .versa-form-item__element {
       width: $input-width;
     }
   }

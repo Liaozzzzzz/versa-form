@@ -370,17 +370,20 @@ export const detailProps = {
             prop: 'el-input-textarea',
             type: 'textarea',
             element: 'el-input',
+            tooltip: '嘻嘻嘻'
         },
         {
             label: '排序',
             prop: 'el-input-number',
             element: 'el-input-number',
-            style: {width: '180px'}
+            style: {width: '180px'},
+            tooltip: '嘻嘻嘻'
         },
         {
             label: 'Switch 开关',
             prop: 'el-switch',
-            element: 'el-switch'
+            element: 'el-switch',
+            sensitive: true,
         },
         {
             label: '嵌套表单',

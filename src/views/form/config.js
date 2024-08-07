@@ -18,6 +18,7 @@ export const formOptions = [
             test2: '测试2',
             test3: '测试3'
         },
+        tooltip: 'aaaa',
         // options: [{
         //     label: '测试1',
         //     value: 'test1',
@@ -62,6 +63,7 @@ export const formOptions = [
         prop: 'status',
         element: 'versa-select',
         mapSource: statusMap,
+        tooltip: 'aaaa',
         // multiple: true,
         // labelInValue: {
         //     label: 'name',
@@ -73,6 +75,7 @@ export const formOptions = [
         label: '输入框',
         prop: 'telphone',
         sensitive: true,
+        tooltip: 'aaaa',
         element: 'el-input',
         placeholder: '请输入',
         on: {
@@ -84,6 +87,7 @@ export const formOptions = [
     {
         label: '文本域',
         prop: 'el-input-textarea',
+        tooltip: 'aaaa',
         type: 'textarea',
         element: 'el-input',
         placeholder: '请输入'
@@ -143,6 +147,11 @@ export const formOptions = [
         prop: 'VersaRepeater',
         type: 'inline',
         element: 'versa-repeater',
+        formItemProps: {    
+            contentStyle: {
+                overflow: 'hidden'
+            },
+        },
         fixedMode: 9,
         options: [
             {

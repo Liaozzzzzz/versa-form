@@ -85,6 +85,7 @@ export default {
         style.marginLeft = marginLeft + "px";
       }
     }
+
     return h(
       "div",
       { class: "versa-form-item__label-wrap", style },

@@ -2,7 +2,7 @@
   <div>
     <versa-form
       ref="VersaForm"
-      labelWidth="90px"
+      labelWidth="auto"
       :defaultValues="defaultValues"
       :options="formOptions"
       :status="status"

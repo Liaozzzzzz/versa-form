@@ -23,6 +23,7 @@ export default {
     },
     tips: String,
     tooltip: String,
+    hasToolTip: Boolean,
     label: String,
     labelWidth: String,
     /** label样式 */
@@ -172,6 +173,18 @@ export default {
           : rule.trigger || "update:modelValue"
       );
       return triggers;
+    },
+    tooltipOptions() {
+      return this.tooltip
+        ? {
+            placement: "top",
+            ...(typeof this.tooltip === "string"
+              ? {
+                  content: this.tooltip,
+                }
+              : this.tooltip),
+          }
+        : null;
     },
   },
   created() {
@@ -380,6 +393,29 @@ export default {
         ])
       );
     }
+    if (this.hasToolTip) {
+      if (this.tooltipOptions) {
+        children.push(
+          h(
+            ElTooltip,
+            { ...this.tooltipOptions },
+            {
+              default: () =>
+                h("img", {
+                  src: IconTips,
+                  class: "versa-form-item__tooltip",
+                }),
+            }
+          )
+        );
+      } else {
+        children.push(
+          h("span", {
+            class: "versa-form-item__tooltip",
+          })
+        );
+      }
+    }
 
     const elements = [
       h(
@@ -389,10 +425,13 @@ export default {
             "versa-form-item__content",
             `versa-form-item__content--${this.status}`,
             {
+              "versa-form-item__content--tooltip": !!this.tooltip,
               "versa-form-item--mb": !showTips && !isCard,
             },
           ],
-          style: this.$attrs.contentStyle,
+          style: {
+            ...this.$attrs.contentStyle,
+          },
         },
         {
           default: () => children,
@@ -400,36 +439,12 @@ export default {
       ),
     ];
 
-    if (this.tooltip) {
-      const tooltipOptions = {
-        placement: "top",
-        ...(typeof this.tooltip === "string"
-          ? {
-              content: this.tooltip,
-            }
-          : this.tooltip),
-      };
-      elements.push(
-        h(
-          ElTooltip,
-          { ...tooltipOptions },
-          {
-            default: () =>
-              h("img", {
-                src: IconTips,
-                class: "versa-form-item__tooltip",
-              }),
-          }
-        )
-      );
-    }
-
     if (!isCard) {
       elements.unshift(
         h(
           VersaLabelWrap,
           {
-            isAutoWidth: this.labelStyle && this.labelStyle.width === "auto",
+            isAutoWidth: this.labelStyle.width === "auto",
             updateAll: this.VersaForm.labelWidth === "auto",
           },
           {

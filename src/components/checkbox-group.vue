@@ -145,7 +145,7 @@ export default {
       ...this.$attrs,
       modelValue: this.innerValue,
       "onUpdate:modelValue": (newVal) => (this.innerValue = newVal),
-      class: "versa-checkbox-group",
+      class: `versa-checkbox-group ${this.$attrs.class || ""}`,
       ref: "versaCheckboxGroup",
     };
 

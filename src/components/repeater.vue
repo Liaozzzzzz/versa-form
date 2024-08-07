@@ -481,7 +481,10 @@ export default {
                   item.itemAlign || this.itemAlign
                 }` + fixedClass,
               itemStyle,
-              contentStyle: item.width ? `width:${item.width - 20}px` : "",
+              contentStyle: Object.assign(
+                {},
+                item.width ? { width: `${item.width - 20}px` } : {}
+              ),
             },
           };
         });
@@ -925,8 +928,8 @@ export default {
   position: relative;
   box-sizing: border-box;
   flex: 1;
-  width: 100%;
-  max-width: 100%;
+  width: calc(100% - 24px);
+  max-width: calc(100% - 24px);
   font-size: 14px;
   color: #606266;
 
@@ -943,17 +946,14 @@ export default {
       height: 8px;
       width: 8px;
       margin-right: 4px;
-      //   @apply h-2 w-[7px] -mr-1;
     }
 
     &::-webkit-scrollbar-track {
-      //   @apply bg-transparent rounded-full;
       border-radius: 9999px;
       background-color: transparent;
 
       &:hover {
         background-color: rgba(148, 163, 184, 0.25);
-        // @apply bg-slate-400/25;
       }
     }
 
@@ -961,13 +961,10 @@ export default {
       border: 1px solid transparent;
       border-radius: 9999px;
       background-color: rgba(71, 85, 105, 0.5);
-
-      //   @apply border border-transparent rounded-full bg-slate-600/50;
     }
 
     &::-webkit-scrollbar-thumb:hover {
       background-color: rgba(148, 163, 184, 1);
-      //   @apply bg-slate-400;
     }
 
     &::-webkit-scrollbar-thumb {
