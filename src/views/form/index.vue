@@ -1,12 +1,12 @@
 <template>
   <div>
     <versa-form
-      ref="VersaForm"
+      ref="VersaFormRef"
       labelWidth="auto"
-      :defaultValues="defaultValues"
+      :defaultValues="state.defaultValues"
       :options="formOptions"
-      :status="status"
-      v-model="formValue"
+      :status="state.status"
+      v-model="state.formValue"
       @validate="onValidated"
     >
       <template #telphone1="{ data, prop }">
@@ -25,7 +25,7 @@
       >Callback模式校验局部</el-button
     >
     <el-button @click="onPrintFormValues">打印表单值</el-button>
-    <el-form :model="test">
+    <el-form :model="state.test">
       <el-form-item
         label="测试"
         prop="tests"
@@ -34,87 +34,102 @@
           { type: 'string', min: 2, trigger: 'change', message: 'ceil' },
         ]"
       >
-        <el-input v-model="test.tests"></el-input>
-        <el-input v-model="test.test212s"></el-input>
+        <el-input v-model="state.test.tests"></el-input>
+        <el-input v-model="state.test.test212s"></el-input>
       </el-form-item>
     </el-form>
   </div>
 </template>
-<script>
+<script lang="ts" setup>
+import { reactive, ref, watch } from "vue";
 import { formOptions } from "./config";
+import type { VersaForm } from "@root/types/VersaForm";
 
-export default {
-  data() {
-    return {
-      formOptions,
-      formValue: {},
-      defaultValues: {
-        "el-input-textarea": "1312",
-        "nest-form": {
-          // date: '2023-07-12',
-          year: "2022",
-        },
-        VersaRepeater: [
-          {
-            "radio-group": "test2",
-            telphone: 15527137531,
-          },
-        ],
+const VersaFormRef = ref<InstanceType<VersaForm<{ aaa: 0 }>>>();
+
+const state = reactive({
+  formOptions,
+  formValue: {},
+  defaultValues: {
+    "el-input-textarea": "1312",
+    "nest-form": {
+      // date: '2023-07-12',
+      year: "2022",
+    },
+    VersaRepeater: [
+      {
+        "radio-group": "test2",
+        telphone: 15527137531,
       },
-      status: "edit",
-      test: {},
-    };
+    ],
   },
-  watch: {
-    formValue: {
-      handler() {
-        console.log("watch::formValue", this.formValue);
-      },
-      deep: true,
-    },
-    test: {
-      handler() {
-        console.log("watch::test", this.test);
-      },
-      deep: true,
-    },
+  status: "edit" as const,
+  test: {},
+});
+
+watch(
+  () => state.formValue,
+  () => {
+    console.log("form:watch::formValue", state.formValue);
   },
-  methods: {
-    onChangeFormStatus(status) {
-      this.status = status;
-    },
-    onValidated(...args) {
-      // console.log('onValidated', args);
-    },
-    onReset() {
-      this.$refs.VersaForm.resetField();
-    },
-    onClearValidate() {
-      this.$refs.VersaForm.clearValidate();
-    },
-    onValidateAll() {
-      this.$refs.VersaForm.validate();
-    },
-    onValidateAllCallback() {
-      this.$refs.VersaForm.validate((errors, ...reset) => {
-        console.log(errors, reset);
-      });
-    },
-    async onValidatePartial() {
-      this.$refs.VersaForm.validateField(["telphone1", "radio-group"]);
-    },
-    onValidatePartialCallback() {
-      this.$refs.VersaForm.validateField(
-        ["telphone1", "nest-form"],
-        (errors, ...reset) => {
-          console.log(errors, reset);
-        }
-      );
-    },
-    onPrintFormValues() {
-      console.log("onPrintFormValues", this.formValue);
-    },
+  {
+    deep: true,
+  }
+);
+
+watch(
+  () => state.test,
+  () => {
+    console.log("form:watch::test", state.test);
   },
+  {
+    deep: true,
+  }
+);
+
+const onChangeFormStatus = (status) => {
+  state.status = status;
+};
+
+const onValidated = (...args) => {
+  // console.log('onValidated', args);
+};
+
+const onReset = () => {
+  VersaFormRef.value?.resetField();
+  VersaFormRef.value?.setStatus("aaa", "edit");
+  VersaFormRef.value?.getStatus(["aaa"]);
+  VersaFormRef.value?.clearValidate();
+  VersaFormRef.value?.clearValidate("aaa");
+  VersaFormRef.value?.clearValidate(["aaa"]);
+};
+const onClearValidate = () => {
+  VersaFormRef.value?.clearValidate();
+};
+
+const onValidateAll = () => {
+  VersaFormRef.value?.validate();
+};
+
+const onValidateAllCallback = () => {
+  VersaFormRef.value?.validate((errors, ...reset) => {
+    console.log(errors, reset);
+  });
+};
+
+const onValidatePartial = () => {
+  VersaFormRef.value?.validateField(["telphone1", "radio-group"]);
+};
+const onValidatePartialCallback = () => {
+  VersaFormRef.value?.validateField(
+    ["telphone1", "nest-form"],
+    (errors, ...reset) => {
+      console.log(errors, reset);
+    }
+  );
+};
+const onPrintFormValues = () => {
+  console.log("onPrintFormValues", state.formValue);
 };
 </script>
 

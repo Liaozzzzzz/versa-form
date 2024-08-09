@@ -95,7 +95,7 @@
   </div>
   <versa-image-upload :maxSize="10 * 1024" accept=".svg"></versa-image-upload>
 </template>
-<script>
+<script lang="ts">
 import { detailProps, tableOptions, filterOptions } from "./config";
 
 export default {
@@ -194,14 +194,6 @@ export default {
   methods: {
     onTTT(a) {
       console.log(a);
-    },
-    callback(e) {
-      this.data = [
-        ...this.data,
-        {
-          a: 1,
-        },
-      ];
     },
     onFilterChange(val) {
       console.log("onFilterChange", val);
