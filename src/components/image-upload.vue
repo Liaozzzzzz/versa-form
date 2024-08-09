@@ -69,6 +69,9 @@ export default {
       type: String,
       default: ".png;.jpg;.jpeg",
     },
+    onUpload: {
+      type: Function,
+    },
   },
   emits: ["update:modelValue"],
   data() {
@@ -103,7 +106,7 @@ export default {
       this.$refs.inputRef.click();
       this.$refs.inputRef.blur();
     },
-    handleChange(e) {
+    async handleChange(e) {
       const files = e.target?.files ?? [];
 
       if (files.length === 0) {
@@ -131,8 +134,16 @@ export default {
         return;
       }
 
-      this.previewSrc = URL.createObjectURL(files[0]);
-      this.$emit("update:modelValue", files[0]);
+      try {
+        const uploadRes = (await this.onUpload?.(files[0])) ?? files[0];
+        this.previewSrc =
+          typeof uploadRes === "string"
+            ? uploadRes
+            : URL.createObjectURL(uploadRes);
+        this.$emit("update:modelValue", uploadRes);
+      } catch (error) {
+        console.log(error);
+      }
     },
     onRemove() {
       this.$emit("update:modelValue", null);
