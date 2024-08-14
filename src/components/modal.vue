@@ -81,6 +81,7 @@ export default {
     VersaButton,
     ElSpace,
     ElDialog,
+    ElDrawer,
   },
   directives: {
     loading: ElLoading.directive,
