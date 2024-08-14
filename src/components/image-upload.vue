@@ -10,12 +10,13 @@
     <div v-else class="versa-image-upload__preview">
       <ElImage
         class="versa-image-upload__preview--pic"
+        fit="cover"
         :src="previewSrc"
         :zoom-rate="1.2"
         :max-scale="7"
         :min-scale="0.2"
+        v-bind="$attrs"
         :preview-src-list="previewSrcList"
-        fit="cover"
       />
       <template v-if="status === 'edit'">
         <div class="versa-image-upload__preview--mask"></div>
