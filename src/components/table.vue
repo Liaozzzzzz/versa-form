@@ -112,6 +112,12 @@ export default {
 
               if (isObject(copyOption.mapSource)) {
                 return copyOption.mapSource[val[copyOption.prop]];
+              } else if (Array.isArray(copyOption.mapSource)) {
+                return (
+                  copyOption.mapSource.find(
+                    (item) => item.value === val[copyOption.prop]
+                  )?.label ?? ""
+                );
               }
               return val[copyOption.prop];
             };
