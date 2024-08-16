@@ -649,7 +649,7 @@ export default {
               ...action,
               disabled:
                 typeof action.disabled === "function"
-                  ? action.disabled.bind(this, rest[0])
+                  ? action.disabled.bind(this, form)
                   : action.disabled,
             };
           }
