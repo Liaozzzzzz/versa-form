@@ -1,5 +1,5 @@
 import { FormOption } from "@root/types/VersaForm";
-import {  VersaRadioGroup } from '@/components';
+import { VersaRadioGroup } from '@/components';
 
 export const statusMap = {
     T: '启用',
@@ -155,11 +155,11 @@ export const formOptions: FormOption[] = [
         prop: 'VersaRepeater',
         type: 'inline',
         element: 'versa-repeater',
-        formItemProps: {    
-            contentStyle: {
-                overflow: 'hidden'
-            },
-        },
+        // formItemProps: {    
+        //     contentStyle: {
+        //         overflow: 'hidden'
+        //     },
+        // },
         fixedMode: 9,
         options: [
             {

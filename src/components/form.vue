@@ -647,6 +647,7 @@ export default {
     font-size: 14px;
     position: relative;
     width: 100%;
+    min-width: 0;
 
     &--preview {
       color: #333333;
