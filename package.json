@@ -1,12 +1,13 @@
 {
     "name": "versa-form",
-    "version": "0.0.15",
+    "version": "0.0.16",
     "main": "lib/index.umd.js",
     "module": "lib/index.es.js",
     "description": "a configable form for vue3 and element-ui",
     "files": [
         "lib",
         "src",
+        "types",
         "README.md",
         "package.json"
     ],
