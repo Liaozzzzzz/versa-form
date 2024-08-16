@@ -1,13 +1,16 @@
+import { FormOption } from "@root/types/VersaForm";
+import {  VersaRadioGroup } from '@/components';
+
 export const statusMap = {
     T: '启用',
     F: '停用'
 }
 
-export const formOptions = [
+export const formOptions: FormOption[] = [
     {
         label: '单选框组',
         prop: 'radio-group',
-        element: 'versa-radio-group',
+        element: VersaRadioGroup,
         // button: true,
         labelInValue: {
             label: 'name',

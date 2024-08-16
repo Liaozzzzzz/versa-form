@@ -3,7 +3,7 @@
     <versa-form
       ref="VersaFormRef"
       labelWidth="auto"
-      :defaultValues="state.defaultValues"
+      :defaultValues="{ ...state.defaultValues, a: 1 }"
       :options="formOptions"
       :status="state.status"
       v-model="state.formValue"
@@ -45,8 +45,6 @@ import { reactive, ref, watch } from "vue";
 import { formOptions } from "./config";
 import type { VersaForm } from "@root/types/VersaForm";
 
-const VersaFormRef = ref<InstanceType<VersaForm<{ aaa: 0 }>>>();
-
 const state = reactive({
   formOptions,
   formValue: {},
@@ -56,6 +54,8 @@ const state = reactive({
       // date: '2023-07-12',
       year: "2022",
     },
+    "radio-group": null,
+    telphone1: "",
     VersaRepeater: [
       {
         "radio-group": "test2",
@@ -64,8 +64,11 @@ const state = reactive({
     ],
   },
   status: "edit" as const,
-  test: {},
+  test: {} as any,
 });
+
+const VersaFormRef =
+  ref<InstanceType<VersaForm<{ aaa: 0 } & typeof state.defaultValues>>>();
 
 watch(
   () => state.formValue,
@@ -92,7 +95,7 @@ const onChangeFormStatus = (status) => {
 };
 
 const onValidated = (...args) => {
-  // console.log('onValidated', args);
+  console.log("onValidated", args);
 };
 
 const onReset = () => {
@@ -108,7 +111,18 @@ const onClearValidate = () => {
 };
 
 const onValidateAll = () => {
-  VersaFormRef.value?.validate();
+  VersaFormRef.value?.validate((valid, errorField) => {
+    console.log(valid, errorField);
+    // errorField.((item) => item.field === "aaa");
+  });
+  VersaFormRef.value
+    ?.validate()
+    .then((valid) => {
+      console.log(valid);
+    })
+    .catch((error) => {
+      error;
+    });
 };
 
 const onValidateAllCallback = () => {

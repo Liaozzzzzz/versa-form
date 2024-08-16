@@ -34,6 +34,12 @@ export default defineConfig(({ mode }) => {
             //     ]
             // })
         ],
+        resolve: {
+            alias: {
+                '@root': resolve(__dirname, './'),
+                '@': resolve(__dirname, './src'),
+            },
+        },
         build: {
             target: 'es2015',
             lib: {

@@ -96,13 +96,18 @@
   <versa-image-upload :maxSize="10 * 1024" accept=".svg"></versa-image-upload>
 </template>
 <script lang="ts">
-import { detailProps, tableOptions, filterOptions } from "./config";
+import {
+  detailProps,
+  tableOptions,
+  filterOptions,
+  toolOptions,
+} from "./config";
 
 export default {
   data() {
     return {
       visible: true,
-      filterOptions: filterOptions(this),
+      filterOptions: filterOptions(),
       detailProps: detailProps,
       tableOptions: tableOptions,
       data: [
@@ -118,61 +123,29 @@ export default {
         { title: "age", key: "age" },
         { title: "address", key: "address" },
       ],
-      // toolOptions: [],
-      toolOptions: [
-        {
-          actionType: "create",
-          actionName: "新建",
-          disabled: (selection, instance) => {
-            return !instance.filterValues.typeCode;
-          },
-        },
-        {
-          actionType: "test",
-          actionName: "使用内置弹窗",
-          usePageModal: true,
-        },
-        {
-          actionType: "delete",
-          actionName: "选择删除",
-          popconfirm: "真的是事逼啊，还批量删除？",
-          action: (selection, instance, { clearRowSelection }) => {
-            console.log(selection, instance.filterValues, instance, {
-              ...instance,
-            });
-            instance.isLoading = true;
-            instance.text = "进行中";
-            setTimeout(() => {
-              instance.text = "";
-              instance.isLoading = false;
-              clearRowSelection(selection);
-            }, 3000);
-          },
-          disabled: (list) => {
-            return !list.length;
-          },
-        },
-        {
-          is: "el-rate",
-          value: 2,
-        },
-      ],
+      toolOptions,
       actions: (filterValues) => {
         return [
           filterValues.typeCode ? "reset" : null,
           "search",
+          // () => {
+          //   return [1];
+          // },
           {
             actionType: "create",
             actionName: "新建",
+            disabled: (formValues, instance) => {
+              return true;
+            },
             actions: (values) => {
               console.error(values);
               return [values["el-switch"] ? "confirm" : null, "cancel"];
             },
           },
-          //   {
-          //     is: "el-rate",
-          //     value: 2,
-          //   },
+          // {
+          //   is: "el-rate",
+          //   value: 2,
+          // },
           //   {
           //     actionType: "测试",
           //     popconfirm: "测试",

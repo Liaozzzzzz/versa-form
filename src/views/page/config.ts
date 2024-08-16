@@ -1,3 +1,8 @@
+import { FilterAction, FilterProps } from "@root/types/VersaFilter";
+import { FormValues } from "@root/types/VersaForm";
+import { ModalProps } from "@root/types/VersaModal";
+import { TableOption, TableToolAction } from "@root/types/VersaTable";
+
 export const statusMap = {
     T: '启用',
     F: '停用'
@@ -80,7 +85,100 @@ export const filterOptions = () => [
     }
 ];
 
-export const tableOptions = [
+type AA = {
+    a: string
+}
+
+// const aa: AA[] = [
+//     {
+//         a: '',
+//     },
+//     () => { }
+// ]
+
+export const actions: FilterProps['actions'] = (filterValues) => {
+    return [
+        filterValues.typeCode ? "reset" : null,
+        "search",
+        // 1,
+        // () => {
+        //     // return ;
+        // },
+        {
+            actionType: "create",
+            actionName: "新建",
+            disabled: (formValues, instance) => {
+                return true;
+            },
+            actions: (values) => {
+                console.error(values);
+                return [values["el-switch"] ? "confirm" : null, "cancel"];
+            },
+        },
+        {
+            is: "el-rate",
+            value: 2,
+        },
+        {
+            actionType: "测试",
+            popconfirm: "测试",
+            actionName: "测试",
+            action: (formValues, instance) => {
+                instance.isLoading = true;
+                setTimeout(() => {
+                    instance.isLoading = false;
+                }, 3000);
+            },
+            disabled: (values, instance) => {
+                return values.status === "T" || !instance.selectionValues.length;
+            },
+        },
+    ];
+}
+
+console.log(actions)
+
+export const toolOptions: TableToolAction<any>[] = [
+    {
+        actionType: "create",
+        actionName: "新建",
+        disabled: (selection, instance) => {
+            return false;
+            // return !instance.filterValues.typeCode;
+        },
+    },
+    {
+        actionType: "test",
+        actionName: "使用内置弹窗",
+        usePageModal: true,
+    },
+    {
+        actionType: "delete",
+        actionName: "选择删除",
+        popconfirm: "真的是事逼啊，还批量删除？",
+        action: (selection, instance, { clearRowSelection }) => {
+            console.log(selection, instance.filterValues, instance, {
+                ...instance,
+            });
+            instance.isLoading = true;
+            instance.text = "进行中";
+            setTimeout(() => {
+                instance.text = "";
+                instance.isLoading = false;
+                clearRowSelection(selection);
+            }, 3000);
+        },
+        disabled: (list) => {
+            return !list.length;
+        },
+    },
+    {
+        is: "el-rate",
+        value: 2,
+    },
+]
+
+export const tableOptions: TableOption<{ typeCode1: number }>[] = [
     {
         type: 'selection',
         fixed: 'left',
@@ -204,6 +302,7 @@ export const tableOptions = [
                 actionType: 'edit',
                 actionName: '编辑1',
                 'append-to-body': true,
+                disabled: () => false,
                 actions: (values) => {
                     return [values['el-switch'] ? 'cancel' : undefined, 'confirm', {
                         actionType: 'edit111',
@@ -219,8 +318,9 @@ export const tableOptions = [
                     }]
                 },
             },
-         'detail', 
-         'remove', 
+            'detail',
+            // () => ({}),
+            'remove',
             {
                 actionType: 'nestPage',
                 actionName: '测试嵌套page',
@@ -255,20 +355,20 @@ export const tableOptions = [
                 status: "edit",
                 disabled: true,
                 formatBefore: (row) => {
-                  console.log(row);
-                  return {
-                    'checkbox-group': row['checkbox-group'],
-                    parentId: row.menuId,
-                  };
+                    console.log(row);
+                    return {
+                        'checkbox-group': row['checkbox-group'],
+                        parentId: row.menuId,
+                    };
                 },
                 usePageModal: true,
                 actions: [
-                  "cancel",
-                  {
-                    actionType: "confirm",
-                    actionName: "确认",
-                    action: console.log,
-                  },
+                    "cancel",
+                    {
+                        actionType: "confirm",
+                        actionName: "确认",
+                        action: console.log,
+                    },
                 ],
             },
         ],
@@ -278,15 +378,26 @@ export const tableOptions = [
         width: 400
     }
 ];
-
-export const detailProps = {
+// ModalProps
+export const detailProps: ModalProps = {
     // columns: 2,
-    formatBefore: (row, done) => {
+    formatBefore: (row) => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({ ...row });
             }, 1000);
         });
+    },
+    actions: () => {
+        return [
+            {
+                actionType: '1',
+                actionName: '0',
+                disabled(formValues, instance) {
+                    return true;
+                },
+            }
+        ]
     },
     width: '750px',
     formProps: {
@@ -376,7 +487,7 @@ export const detailProps = {
             label: '排序',
             prop: 'el-input-number',
             element: 'el-input-number',
-            style: {width: '180px'},
+            style: { width: '180px' },
             tooltip: '嘻嘻嘻'
         },
         {

@@ -107,7 +107,7 @@ export const tablePropsMixins = {
         /** 列表查询接口或方法 */
         api: {
             type: [String, Function],
-            required: true
+            required: false
         },
         apiMethod: {
             type: String,

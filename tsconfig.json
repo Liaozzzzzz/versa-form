@@ -10,6 +10,7 @@
       "noImplicitAny": false,
       // 指定生成哪个模块系统代码
       "module": "esnext",
+      "allowJs": true,
       // 决定如何处理模块。
       "moduleResolution": "node",
       //启用所有严格类型检查选项。
@@ -31,5 +32,5 @@
         "@root/*":["./*"]
       }
     },
-    "include": ["src/**/*.ts", "**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/VersaPage.ts", "src/views/form/config.js"],
+    "include": ["src/**/*.ts", "**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/VersaPage.ts"],
   }
