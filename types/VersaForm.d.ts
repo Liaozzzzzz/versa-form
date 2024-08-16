@@ -78,8 +78,8 @@ export type FormOption = {
 }
 
 /** 表单状态函数 */
-export type FormStatusFn = (
-    formValues: FormValues,
+export type FormStatusFn<T = FormValues> = (
+    formValues: T,
     option: FormOption,
     extraConfig: {
         actionType: ActionType;
@@ -119,7 +119,7 @@ export type FormBaseProps<T = BaseValues> = {
      * 表单状态
      * @default 'edit'
      */
-    status?: FormStatus | FormStatusFn;
+    status?: FormStatus | FormStatusFn<T>;
     /**
      * 操作类型
      * @default 'edit'

@@ -10,7 +10,7 @@
   ></VersaRepeater>
 </template>
 
-<script>
+<script lang="ts">
 import { repeatProps } from "./config";
 export default {
   data() {
