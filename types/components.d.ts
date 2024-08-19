@@ -30,4 +30,18 @@ declare module "vue" {
   }
 }
 
-export { };
+export {
+  VersaPage,
+  VersaForm,
+  VersaTable,
+  VersaButton,
+  VersaFilter,
+  VersaCard,
+  VersaModal,
+  VersaRepeater,
+  VersaCheckboxGroup,
+  VersaDropdown,
+  VersaImageUpload,
+  VersaRadioGroup,
+  VersaSelect
+};

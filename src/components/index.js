@@ -53,6 +53,7 @@ export {
     VersaRepeater,
     VersaCard,
     VersaProvide,
-    VersaMessageBox,
-    install
+    VersaMessageBox
 }
+
+export default install;

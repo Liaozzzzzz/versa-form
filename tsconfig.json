@@ -22,6 +22,7 @@
       // 指定ECMAScript目标版本
       "target": "esnext",
       "jsx": "preserve",
+      "outDir": "./",
       "resolveJsonModule": true,
       // 编译过程中需要引入的库文件的列表。
       "lib": ["esnext", "dom", "DOM.Iterable", "ScriptHost"],
@@ -33,4 +34,5 @@
       }
     },
     "include": ["src/**/*.ts", "**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/VersaPage.ts"],
+    "exclude": ["node_modules", "dist"]
   }
