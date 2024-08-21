@@ -94,7 +94,7 @@ export type TableOption<R = FormValues> = Partial<TableColumnCtx<R>> & {
 };
 
 export type TableProps<
-    R = Record<string, any>,
+    R = any,
     T = BaseValues
 > = TableBaseProps<R> & {
     /** 列表配置 */
@@ -110,4 +110,4 @@ export type TableProps<
     autoLoad?: boolean;
 };
 
-export type VersaTable = DefineComponent<TableProps>;
+export type VersaTable = DefineComponent<TableProps<{ typeCode1: number }, any>>;

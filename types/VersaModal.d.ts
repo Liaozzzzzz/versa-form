@@ -48,6 +48,8 @@ export type ModalProps<R = BaseValues> = FormBaseProps<R> & {
     formatBefore?: (defaultValues: R, done: () => void) => Promise<FormValues>;
     /** 表单配置属性 */
     formProps?: Partial<FormProps<R>>;
+    /** 指定内容区域是否滚动 */
+    maxHeight?: number | string;
     [extra: string]: unknown;
 };
 

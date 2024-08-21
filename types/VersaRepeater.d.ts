@@ -47,6 +47,9 @@ export type HasActionFn<T> = (row: T, index: number, options: {
     globalStatus: RepeaterProps["status"];
 }) => boolean;
 
+
+export type AsyncHandlerResult<T> = boolean | { success: boolean; values: T } | undefined;
+
 /** 表单全部配置 */
 export type RepeaterProps<T = FormValues> = {
     /**
@@ -106,10 +109,10 @@ export type RepeaterProps<T = FormValues> = {
     hasMoveDown?: boolean | HasActionFn<T>;
     /** 各种异步操作钩子：add-新增；update-从预览态改为编辑态；save-编辑保存；remove-删除 */
     asyncHandler?: {
-        add: (row: T, index: number) => Promise<boolean | { success: boolean; values: T } | undefined>,
-        update: (row: T, index: number) => Promise<boolean | { success: boolean; values: T } | undefined>,
-        save: (row: T, index: number) => Promise<boolean | { success: boolean; values: T } | undefined>,
-        remove: (row: T, index: number) => Promise<boolean | { success: boolean; values: T } | undefined>,
+        add?: (row: T, index: number) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>,
+        update?: (row: T, index: number) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>,
+        save?: (row: T, index: number) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>,
+        remove?: (row: T, index: number) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>,
     };
     /** 
      * 编号

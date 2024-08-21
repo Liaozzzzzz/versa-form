@@ -9,9 +9,10 @@
   >
     <VersaForm
       v-bind="mergedFormProps"
-      class="versa-modal__form"
+      :class="['versa-modal__form', { 'is-scrollable': !!scrollStyles }]"
       v-loading="loading"
       ref="formRef"
+      :style="scrollStyles"
       :autoInitValue="false"
       v-model="formValues"
     >
@@ -117,6 +118,9 @@ export default {
     formProps: {
       type: Object,
     },
+    maxHeight: {
+      type: String,
+    },
   },
   emits: ["update:visible"],
   data() {
@@ -202,6 +206,22 @@ export default {
         },
         this.$attrs
       );
+    },
+    /** 允许内容区域滚动 */
+    scrollStyles() {
+      let validValue = null;
+      if (/.*vh$/.test(this.maxHeight)) {
+        validValue = this.maxHeight;
+      } else if (/^\d+(\.\d+)?(px)?$/.test(this.maxHeight)) {
+        validValue = `${this.maxHeight}px`.replace(/(px)*$/, "px");
+      }
+
+      return validValue
+        ? {
+            "max-height": validValue,
+            "overflow-y": "auto",
+          }
+        : validValue;
     },
   },
   watch: {
@@ -343,6 +363,42 @@ export default {
 
   &__form {
     flex: 1;
+
+    &.is-scrollable {
+      margin-bottom: 20px;
+    }
+
+    &::-webkit-scrollbar {
+      height: 8px;
+      width: 8px;
+      margin-right: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 9999px;
+      background-color: transparent;
+
+      &:hover {
+        background-color: rgba(148, 163, 184, 0.25);
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border: 1px solid transparent;
+      border-radius: 9999px;
+      background-color: rgba(71, 85, 105, 0.5);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(148, 163, 184, 1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      visibility: hidden;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      visibility: visible;
+    }
   }
 }
 </style>

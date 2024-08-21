@@ -110,19 +110,6 @@ export default {
       filterOptions: filterOptions(),
       detailProps: detailProps,
       tableOptions: tableOptions,
-      data: [
-        { id: 1, name: "xwang", age: 18, address: "是是是" },
-        { id: 2, name: "xwang", age: 18, address: "是是是" },
-        { id: 3, name: "xwang", age: 18, address: "是是是" },
-        { id: 4, name: "xwang", age: 18, address: "是是是", func: () => {} },
-      ],
-      columns: [
-        { width: "20px", align: "center", type: "selection" },
-        { title: "ID", key: "id", align: "center" },
-        { title: "Name", align: "center", key: "name" },
-        { title: "age", key: "age" },
-        { title: "address", key: "address" },
-      ],
       toolOptions,
       actions: (filterValues) => {
         return [

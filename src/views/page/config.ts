@@ -327,6 +327,7 @@ export const tableOptions: TableOption<{ typeCode1: number }>[] = [
                 title: '测试嵌套page',
                 usePageModal: true,
                 width: '80%',
+                'max-height': '400px',
                 'append-to-body': true,
                 options: [
                     {
@@ -388,6 +389,8 @@ export const detailProps: ModalProps = {
             }, 1000);
         });
     },
+    'align-center': true,
+    maxHeight: '300',
     actions: () => {
         return [
             {
