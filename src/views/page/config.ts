@@ -380,12 +380,16 @@ export const tableOptions: TableOption<{ typeCode1: number }>[] = [
     }
 ];
 // ModalProps
-export const detailProps: ModalProps = {
+type Row = {
+    a: string;
+    b: number
+}
+export const detailProps: ModalProps<any, any> = {
     // columns: 2,
-    formatBefore: (row) => {
+    formatBefore: (row: Row) => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve({ ...row });
+                resolve({ ...row, cc: 1 });
             }, 1000);
         });
     },
@@ -408,6 +412,23 @@ export const detailProps: ModalProps = {
         // inline: true,
     },
     options: [
+        {
+            label: "菜单级别",
+            prop: "menuLevel",
+            element: "versa-radio-group",
+            status: (
+                formValues,
+                _: unknown,
+                { actionType }: { actionType: string }
+            ) => {
+                if (actionType !== "detail") {
+                    return formValues.children?.length > 0 ? "disabled" : "edit";
+                }
+                return "preview";
+            },
+            button: true,
+            rules: [{ required: true, message: "请选择菜单级别" }],
+        },
         {
             label: '单选框组',
             prop: 'radio-group',
@@ -433,7 +454,14 @@ export const detailProps: ModalProps = {
             //     label: '测试3',
             //     value: 'test3'
             // }],
-            rules: [{ required: true }]
+            // rules: [{ required: true }]
+            rules: [
+                {
+                    required: true,
+                    type: "url",
+                    message: "请输入'http(s)://'开头的合法url",
+                },
+            ],
         },
         {
             label: '多选框组',

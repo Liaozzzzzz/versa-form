@@ -47,7 +47,7 @@ export type TableBaseProps<R = FormValues> = {
      * 是否需要分页
      * @default true
      */
-    needPagination?: string;
+    needPagination?: boolean;
     /** 列表查询接口或方法 */
     api?: string | ((value: Record<string, any>) => Promise<any>);
     /**
@@ -94,15 +94,15 @@ export type TableOption<R = FormValues> = Partial<TableColumnCtx<R>> & {
 };
 
 export type TableProps<
-    R = any,
-    T = BaseValues
+    R extends BaseValues,
+    F extends BaseValues
 > = TableBaseProps<R> & {
     /** 列表配置 */
     options: TableOption<R>[];
     /** 列表自定义数据 */
     tableData?: Array<R>;
     /** 查询条件 */
-    queryParams?: FormValues<T>;
+    queryParams?: FormValues<F>;
     /**
      * 是否自动查询
      * @default true
@@ -110,4 +110,4 @@ export type TableProps<
     autoLoad?: boolean;
 };
 
-export type VersaTable = DefineComponent<TableProps<{ typeCode1: number }, any>>;
+export type VersaTable<R extends BaseValues, F extends BaseValues> = DefineComponent<TableProps<R, F>>;

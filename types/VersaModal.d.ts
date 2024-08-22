@@ -22,7 +22,7 @@ export type ModalAction<R> = OneOf<
     ComponentAction
 >;
 
-export type ModalProps<R = BaseValues> = FormBaseProps<R> & {
+export type ModalProps<R extends BaseValues, D extends BaseValues & R> = FormBaseProps<D> & {
     /** 受控显隐 */
     visible?: boolean;
     /**
@@ -30,14 +30,14 @@ export type ModalProps<R = BaseValues> = FormBaseProps<R> & {
      * @default 'cancel,confirm'
      */
     actions?:
-    | (ModalAction<R> | string | undefined | null)[]
-    | ((formValues: R) => (ModalAction<R> | string | undefined | null)[]);
+    | (ModalAction<D> | string | undefined | null)[]
+    | ((formValues: D) => (ModalAction<D> | string | undefined | null)[]);
 
     /** 点击确认回调 */
     onOk?: (
-        formValues: R,
+        formValues: D,
         instance: Parameters<NonNullable<Action["aciton"]>>[1],
-        options: ModalAction<R> & { close: () => void }
+        options: ModalAction<D> & { close: () => void }
     ) => void;
     /**
      * 弹窗类型：el-dialog | el-drawer
@@ -45,12 +45,12 @@ export type ModalProps<R = BaseValues> = FormBaseProps<R> & {
      */
     panelType?: "el-dialog" | "el-drawer";
     /** 弹窗表单展示时格式化 */
-    formatBefore?: (defaultValues: R, done: () => void) => Promise<FormValues>;
+    formatBefore?: (defaultValues: R, done: () => void) => Promise<FormValues<D> | unknown>;
     /** 表单配置属性 */
-    formProps?: Partial<FormProps<R>>;
+    formProps?: Partial<FormProps<D>>;
     /** 指定内容区域是否滚动 */
     maxHeight?: number | string;
     [extra: string]: unknown;
 };
 
-export type VersaModal = DefineComponent<ModalProps>;
+export type VersaModal = DefineComponent<ModalProps<any, any>>;

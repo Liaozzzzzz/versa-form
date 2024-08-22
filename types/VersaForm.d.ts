@@ -8,7 +8,7 @@ import type {
 import type { RuleItem } from "async-validator";
 
 export type BaseValues = {
-    [key: string]:
+    [key: string | number]:
     | string
     | number
     | boolean
@@ -36,20 +36,20 @@ export type ValidErrors<T = BaseValues> = {
 export type FormStatus = "edit" | "preview" | "disabled";
 
 /** 操作类型 */
-export type ActionType = "create" | "edit" | "detail" | String;
+export type ActionType = "create" | "edit" | "detail";
 
 export type SensitiveType = 'cellphone' | 'identity' | ((value: string | number | null | undefined) => string);
 
 /** 表单项配置 */
-export type FormOption = {
+export type FormOption<T extends BaseValues> = {
     /** 标签 */
     label?: string;
     /** 标签宽度 */
     labelWidth?: string;
     /** 表单项布局方式，支持卡片布局 */
-    labelType?: 'card' | String | {
+    labelType?: 'card' | {
         type: 'card';
-        [extra: string]: any;
+        [extra: string | number]: any;
     };
     /** 表单field */
     prop: FieldKeys<BaseValues>;
@@ -67,7 +67,7 @@ export type FormOption = {
     rules?: Rule[];
     required?: boolean;
     /** 表单状态 */
-    status?: FormStatus | FormStatusFn;
+    status?: FormStatus | FormStatusFn<T>;
     /** select、radio、checkbox等元素的映射 */
     mapSource?: Record<string, string | number>;
     formItemProps?: {
@@ -78,12 +78,12 @@ export type FormOption = {
 }
 
 /** 表单状态函数 */
-export type FormStatusFn<T = FormValues> = (
+export type FormStatusFn<T extends BaseValues> = (
     formValues: T,
-    option: FormOption,
+    option: FormOption<T>,
     extraConfig: {
         actionType: ActionType;
-        status: FormStatus;
+        globalStatus: FormStatus;
     }
 ) => FormStatus;
 
@@ -92,7 +92,7 @@ export type Rule = RuleItem & {
 }
 
 /** 表单基础配置 */
-export type FormBaseProps<T = BaseValues> = {
+export type FormBaseProps<T extends BaseValues> = {
     /**
      * 表头宽度
      * @default '90'
@@ -107,7 +107,7 @@ export type FormBaseProps<T = BaseValues> = {
      * 表单配置项
      *
      */
-    options?: FormOption[];
+    options?: FormOption<T>[];
     /** 默认值 */
     defaultValues?: FormValues<T>;
     /**
@@ -131,7 +131,7 @@ export type FormBaseProps<T = BaseValues> = {
 }
 
 /** 表单全部配置 */
-export type FormProps<T> = FormBaseProps<T> & {
+export type FormProps<T extends BaseValues> = FormBaseProps<T> & {
     /**
      * 初始化时自动处理初始值
      * @default true
@@ -223,7 +223,7 @@ type EmitOptions<T> = {
     onMounted: (formValues: T) => void;
 }
 
-export type VersaForm<T = BaseValues> = DefineComponent<
+export type VersaForm<T extends BaseValues> = DefineComponent<
     FormProps<T>,
     {},
     {},

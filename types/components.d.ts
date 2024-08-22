@@ -15,8 +15,8 @@ import type { VersaSelect } from "./VersaSelect";
 declare module "vue" {
   export interface GlobalComponents {
     VersaPage: VersaPage;
-    VersaForm: VersaForm;
-    VersaTable: VersaTable;
+    VersaForm: VersaForm<any>;
+    VersaTable: VersaTable<any, any>;
     VersaButton: VersaButton;
     VersaFilter: VersaFilter;
     VersaCard: VersaCard;

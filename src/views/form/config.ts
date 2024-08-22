@@ -6,7 +6,7 @@ export const statusMap = {
     F: '停用'
 }
 
-export const formOptions: FormOption[] = [
+export const formOptions: FormOption<any>[] = [
     {
         label: '单选框组',
         prop: 'radio-group',
