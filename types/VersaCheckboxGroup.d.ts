@@ -26,3 +26,5 @@ export type VersaCheckboxGroupProps = {
 };
 
 export type VersaCheckboxGroup = DefineComponent<VersaCheckboxGroupProps>;
+
+export declare const VersaCheckboxGroup: VersaCheckboxGroup;

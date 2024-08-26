@@ -1,9 +1,9 @@
 import type { DefineComponent } from "vue";
 import type { Action, BaseAction, ComponentAction } from "./VersaButton";
-import type { FormValues, BaseValues, FormOption } from "./VersaForm";
+import type { FormValues, FormOption } from "./VersaForm";
 import { OneOf } from "./common";
 
-export type FilterAction<R> = OneOf<
+export type FilterAction<R extends FormValues> = OneOf<
     Omit<BaseAction, "action" | "disabled"> & {
         action?: (
             formValues: R,
@@ -22,9 +22,9 @@ export type FilterAction<R> = OneOf<
     ComponentAction
 >;
 
-export type FilterBaseProps<T = BaseValues> = {
+export type FilterBaseProps<T extends FormValues> = {
     /** 默认筛选项 */
-    defaultFilters?: FormValues<T>;
+    defaultFilters?: T;
     /**
      * 提交按钮项，多个用逗号分隔（search,reset,create）
      * @default 'search,reset'
@@ -54,8 +54,10 @@ export type FilterBaseProps<T = BaseValues> = {
     labelSuffix?: string;
 };
 
-export type FilterProps<T = BaseValues> = FilterBaseProps<T> & {
-    options: FormOption[];
+export type FilterProps<T extends FormValues> = FilterBaseProps<T> & {
+    options: FormOption<T>[];
 };
 
-export type VersaFilter = DefineComponent<FilterProps>;
+export type VersaFilter = DefineComponent<FilterProps<FormValues>>;
+
+export declare const VersaFilter: VersaFilter;

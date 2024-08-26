@@ -1,9 +1,9 @@
 import type { DefineComponent } from "vue";
 import type {
+    FormValues,
     FormOption,
     FormStatus,
-    FormStatusFn,
-    FormValues,
+    FormStatusFn
 } from "./VersaForm";
 import type { OneOf } from "./common";
 import type { BaseAction, Action, ComponentAction } from "./VersaButton";
@@ -22,7 +22,7 @@ type RepeaterCoreInstance<T> = {
     status: FormStatus;
     /** 挂载回调函数 */
     mounted: (form: RepeaterCoreInstance<T>) => void;
-}
+};
 
 export type RepeaterAction<R> = OneOf<
     Omit<BaseAction, "action" | "disabled"> & {
@@ -43,22 +43,28 @@ export type RepeaterAction<R> = OneOf<
     ComponentAction
 >;
 
-export type HasActionFn<T> = (row: T, index: number, options: {
-    globalStatus: RepeaterProps["status"];
-}) => boolean;
+export type HasActionFn<T extends FormValues> = (
+    row: T,
+    index: number,
+    options: {
+        globalStatus: RepeaterProps<T>["status"];
+    }
+) => boolean;
 
-
-export type AsyncHandlerResult<T> = boolean | { success: boolean; values: T } | undefined;
+export type AsyncHandlerResult<T> =
+    | boolean
+    | { success: boolean; values: T }
+    | undefined;
 
 /** 表单全部配置 */
-export type RepeaterProps<T = FormValues> = {
+export type RepeaterProps<T extends FormValues> = {
     /**
      * 增删查改模型：sync - 行内编辑； inline - 表格内编辑、保存； dialog - 弹窗类型
      * @default 'sync'
      */
     type?: RepeaterType;
     /** 表单配置项 */
-    options?: FormOption[];
+    options?: FormOption<T>[];
     /** v-model的值 */
     modelValue?: T[];
     /** 全局编辑状态: */
@@ -83,7 +89,7 @@ export type RepeaterProps<T = FormValues> = {
         row: T,
         index: number,
         options: {
-            globalStatus: RepeaterProps["status"];
+            globalStatus: RepeaterProps<T>["status"];
         }
     ) => (RepeaterAction<T> | string | undefined | null)[]);
     /**
@@ -91,12 +97,12 @@ export type RepeaterProps<T = FormValues> = {
      * @default true
      */
     hasAdd?: boolean;
-    /** 
+    /**
      * 是否有删除操作按钮
      * @default true
      */
     hasDelete?: boolean | HasActionFn<T>;
-    /** 
+    /**
      * 是否有编辑操作按钮
      * @default true
      */
@@ -109,31 +115,47 @@ export type RepeaterProps<T = FormValues> = {
     hasMoveDown?: boolean | HasActionFn<T>;
     /** 各种异步操作钩子：add-新增；update-从预览态改为编辑态；save-编辑保存；remove-删除 */
     asyncHandler?: {
-        add?: (row: T, index: number) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>,
-        update?: (row: T, index: number) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>,
-        save?: (row: T, index: number) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>,
-        remove?: (row: T, index: number) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>,
+        add?: (
+            row: T,
+            index: number
+        ) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>;
+        update?: (
+            row: T,
+            index: number
+        ) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>;
+        save?: (
+            row: T,
+            index: number
+        ) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>;
+        remove?: (
+            row: T,
+            index: number
+        ) => Promise<AsyncHandlerResult<T>> | AsyncHandlerResult<T>;
     };
-    /** 
+    /**
      * 编号
      * @default (index) => index<9 ? `0${index + 1}` : index + 1
      */
     index?: string | boolean | number | Function;
-    /** 
+    /**
      * 对齐方式: left/right/center
      * @default 'left''
      */
-    itemAlign?: 'left' | 'right' | 'center';
-    /** 
+    itemAlign?: "left" | "right" | "center";
+    /**
      * 固定列模式(转换为二进制使用)： 1(1)-编号左固定；2(10)-编号右固定；4(100)-操作左固定；8(1000)-操作右固定
      * @default 0
      */
     fixedMode?: number;
-    /** 
+    /**
      * 新增按钮文本
      * @default '新增'
      */
     addText?: string;
 };
 
-export type VersaRepeater<T = FormValues> = DefineComponent<RepeaterProps<T>>;
+export type VersaRepeater<T extends FormValues> = DefineComponent<
+    RepeaterProps<T>
+>;
+
+export declare const VersaRepeater: VersaRepeater<FormValues>;

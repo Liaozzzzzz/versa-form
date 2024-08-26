@@ -1,6 +1,7 @@
 import type { DefineComponent, Component } from "vue";
 import type { OneOf } from "./common";
 import type { PageProvide } from "./VersaPage";
+import type { FormValues } from "./VersaForm";
 
 export type ButtonProps = {
     /**
@@ -23,10 +24,12 @@ export type ButtonProps = {
     /** 二次弹窗校验, 参考 el-popconfirm和el-messageBox详细配置 */
     popconfirm?:
     | string
-    | { confirmType: "popconfirm" | "messageBox";[extra: string]: any };
+    | { confirmType?: "popconfirm" | "messageBox";[extra: string]: any };
     /** 是否禁用 */
-    disabled?: boolean | ((instance: InstanceType<VersaButton> & PageProvide) => boolean);
-}
+    disabled?:
+    | boolean
+    | ((instance: InstanceType<VersaButton> & PageProvide<FormValues, FormValues, FormValues>, ...args: any[]) => boolean);
+};
 
 export type ComponentAction = {
     is: string | Component;
@@ -43,7 +46,6 @@ export type BaseAction = Omit<ButtonProps, "buttonText"> & {
     [k: string]: unknown;
 };
 
-
 export type Action = OneOf<ComponentAction, BaseAction>;
 
 export type VersaButton = DefineComponent<
@@ -51,3 +53,5 @@ export type VersaButton = DefineComponent<
     {},
     { isLoading: boolean; text: string }
 >;
+
+export declare const VersaButton: VersaButton;

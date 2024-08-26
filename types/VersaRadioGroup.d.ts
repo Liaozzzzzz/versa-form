@@ -26,3 +26,5 @@ export type VersaRadioGroupProps = {
 };
 
 export type VersaRadioGroup = DefineComponent<VersaRadioGroupProps>;
+
+export declare const VersaRadioGroup: VersaRadioGroup;

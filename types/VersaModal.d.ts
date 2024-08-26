@@ -1,5 +1,9 @@
 import type { DefineComponent } from "vue";
-import type { BaseValues, FormBaseProps, FormProps, FormValues } from "./VersaForm";
+import type {
+    FormBaseProps,
+    FormProps,
+    FormValues,
+} from "./VersaForm";
 import type { OneOf } from "./common";
 import type { Action, BaseAction, ComponentAction } from "./VersaButton";
 
@@ -22,7 +26,10 @@ export type ModalAction<R> = OneOf<
     ComponentAction
 >;
 
-export type ModalProps<R extends BaseValues, D extends BaseValues & R> = FormBaseProps<D> & {
+export type ModalProps<
+    R extends FormValues,
+    D extends FormValues
+> = FormBaseProps<D> & {
     /** 受控显隐 */
     visible?: boolean;
     /**
@@ -45,7 +52,10 @@ export type ModalProps<R extends BaseValues, D extends BaseValues & R> = FormBas
      */
     panelType?: "el-dialog" | "el-drawer";
     /** 弹窗表单展示时格式化 */
-    formatBefore?: (defaultValues: R, done: () => void) => Promise<FormValues<D> | unknown>;
+    formatBefore?: (
+        defaultValues: R,
+        done: () => void
+    ) => Promise<D | unknown>;
     /** 表单配置属性 */
     formProps?: Partial<FormProps<D>>;
     /** 指定内容区域是否滚动 */
@@ -53,4 +63,9 @@ export type ModalProps<R extends BaseValues, D extends BaseValues & R> = FormBas
     [extra: string]: unknown;
 };
 
-export type VersaModal = DefineComponent<ModalProps<any, any>>;
+export type VersaModal<
+    R extends FormValues,
+    D extends FormValues
+> = DefineComponent<ModalProps<R, D>>;
+
+export declare const VersaModal: VersaModal<FormValues, FormValues>;

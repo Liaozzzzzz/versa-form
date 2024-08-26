@@ -1,93 +1,106 @@
-import { FilterAction, FilterProps } from "@root/types/VersaFilter";
+import { FilterProps } from "@root/types/VersaFilter";
 import { FormValues } from "@root/types/VersaForm";
 import { ModalProps } from "@root/types/VersaModal";
-import { TableOption, TableToolAction } from "@root/types/VersaTable";
+import { TableProps } from "@root/types/VersaTable";
 
 export const statusMap = {
-    T: '启用',
-    F: '停用'
-}
+    T: "启用",
+    F: "停用",
+};
 
-export const filterOptions = () => [
+export const filterOptions: () => FilterProps<{
+    typeCode: number;
+    status: string;
+    date: string;
+    year: string;
+    month: number;
+    monthrange: string[];
+    dates: string[];
+    daterange: string[];
+    datetime: string;
+    datetimerange: string;
+}>["options"] = () => [
     {
-        label: '配置项代码',
-        prop: 'typeCode',
-        element: 'el-input',
-        initValue: '12312',
-        rules: [{
-            required: true
-        }],
+        label: "配置项代码",
+        prop: "typeCode",
+        element: "el-input",
+        initValue: "12312",
+        rules: [
+            {
+                required: true,
+            },
+        ],
         on: {
             input: (e, val) => {
-                console.log('e, val:---', e, val);
+                console.log("e, val:---", e, val);
                 if (!e) {
-                    val.model.year = '2023';
+                    val.model.year = "2023";
                 } else {
-                    val.model.year = '2015';
+                    val.model.year = "2015";
                 }
-            }
-        }
+            },
+        },
     },
     {
-        label: '启用状态',
-        prop: 'status',
-        element: 'versa-select',
+        label: "启用状态",
+        prop: "status",
+        element: "versa-select",
         mapSource: statusMap,
         // initValue: 'T'
     },
     {
-        label: '日期选择',
-        prop: 'date',
-        element: 'el-date-picker',
-        type: 'date'
+        label: "日期选择",
+        prop: "date",
+        element: "el-date-picker",
+        type: "date",
     },
     {
-        label: '选择年',
-        prop: 'year',
-        element: 'el-date-picker',
-        type: 'year'
+        label: "选择年",
+        prop: "year",
+        element: "el-date-picker",
+        type: "year",
     },
     {
-        label: '选择月',
-        prop: 'month',
-        element: 'el-date-picker',
-        type: 'month'
+        label: "选择月",
+        prop: "month",
+        element: "el-date-picker",
+        type: "month",
     },
     {
-        label: '选择月区间',
-        prop: 'monthrange',
-        element: 'el-date-picker',
-        type: 'monthrange'
+        label: "选择月区间",
+        prop: "monthrange",
+        element: "el-date-picker",
+        type: "monthrange",
     },
     {
-        label: '日期多选',
-        prop: 'dates',
-        element: 'el-date-picker',
-        type: 'dates'
+        label: "日期多选",
+        prop: "dates",
+        element: "el-date-picker",
+        type: "dates",
     },
     {
-        label: '日期范围',
-        prop: 'daterange',
-        element: 'el-date-picker',
-        type: 'daterange'
+        label: "日期范围",
+        prop: "daterange",
+        element: "el-date-picker",
+        type: "daterange",
     },
     {
-        label: '时间点',
-        prop: 'datetime',
-        element: 'el-date-picker',
-        type: 'datetime'
+        label: "时间点",
+        prop: "datetime",
+        element: "el-date-picker",
+        type: "datetime",
     },
     {
-        label: '时间点范围',
-        prop: 'datetimerange',
-        element: 'el-date-picker',
-        type: 'datetimerange'
-    }
+        label: "时间点范围",
+        prop: "datetimerange",
+        element: "el-date-picker",
+        type: "datetimerange",
+    },
 ];
 
 type AA = {
-    a: string
-}
+    a: string;
+};
 
 // const aa: AA[] = [
 //     {
@@ -96,7 +109,7 @@ type AA = {
 //     () => { }
 // ]
 
-export const actions: FilterProps['actions'] = (filterValues) => {
+export const actions: FilterProps<FormValues>["actions"] = (filterValues) => {
     return [
         filterValues.typeCode ? "reset" : null,
         "search",
@@ -134,15 +147,14 @@ export const actions: FilterProps['actions'] = (filterValues) => {
             },
         },
     ];
-}
+};
 
-console.log(actions)
-
-export const toolOptions: TableToolAction<any>[] = [
+export const toolOptions: TableProps<{ a: 1 }, { b: 1 }>["toolOptions"] = [
     {
         actionType: "create",
         actionName: "新建",
         disabled: (selection, instance) => {
+            console.log(instance.isLoading);
             return false;
             // return !instance.filterValues.typeCode;
         },
@@ -176,18 +188,33 @@ export const toolOptions: TableToolAction<any>[] = [
         is: "el-rate",
         value: 2,
     },
-]
+];
 
-export const tableOptions: TableOption<{ typeCode1: number }>[] = [
+// TableProps<
+//     {
+//         typeCode1: string;
+//         typeCode: string;
+//         status: string;
+//         telphone: string;
+//         itemCode: string;
+//         actions: string;
+//         test10086: string;
+//         itemLevel: string;
+//         itemSort: number;
+//     },
+//     { b: 1 }
+// >["options"]
+
+export const tableOptions = [
     {
-        type: 'selection',
-        fixed: 'left',
+        type: "selection",
+        fixed: "left",
     },
     {
-        label: '序号',
-        type: 'index',
+        label: "序号",
+        type: "index",
         width: 60,
-        fixed: 'left',
+        fixed: "left",
     },
     // {
     //     prop: 'typeCode',
@@ -205,130 +232,157 @@ export const tableOptions: TableOption<{ typeCode1: number }>[] = [
     //     ]
     // },
     {
-        prop: 'typeCode1',
+        prop: "typeCode1",
         width: 200,
-        label: '配置项代码1',
+        label: "配置项代码1",
+        mapSource: {
+            a: 1,
+        },
     },
     {
-        prop: 'typeCode',
-        label: '配置项代码2',
+        prop: "typeCode",
+        label: "配置项代码2",
+        mapSource: [{ label: "aa", value: 1 }],
+        sensitiveType: (row) => () => "",
     },
     {
-        label: '手机号',
-        prop: 'telphone',
+        label: "手机号",
+        prop: "telphone",
         sensitive: true,
-        sensitiveType: (row) => row.type,
-        width: 150
+        sensitiveType: (row) => (row.itemCode === "1" ? "cellphone" : "identity"),
+        width: 150,
     },
     {
-        prop: 'itemCode',
-        label: '明细代码',
+        prop: "itemCode",
+        label: "明细代码",
     },
     {
-        prop: 'itemDesc',
-        label: '明细描述',
-        width: 200,
-        actions: (...rest) => {
+        prop: "actions",
+        label: "操作",
+        width: "160",
+        showOverflowTooltip: true,
+        fixed: "right",
+        actions: (row: { a: number }) => {
             return [
                 {
                     actionName: "信息变更",
                     actionType: "detail21212",
                     usePageModal: true,
-                    title: '信息变更马里奥',
-                    options: []
+                    title: "信息变更马里奥",
+                    options: [],
+                    disabled: () => {
+                        return false;
+                    },
+                    action: (row, instance, option) => {
+                        // instance.loading
+                    },
                 },
-            ]
+                {
+                    is: "el-rate",
+                    value: 2,
+                },
+            ];
         },
     },
     {
-        prop: 'test10086',
-        label: '测试自定义按钮',
+        prop: "test10086",
+        label: "测试自定义按钮",
         width: 160,
-        actions: [{
-            is: 'versa-dropdown',
-            // labelInValue: {
-            //     label: 'name',
-            //     value: 'code'
-            // },
-            // mapSource: {
-            //     test1: '测试1',
-            //     test2: '测试2',
-            //     test3: '测试3'
-            // },
-            text: '下拉菜单',
-            on: {
-                command: (val, instance) => {
-                    console.log(val)
-                    instance.isLoading = true;
-                    setTimeout(() => {
-                        instance.isLoading = false;
-                    }, 3000);
-                }
+        actions: [
+            {
+                is: "versa-dropdown",
+                // labelInValue: {
+                //     label: 'name',
+                //     value: 'code'
+                // },
+                // mapSource: {
+                //     test1: '测试1',
+                //     test2: '测试2',
+                //     test3: '测试3'
+                // },
+                text: "下拉菜单",
+                on: {
+                    command: (val, instance) => {
+                        console.log(val);
+                        instance.isLoading = true;
+                        setTimeout(() => {
+                            instance.isLoading = false;
+                        }, 3000);
+                    },
+                },
+                options: [
+                    {
+                        label: "测试1",
+                        value: "test1",
+                        disabled: true,
+                    },
+                    {
+                        label: "测试2",
+                        value: "test2",
+                    },
+                    {
+                        label: "测试3",
+                        value: "test3",
+                    },
+                ],
             },
-            options: [{
-                label: '测试1',
-                value: 'test1',
-                disabled: true,
-            }, {
-                label: '测试2',
-                value: 'test2'
-            }, {
-                label: '测试3',
-                value: 'test3'
-            }]
-        }]
+        ],
     },
     {
-        prop: 'itemLevel',
-        label: '明细层级',
+        prop: "itemLevel",
+        label: "明细层级",
         width: 200,
-        slotName: 'itemLevel'
+        slotName: "itemLevel",
     },
     {
-        prop: 'itemSort',
-        label: '明细顺序',
+        prop: "itemSort",
+        label: "明细顺序",
         // width: 200
     },
     {
-        prop: 'status',
-        label: '启用状态',
+        prop: "status",
+        label: "启用状态",
         // width: 200,
-        mapSource: statusMap
+        mapSource: statusMap,
         // formatter: (row, column, cellValue) => statusMap[cellValue]
     },
     {
         actions: [
             {
-                actionType: 'edit',
-                actionName: '编辑1',
-                'append-to-body': true,
+                actionType: "edit",
+                actionName: "编辑1",
+                "append-to-body": true,
                 disabled: () => false,
                 actions: (values) => {
-                    return [values['el-switch'] ? 'cancel' : undefined, 'confirm', {
-                        actionType: 'edit111',
-                        actionName: '测试按钮',
-                        popconfirm: { title: '测试', confirmType: 'popconfirm' },
-                        action: (formValues, instance, { close }) => {
-                            instance.isLoading = true;
-                            setTimeout(() => {
-                                instance.isLoading = false;
-                                close();
-                            }, 3000);
-                        }
-                    }]
+                    return [
+                        values["el-switch"] ? "cancel" : undefined,
+                        "confirm",
+                        {
+                            actionType: "edit111",
+                            actionName: "测试按钮",
+                            popconfirm: { title: "测试", confirmType: "popconfirm" },
+                            action: (formValues, instance, { close }) => {
+                                instance.isLoading = true;
+                                setTimeout(() => {
+                                    instance.isLoading = false;
+                                    close();
+                                }, 3000);
+                            },
+                        },
+                    ];
                 },
             },
-            'detail',
+            "detail",
             // () => ({}),
-            'remove',
+            "remove",
             {
-                actionType: 'nestPage',
-                actionName: '测试嵌套page',
-                title: '测试嵌套page',
+                actionType: "nestPage",
+                actionName: "测试嵌套page",
+                title: "测试嵌套page",
                 usePageModal: true,
-                width: '80%',
-                'max-height': '400px',
-                'append-to-body': true,
+                width: "80%",
+                "max-height": "400px",
+                "append-to-body": true,
                 options: [
                     {
                         label: "所属企业",
@@ -338,9 +392,9 @@ export const tableOptions: TableOption<{ typeCode1: number }>[] = [
                 ],
             },
             {
-                actionType: 'edit111',
-                actionName: '测试按钮',
-                popconfirm: { title: '测试', confirmType: 'popconfirm' },
+                actionType: "edit111",
+                actionName: "测试按钮",
+                popconfirm: { title: "测试", confirmType: "popconfirm" as const },
                 // disabled: (row, instance) => !instance.selectionValues.length,
                 action: (formValues, instance, options) => {
                     instance.isLoading = true;
@@ -358,7 +412,7 @@ export const tableOptions: TableOption<{ typeCode1: number }>[] = [
                 formatBefore: (row) => {
                     console.log(row);
                     return {
-                        'checkbox-group': row['checkbox-group'],
+                        "checkbox-group": row["checkbox-group"],
                         parentId: row.menuId,
                     };
                 },
@@ -373,40 +427,40 @@ export const tableOptions: TableOption<{ typeCode1: number }>[] = [
                 ],
             },
         ],
-        label: '操作',
-        align: 'center',
-        fixed: 'right',
-        width: 400
-    }
+        label: "操作",
+        align: "center",
+        fixed: "right",
+        width: 400,
+    },
 ];
 // ModalProps
 type Row = {
     a: string;
-    b: number
-}
-export const detailProps: ModalProps<any, any> = {
+    b: number;
+};
+export const detailProps: ModalProps<Row, any> = {
     // columns: 2,
-    formatBefore: (row: Row) => {
+    formatBefore: (row) => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({ ...row, cc: 1 });
             }, 1000);
         });
     },
-    'align-center': true,
-    maxHeight: '300',
+    "align-center": true,
+    maxHeight: "300",
     actions: () => {
         return [
             {
-                actionType: '1',
-                actionName: '0',
+                actionType: "1",
+                actionName: "0",
                 disabled(formValues, instance) {
                     return true;
                 },
-            }
-        ]
+            },
+        ];
     },
-    width: '750px',
+    width: "750px",
     formProps: {
         // 'label-position': 'top',
         // inline: true,
@@ -430,18 +484,18 @@ export const detailProps: ModalProps<any, any> = {
             rules: [{ required: true, message: "请选择菜单级别" }],
         },
         {
-            label: '单选框组',
-            prop: 'radio-group',
-            element: 'versa-radio-group',
+            label: "单选框组",
+            prop: "radio-group",
+            element: "versa-radio-group",
             // button: true,
             labelInValue: {
-                label: 'name',
-                value: 'code'
+                label: "name",
+                value: "code",
             },
             mapSource: {
-                test1: '测试1',
-                test2: '测试2',
-                test3: '测试3'
+                test1: "测试1",
+                test2: "测试2",
+                test3: "测试3",
             },
             // options: [{
             //     label: '测试1',
@@ -464,19 +518,19 @@ export const detailProps: ModalProps<any, any> = {
             ],
         },
         {
-            label: '多选框组',
-            prop: 'checkbox-group',
-            element: 'versa-checkbox-group',
+            label: "多选框组",
+            prop: "checkbox-group",
+            element: "versa-checkbox-group",
             // button: true,
             labelInValue: {
-                label: 'name',
-                value: 'code'
+                label: "name",
+                value: "code",
             },
             mapSource: {
-                test1: '测试1',
-                test2: '测试2',
-                test3: '测试3'
-            }
+                test1: "测试1",
+                test2: "测试2",
+                test3: "测试3",
+            },
             // options: [{
             //     label: '测试1',
             //     value: 'test1',
@@ -490,67 +544,67 @@ export const detailProps: ModalProps<any, any> = {
             // }]
         },
         {
-            label: '启用状态',
-            prop: 'status',
-            element: 'versa-select',
+            label: "启用状态",
+            prop: "status",
+            element: "versa-select",
             mapSource: statusMap,
             // multiple: true,
             // labelInValue: {
             //     label: 'name',
             //     value: 'code'
             // },
-            hasAll: true
+            hasAll: true,
         },
         {
-            label: '输入框',
-            prop: 'telphone',
+            label: "输入框",
+            prop: "telphone",
             sensitive: true,
-            element: 'el-input',
+            element: "el-input",
         },
         {
-            label: '文本域',
-            prop: 'el-input-textarea',
-            type: 'textarea',
-            element: 'el-input',
-            tooltip: '嘻嘻嘻'
+            label: "文本域",
+            prop: "el-input-textarea",
+            type: "textarea",
+            element: "el-input",
+            tooltip: "嘻嘻嘻",
         },
         {
-            label: '排序',
-            prop: 'el-input-number',
-            element: 'el-input-number',
-            style: { width: '180px' },
-            tooltip: '嘻嘻嘻'
+            label: "排序",
+            prop: "el-input-number",
+            element: "el-input-number",
+            style: { width: "180px" },
+            tooltip: "嘻嘻嘻",
         },
         {
-            label: 'Switch 开关',
-            prop: 'el-switch',
-            element: 'el-switch',
+            label: "Switch 开关",
+            prop: "el-switch",
+            element: "el-switch",
             sensitive: true,
         },
         {
-            label: '嵌套表单',
-            prop: 'nest-form',
+            label: "嵌套表单",
+            prop: "nest-form",
             inline: true,
-            element: 'versa-form',
-            'label-position': 'right',
+            element: "versa-form",
+            "label-position": "right",
             options: [
                 {
                     // label: '日期选择',
-                    prop: 'date',
-                    element: 'el-date-picker',
-                    type: 'date',
-                    placeholder: '请输入',
+                    prop: "date",
+                    element: "el-date-picker",
+                    type: "date",
+                    placeholder: "请输入",
                     rules: [{ required: true }],
                 },
                 {
                     // label: '选择年',
-                    prop: 'year',
-                    placeholder: '请输入',
-                    element: 'el-date-picker',
-                    type: 'year'
-                }
-            ]
-        }
+                    prop: "year",
+                    placeholder: "请输入",
+                    element: "el-date-picker",
+                    type: "year",
+                },
+            ],
+        },
         // {
         //     label: '日期选择',
         //     prop: 'date',
@@ -593,6 +647,5 @@ export const detailProps: ModalProps<any, any> = {
         //     element: 'el-date-picker',
         //     type: 'datetimerange'
         // }
-    ]
-}
-
+    ],
+};

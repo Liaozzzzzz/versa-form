@@ -1,11 +1,11 @@
 import type { DefineComponent } from "vue";
 import type { Action, BaseAction, ComponentAction } from "./VersaButton";
-import type { FormValues, BaseValues, SensitiveType } from "./VersaForm";
+import type { FormValues, SensitiveType, FieldKeys, SensitiveReturnType } from "./VersaForm";
 import type { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
-import type { OneOf } from "./common";
+import type { BaseOptions, OneOf } from "./common";
 
 export type TableToolAction<R> = OneOf<
-    Omit<BaseAction, "action" | "disabled"> & {
+    Omit<BaseAction, 'action' | 'disabled'> & {
         action?: (
             rows: R[],
             instance: Parameters<NonNullable<Action["aciton"]>>[1],
@@ -24,7 +24,7 @@ export type TableToolAction<R> = OneOf<
 >;
 
 export type TableOptionAction<R> = OneOf<
-    Omit<BaseAction, "action" | "disabled"> & {
+    Omit<BaseAction, 'action' | 'disabled'> & {
         action?: (
             row: R,
             instance: Parameters<NonNullable<Action["aciton"]>>[1],
@@ -42,7 +42,7 @@ export type TableOptionAction<R> = OneOf<
     ComponentAction
 >;
 
-export type TableBaseProps<R = FormValues> = {
+export type TableBaseProps<R extends FormValues> = {
     /**
      * 是否需要分页
      * @default true
@@ -78,14 +78,15 @@ export type TableBaseProps<R = FormValues> = {
     fillNull?: string;
 };
 
-export type TableOption<R = FormValues> = Partial<TableColumnCtx<R>> & {
+export type TableOption<R extends FormValues> = Partial<TableColumnCtx<R>> & {
+    prop?: FieldKeys<R>,
     /** 预览时是否加密展示 */
     sensitive?: boolean;
-    sensitiveType?: SensitiveType | ((value: BaseValues) => string);
+    sensitiveType?: ((row: R) => SensitiveReturnType) | SensitiveType;
     /** 枚举映射 */
     mapSource?:
     | Record<string, string | number>
-    | Array<{ label: string; value: string | number }>;
+    | BaseOptions[];
     /** 自定义插槽名称 */
     slotName?: string;
     actions?:
@@ -94,15 +95,15 @@ export type TableOption<R = FormValues> = Partial<TableColumnCtx<R>> & {
 };
 
 export type TableProps<
-    R extends BaseValues,
-    F extends BaseValues
+    R extends FormValues,
+    F extends FormValues
 > = TableBaseProps<R> & {
     /** 列表配置 */
     options: TableOption<R>[];
     /** 列表自定义数据 */
     tableData?: Array<R>;
     /** 查询条件 */
-    queryParams?: FormValues<F>;
+    queryParams?: F;
     /**
      * 是否自动查询
      * @default true
@@ -110,4 +111,9 @@ export type TableProps<
     autoLoad?: boolean;
 };
 
-export type VersaTable<R extends BaseValues, F extends BaseValues> = DefineComponent<TableProps<R, F>>;
+export type VersaTable<
+    R extends FormValues,
+    F extends FormValues
+> = DefineComponent<TableProps<R, F>>;
+
+export declare const VersaTable: VersaTable<FormValues, FormValues>;

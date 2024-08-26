@@ -7,30 +7,17 @@ import type {
 } from "vue";
 import type { RuleItem } from "async-validator";
 
-export type BaseValues = {
-    [key: string | number]:
-    | string
-    | number
-    | boolean
-    | null
-    | undefined
-    | BaseValues
-    | BaseValues[];
-}
-
 /** 表单值 */
-export type FormValues<T = BaseValues> = {
-    [P in keyof T]: T[P];
-};
+export type FormValues = any;
 
-export type FieldKeys<T> = keyof FormValues<T>;
+export type FieldKeys<T> = keyof T;
 
 /** 校验错误信息 */
-export type ValidErrors<T = BaseValues> = {
+export type ValidErrors<T extends FormValues> = {
     field: FieldKeys<T>;
-    fieldValue: FormValues<T>[FieldKeys<T>];
+    fieldValue: T[FieldKeys<T>];
     message: string;
-}
+};
 
 /** 表单基础状态 */
 export type FormStatus = "edit" | "preview" | "disabled";
@@ -38,26 +25,34 @@ export type FormStatus = "edit" | "preview" | "disabled";
 /** 操作类型 */
 export type ActionType = "create" | "edit" | "detail";
 
-export type SensitiveType = 'cellphone' | 'identity' | ((value: string | number | null | undefined) => string);
+export type SensitiveType =
+    | "cellphone"
+    | "identity"
+
+export type SensitiveReturnType = SensitiveType | ((value: string | number | null | undefined) => string);
 
 /** 表单项配置 */
-export type FormOption<T extends BaseValues> = {
+export type FormOption<T extends FormValues> = {
     /** 标签 */
     label?: string;
     /** 标签宽度 */
     labelWidth?: string;
     /** 表单项布局方式，支持卡片布局 */
-    labelType?: 'card' | {
-        type: 'card';
+    labelType?:
+    | "card"
+    | {
+        type: "card";
         [extra: string | number]: any;
     };
     /** 表单field */
-    prop: FieldKeys<BaseValues>;
+    prop: FieldKeys<T>;
+    /** 表单初始值 */
+    initValue?: T[FieldKeys<T>]
     /** 表单元素 */
     element?: string | Component;
     /** 预览时是否加密展示 */
     sensitive?: boolean;
-    sensitiveType?: SensitiveType | ((value: BaseValues) => string);
+    sensitiveType?: SensitiveType | ((value: T) => SensitiveReturnType);
     /** 末尾弹窗提示 */
     tooltip?: string;
     /** 底部 */
@@ -74,11 +69,11 @@ export type FormOption<T extends BaseValues> = {
         [extra: string]: any;
     };
     /** 其它额外属性 */
-    [extra: string]: any;
-}
+    [extra: string | number]: any;
+};
 
 /** 表单状态函数 */
-export type FormStatusFn<T extends BaseValues> = (
+export type FormStatusFn<T extends FormValues> = (
     formValues: T,
     option: FormOption<T>,
     extraConfig: {
@@ -89,10 +84,10 @@ export type FormStatusFn<T extends BaseValues> = (
 
 export type Rule = RuleItem & {
     trigger?: string | string[];
-}
+};
 
 /** 表单基础配置 */
-export type FormBaseProps<T extends BaseValues> = {
+export type FormBaseProps<T extends FormValues> = {
     /**
      * 表头宽度
      * @default '90'
@@ -109,7 +104,7 @@ export type FormBaseProps<T extends BaseValues> = {
      */
     options?: FormOption<T>[];
     /** 默认值 */
-    defaultValues?: FormValues<T>;
+    defaultValues?: T;
     /**
      * 一行多列
      * @default 1
@@ -128,17 +123,17 @@ export type FormBaseProps<T extends BaseValues> = {
     labelSuffix?: string;
     /** 是否隐藏必填标志 */
     hideRequiredAsterisk?: boolean;
-}
+};
 
 /** 表单全部配置 */
-export type FormProps<T extends BaseValues> = FormBaseProps<T> & {
+export type FormProps<T extends FormValues> = FormBaseProps<T> & {
     /**
      * 初始化时自动处理初始值
      * @default true
      */
     autoInitValue?: boolean;
     /** v-model的值 */
-    modelValue?: FormValues<T>;
+    modelValue?: T;
     /**
      * container容器
      * @default 'form'
@@ -165,9 +160,9 @@ export type FormProps<T extends BaseValues> = FormBaseProps<T> & {
     validateOnRuleChange?: boolean;
     /** 是否在versa-repeater下使用 */
     isRepeater?: boolean;
-}
+};
 
-export type FormMethods<T> = MethodOptions & {
+export type FormMethods<T extends FormValues> = MethodOptions & {
     /**
      * 设置表单项状态
      */
@@ -215,15 +210,15 @@ export type FormMethods<T> = MethodOptions & {
             errorFields: { [key in FieldKeys<T>]: ValidErrors<T>[] }
         ) => void
     ): void;
-}
+};
 
 type EmitOptions<T> = {
     "update:modelValue": (formValues: T) => void;
     validate: (field: FieldKeys<T>, valid: boolean, message: string) => void;
     onMounted: (formValues: T) => void;
-}
+};
 
-export type VersaForm<T extends BaseValues> = DefineComponent<
+export type VersaForm<T extends FormValues> = DefineComponent<
     FormProps<T>,
     {},
     {},
@@ -234,3 +229,5 @@ export type VersaForm<T extends BaseValues> = DefineComponent<
     // @ts-ignore
     EmitOptions<T>
 >;
+
+export declare const VersaForm: VersaForm<FormValues>;

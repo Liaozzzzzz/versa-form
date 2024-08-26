@@ -31,3 +31,5 @@ export type VersaSelectProps = {
 };
 
 export type VersaSelect = DefineComponent<VersaSelectProps>;
+
+export declare const VersaSelect: VersaSelect;

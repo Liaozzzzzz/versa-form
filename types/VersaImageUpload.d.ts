@@ -1,5 +1,4 @@
 import type { DefineComponent } from "vue";
-import type { BaseOptions } from "./common";
 import type { FormStatus } from "./VersaForm";
 
 export type VersaImageUploadProps = {
@@ -16,7 +15,9 @@ export type VersaImageUploadProps = {
      */
     accept?: string;
     /** 上传回调 */
-    onUpload?: Function,
+    onUpload?: Function;
 };
 
 export type VersaImageUpload = DefineComponent<VersaImageUploadProps>;
+
+export declare const VersaImageUpload: VersaImageUpload;

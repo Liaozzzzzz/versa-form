@@ -47,3 +47,5 @@ export type VersaDropdown = DefineComponent<
     ComponentOptionsMixin,
     EmitOptions
 >;
+
+export declare const VersaDropdown: VersaDropdown;
