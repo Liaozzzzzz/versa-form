@@ -35,7 +35,7 @@
 
 <script>
 import { ElSpace } from "element-plus";
-import "element-plus/es/components/space/style/css";
+import "element-plus/theme-chalk/src/space.scss";
 import { hasOwnProperty, isObject } from "./utils";
 import VersaButton from "./button.vue";
 

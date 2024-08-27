@@ -1,7 +1,7 @@
 import omit from "lodash/omit";
 import { h } from "vue";
 import { ElMessageBox } from "element-plus";
-import "element-plus/es/components/message-box/style/css";
+import "element-plus/theme-chalk/src/message-box.scss";
 import "./styles.scss";
 import { isEmpty } from "../utils";
 import IconWarning from "../assets/warning.svg";

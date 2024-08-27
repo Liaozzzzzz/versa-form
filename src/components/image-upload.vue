@@ -46,8 +46,8 @@
 import { Plus, Delete } from "@element-plus/icons-vue";
 import ceil from "lodash/ceil";
 import { ElIcon, ElImage } from "element-plus";
-import "element-plus/es/components/icon/style/css";
-import "element-plus/es/components/image/style/css";
+import "element-plus/theme-chalk/src/icon.scss";
+import "element-plus/theme-chalk/src/image.scss";
 import { injectedConfig } from "./mixins/config";
 
 export default {

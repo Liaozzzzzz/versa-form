@@ -54,10 +54,10 @@
 <script>
 import { mergeProps } from "vue";
 import { ElSpace, ElLoading, ElDialog, ElDrawer } from "element-plus";
-import "element-plus/es/components/space/style/css";
-import "element-plus/es/components/loading/style/css";
-import "element-plus/es/components/dialog/style/css";
-import "element-plus/es/components/drawer/style/css";
+import "element-plus/theme-chalk/src/space.scss";
+import "element-plus/theme-chalk/src/loading.scss";
+import "element-plus/theme-chalk/src/dialog.scss";
+import "element-plus/theme-chalk/src/drawer.scss";
 import VersaForm from "./form.vue";
 import VersaButton from "./button.vue";
 import { formPropsMixins } from "./mixins/props";

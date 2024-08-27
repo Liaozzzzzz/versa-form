@@ -3,9 +3,9 @@ import pick from "lodash/pick";
 import mapKeys from "lodash/mapKeys";
 import { h } from "vue";
 import { ElCheckboxButton, ElCheckbox, ElCheckboxGroup } from "element-plus";
-import "element-plus/es/components/checkbox-button/style/css";
-import "element-plus/es/components/checkbox/style/css";
-import "element-plus/es/components/checkbox-group/style/css";
+import "element-plus/theme-chalk/src/checkbox-button.scss";
+import "element-plus/theme-chalk/src/checkbox.scss";
+import "element-plus/theme-chalk/src/checkbox-group.scss";
 import { isObject } from "./utils";
 
 export default {

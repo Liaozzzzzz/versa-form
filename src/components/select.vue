@@ -1,11 +1,12 @@
 <script>
 import pick from "lodash/pick";
 import mapKeys from "lodash/mapKeys";
-import { h, resolveComponent } from "vue";
+import { h } from "vue";
 import { ElOption, ElOptionGroup, ElSelect } from "element-plus";
-import "element-plus/es/components/select/style/css";
-import "element-plus/es/components/option/style/css";
-import "element-plus/es/components/option-group/style/css";
+import "element-plus/theme-chalk/src/option.scss";
+import "element-plus/theme-chalk/src/option-group.scss";
+import "element-plus/theme-chalk/src/select.scss";
+import "element-plus/theme-chalk/src/tag.scss";
 import { isEmpty, toArray, isObject } from "./utils";
 
 export default {

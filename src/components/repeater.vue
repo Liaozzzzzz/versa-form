@@ -118,7 +118,7 @@ import { defineAsyncComponent } from "vue";
 import pick from "lodash/pick";
 import cloneDeep from "lodash/cloneDeep";
 import { ElSpace } from "element-plus";
-import "element-plus/es/components/space/style/css";
+import "element-plus/theme-chalk/src/space.scss";
 import VersaButton from "./button.vue";
 import VersaModal from "./modal.vue";
 import VersaMeasureCell from "./measure-cell.vue";

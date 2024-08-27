@@ -6,7 +6,7 @@ import upperFirst from "lodash/upperFirst";
 import dayjs from "dayjs";
 import AsyncValidator from "async-validator";
 import { ElTooltip } from "element-plus";
-import "element-plus/es/components/tooltip/style/css";
+import "element-plus/theme-chalk/src/tooltip.scss";
 import { isEmpty, toArray, noop, isObject } from "./utils";
 import VersaLabelWrap from "./label-wrap.vue";
 import VersaCard from "./card.vue";

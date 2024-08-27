@@ -3,7 +3,7 @@
 <script>
 import { computed } from "vue";
 import { ElMessage } from "element-plus";
-import "element-plus/es/components/message/style/css";
+import "element-plus/theme-chalk/src/message.scss";
 import { ProvideInjectionKey } from "./config";
 
 export default {

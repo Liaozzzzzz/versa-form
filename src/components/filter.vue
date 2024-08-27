@@ -60,7 +60,7 @@
 import omit from "lodash/omit";
 import pick from "lodash/pick";
 import { ElSpace } from "element-plus";
-import "element-plus/es/components/space/style/css";
+import "element-plus/theme-chalk/src/space.scss";
 import VersaForm from "./form.vue";
 import VersaCard from "./card.vue";
 import VersaButton from "./button.vue";

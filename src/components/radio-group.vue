@@ -3,9 +3,9 @@ import pick from "lodash/pick";
 import mapKeys from "lodash/mapKeys";
 import { h, resolveComponent } from "vue";
 import { ElRadioButton, ElRadio, ElRadioGroup } from "element-plus";
-import "element-plus/es/components/radio/style/css";
-import "element-plus/es/components/radio-button/style/css";
-import "element-plus/es/components/radio-group/style/css";
+import "element-plus/theme-chalk/src/radio.scss";
+import "element-plus/theme-chalk/src/radio-button.scss";
+import "element-plus/theme-chalk/src/radio-group.scss";
 import { isObject } from "./utils";
 
 export default {

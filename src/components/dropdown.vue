@@ -3,9 +3,9 @@ import { h } from "vue";
 import pick from "lodash/pick";
 import mapKeys from "lodash/mapKeys";
 import { ElDropdownItem, ElDropdown, ElDropdownMenu } from "element-plus";
-import "element-plus/es/components/dropdown/style/css";
-import "element-plus/es/components/dropdown-item/style/css";
-import "element-plus/es/components/dropdown-menu/style/css";
+import "element-plus/theme-chalk/src/dropdown-item.scss";
+import "element-plus/theme-chalk/src/dropdown.scss";
+import "element-plus/theme-chalk/src/dropdown-menu.scss";
 import VersaButton from "./button.vue";
 import { isObject } from "./utils";
 

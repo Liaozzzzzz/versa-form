@@ -13,12 +13,11 @@ import {
   ElLoading,
   ElTableColumn,
 } from "element-plus";
-import "element-plus/es/components/table/style/css";
-import "element-plus/es/components/table-column/style/css";
-import "element-plus/es/components/empty/style/css";
-import "element-plus/es/components/pagination/style/css";
-import "element-plus/es/components/space/style/css";
-import "element-plus/es/components/loading/style/css";
+import "element-plus/theme-chalk/src/table.scss";
+import "element-plus/theme-chalk/src/empty.scss";
+import "element-plus/theme-chalk/src/pagination.scss";
+import "element-plus/theme-chalk/src/space.scss";
+import "element-plus/theme-chalk/src/table-column.scss";
 import VersaCard from "./card.vue";
 import VersaButton from "./button.vue";
 import VersaSensitive from "./sensitive.vue";
