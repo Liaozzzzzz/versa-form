@@ -1,6 +1,6 @@
 {
     "name": "versa-form",
-    "version": "0.0.21",
+    "version": "0.0.22",
     "main": "lib/index.umd.js",
     "module": "lib/index.es.js",
     "types": "index.d.ts",
