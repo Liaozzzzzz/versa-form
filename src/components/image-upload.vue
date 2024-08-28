@@ -156,7 +156,7 @@ export default {
 
 <style lang="scss">
 .versa-image-upload {
-  &__icon {
+  & > &__icon {
     width: 140px;
     height: 140px;
     border: 1px solid rgb(229, 231, 235);
@@ -194,7 +194,7 @@ export default {
       opacity: 0;
     }
 
-    &--remove {
+    & > &--remove {
       display: none;
       position: absolute;
       top: calc(50% - 10px);
