@@ -167,21 +167,6 @@ export default {
     &.el-button--small {
       height: 30px;
     }
-
-    &--primary:not(.is-disabled) {
-      background-color: #2f88ff;
-
-      &.is-link {
-        color: #2f88ff;
-        background-color: unset;
-      }
-    }
-
-    &--primary:is(.is-disabled) {
-      &.is-link {
-        color: #b8b8b8;
-      }
-    }
   }
 
   &__icon {
