@@ -35,35 +35,87 @@
             v-on="bindEvent(item)"
             v-bind="bindProps(item)"
             v-model="model[item.prop]"
-          ></component>
+          >
+            <template
+              v-for="slotOption in parseSlots(item)"
+              v-slot:[slotOption.target]="attrs"
+            >
+              <slot :name="slotOption.source" v-bind="attrs"></slot>
+            </template>
+          </component>
         </VersaFormItem>
       </ElSpace>
     </ElRow>
-    <VersaFormItem
-      v-else
-      v-for="item in deployOptions"
-      v-bind="bindFormItemProps(item)"
-      :hasToolTip="hasToolTip"
-      :key="item.prop"
-      :prop="item.prop"
-      :label="item.label || ''"
-      :rules="item.rules"
-      :status="item.status"
-    >
-      <slot
-        v-if="item.slotName"
-        :name="item.slotName"
-        v-bind:data="model"
-        v-bind="item"
-      ></slot>
-      <component
+    <template v-else v-for="item in deployOptions" :key="item.prop">
+      <VersaFormCollapse
+        v-if="item.element === 'versa-form-collapse'"
+        v-bind="omit(item, ['options'])"
+      >
+        <template #title>
+          <slot v-if="item.label" :name="item.label">{{ item.label }}</slot>
+        </template>
+        <VersaFormItem
+          v-for="option in item.options"
+          v-bind="bindFormItemProps(option)"
+          :hasToolTip="hasToolTip"
+          :prop="option.prop"
+          :label="option.label || ''"
+          :rules="option.rules"
+          :status="option.status"
+        >
+          <slot
+            v-if="option.slotName"
+            :name="option.slotName"
+            v-bind:data="model"
+            v-bind="option"
+          ></slot>
+          <component
+            v-else
+            :is="option.element"
+            v-on="bindEvent(option)"
+            v-bind="bindProps(option)"
+            v-model="model[option.prop]"
+          >
+            <template
+              v-for="slotOption in parseSlots(option)"
+              v-slot:[slotOption.target]="attrs"
+            >
+              <slot :name="slotOption.source" v-bind="attrs"></slot>
+            </template>
+          </component>
+        </VersaFormItem>
+      </VersaFormCollapse>
+      <VersaFormItem
         v-else
-        :is="item.element"
-        v-on="bindEvent(item)"
-        v-bind="bindProps(item)"
-        v-model="model[item.prop]"
-      ></component>
-    </VersaFormItem>
+        v-bind="bindFormItemProps(item)"
+        :hasToolTip="hasToolTip"
+        :prop="item.prop"
+        :label="item.label || ''"
+        :rules="item.rules"
+        :status="item.status"
+      >
+        <slot
+          v-if="item.slotName"
+          :name="item.slotName"
+          v-bind:data="model"
+          v-bind="item"
+        ></slot>
+        <component
+          v-else
+          :is="item.element"
+          v-on="bindEvent(item)"
+          v-bind="bindProps(item)"
+          v-model="model[item.prop]"
+        >
+          <template
+            v-for="slotOption in parseSlots(item)"
+            v-slot:[slotOption.target]="attrs"
+          >
+            <slot :name="slotOption.source" v-bind="attrs"></slot>
+          </template>
+        </component>
+      </VersaFormItem>
+    </template>
     <slot name="footer" v-bind="{ model, actionType }"></slot>
   </component>
 </template>
@@ -73,11 +125,13 @@ import { defineAsyncComponent } from "vue";
 import TinyEmitter from "tiny-emitter";
 import omit from "lodash/omit";
 import cloneDeep from "lodash/cloneDeep";
+import kebabCase from "lodash/kebabCase";
 import { ElSpace, ElRow } from "element-plus";
 import "element-plus/theme-chalk/src/space.scss";
 import "element-plus/theme-chalk/src/row.scss";
 import VersaSelect from "./select.vue";
 import VersaFormItem from "./item.vue";
+import VersaFormCollapse from "./form-collapse.vue";
 import VersaRadioGroup from "./radio-group.vue";
 import VersaImageUpload from "./image-upload.vue";
 import VersaCheckboxGroup from "./checkbox-group.vue";
@@ -106,6 +160,7 @@ export default {
     VersaRadioGroup,
     VersaCheckboxGroup,
     VersaImageUpload,
+    VersaFormCollapse,
     VersaRepeater: defineAsyncComponent(() => import("./repeater.vue")),
   },
   mixins: [formPropsMixins, formEmitter],
@@ -207,42 +262,62 @@ export default {
     },
     /** 实际渲染的组件 */
     deployOptions() {
-      return this.options
-        ?.filter((item) => {
-          if (typeof item.when === "function") {
-            return item.when(this.model, item, {
-              actionType: this.actionType,
-              status: this.globalStatus,
-            });
-          }
-          return item.when === undefined ? true : item.when;
-        })
-        .map((item) => ({
-          ...item,
-          element: ElementMap[item.element] || item.element,
-          useCustomPreview:
-            typeof item.useCustomPreview === "boolean"
-              ? item.useCustomPreview
-              : !!ElementMap[item.element],
-          rules:
-            typeof item.rules === "function"
-              ? item.rules(this.model, item, { actionType: this.actionType })
-              : item.rules,
-          colSpan: item.single ? 24 : ~~(24 / this.columns),
-          status:
-            typeof item.status === "function"
-              ? item.status(this.model, item, {
-                  actionType: this.actionType,
-                  globalStatus: this.globalStatus,
-                })
-              : item.status ||
-                this.innerStatusMap[item.prop] ||
-                this.globalStatus,
-        }));
+      const makeFilter = (option) => {
+        if (typeof option.when === "function") {
+          return option.when(this.model, option, {
+            actionType: this.actionType,
+            status: this.globalStatus,
+          });
+        }
+
+        return option.when === undefined ? true : option.when;
+      };
+      return this.options?.filter(makeFilter).map((item) => {
+        const element = kebabCase(item.element);
+
+        const makeOption = (option) => {
+          const optionElement = kebabCase(option.element);
+          return {
+            ...option,
+            element: ElementMap[optionElement] || optionElement,
+            useCustomPreview:
+              typeof option.useCustomPreview === "boolean"
+                ? option.useCustomPreview
+                : !!ElementMap[optionElement],
+            rules:
+              typeof option.rules === "function"
+                ? option.rules(this.model, option, {
+                    actionType: this.actionType,
+                  })
+                : option.rules,
+            colSpan: option.single ? 24 : ~~(24 / this.columns),
+            status:
+              typeof option.status === "function"
+                ? option.status(this.model, option, {
+                    actionType: this.actionType,
+                    globalStatus: this.globalStatus,
+                  })
+                : option.status ||
+                  this.innerStatusMap[option.prop] ||
+                  this.globalStatus,
+          };
+        };
+        return element === "versa-form-collapse"
+          ? {
+              ...item,
+              element,
+              options: item.options.map(makeOption).filter(makeFilter),
+            }
+          : makeOption(item);
+      });
     },
     /** 是否需要处理tooltip提示占位 */
     hasToolTip() {
-      return this.deployOptions.some((item) => !!item.tooltip);
+      return this.deployOptions.some((item) => {
+        return item.element === "versa-form-collapse"
+          ? item.options.some((option) => !!option.tooltip)
+          : !!item.tooltip;
+      });
     },
   },
   watch: {
@@ -290,6 +365,18 @@ export default {
     this.VersaFormItem?.$emitter.emit("removeField", this);
   },
   methods: {
+    omit,
+    /** 透传每个组件的插槽 */
+    parseSlots(option) {
+      const slots = Object.keys(this.$slots);
+      const uniqKeyReg = new RegExp(`^${option.prop || ""}-`);
+      return slots
+        .filter((item) => uniqKeyReg.test(item))
+        .map((item) => ({
+          source: item,
+          target: item.replace(uniqKeyReg, ""),
+        }));
+    },
     /** 设置表单状态 */
     setStatus(...args) {
       const toLoopObj = isObject(args[0]) ? args[0] : { [args[0]]: args[1] };

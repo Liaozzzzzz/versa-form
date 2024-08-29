@@ -12,6 +12,10 @@
       <template #telphone1="{ data, prop }">
         <el-input v-model="data[prop]" />
       </template>
+      <template #basic-slotTitle> fafiowahfaufiweh </template>
+      <template #basic-telphone-prefix>prefix</template>
+      <template #basic-status2-prefix>status2prefix</template>
+      <template #basic-telphone222-prefix>status2prefix</template>
     </versa-form>
     <el-button @click="onChangeFormStatus('preview')">切换到预览</el-button>
     <el-button @click="onChangeFormStatus('edit')">切换到编辑</el-button>
@@ -77,33 +81,64 @@ export default {
               rules: [{ required: true }],
             },
             {
-              label: "多选框组",
-              prop: "checkbox-group",
-              element: "versa-checkbox-group",
-              // button: true,
+              element: "versa-form-collapse",
+              prop: "collapse",
+              label: "slotTitle",
+              defaultExpanded: true,
+              options: [
+                {
+                  label: "多选框组",
+                  prop: "checkbox-group",
+                  element: "versa-checkbox-group",
+                  // button: true,
+                  labelInValue: {
+                    label: "name",
+                    value: "code",
+                  },
+                  mapSource: {
+                    test1: "测试1",
+                    test2: "测试2",
+                    test3: "测试3",
+                  },
+                  tips: "测试",
+                  tooltip: "我我我我我我嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄",
+                  rules: [{ required: true }],
+                },
+                {
+                  label: "启用状态",
+                  prop: "status",
+                  element: "versa-select",
+                  // mapSource: statusMap,
+                  // multiple: true,
+                  // labelInValue: {
+                  //     label: 'name',
+                  //     value: 'code'
+                  // },
+                  hasAll: true,
+                  tooltip: "我我我我我我嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄",
+                },
+                {
+                  label: "输入框222",
+                  prop: "telphone222",
+                  sensitive: true,
+                  element: "el-input",
+                  placeholder: "请输入",
+                  on: {
+                    // change: (val) => console.log('change::', val),
+                    blur: (val) => console.log("blur::", val),
+                  },
+                  rules: [{ required: true }],
+                },
+              ],
+            },
+            {
+              label: "启用状态2",
+              prop: "status2",
+              element: "versa-select",
               labelInValue: {
                 label: "name",
                 value: "code",
               },
-              mapSource: {
-                test1: "测试1",
-                test2: "测试2",
-                test3: "测试3",
-              },
-              tips: "测试",
-              tooltip: "我我我我我我嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄",
-            },
-            {
-              label: "启用状态",
-              prop: "status",
-              element: "versa-select",
-              // mapSource: statusMap,
-              // multiple: true,
-              // labelInValue: {
-              //     label: 'name',
-              //     value: 'code'
-              // },
-              hasAll: true,
               tooltip: "我我我我我我嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄",
             },
             {

@@ -21,9 +21,6 @@
       filterTitle="查询条件"
       fillNull=""
     >
-      <template #slotTest="{ data, prop }">
-        <el-radio v-model="data[prop]" label="1">备选项</el-radio>
-      </template>
       <template #itemLevel="{ row, $index }">
         <div>这是插槽{{ $index }}</div>
       </template>
@@ -53,9 +50,6 @@
             :detailProps="detailProps"
             api="/"
           >
-            <template #slotTest="{ data, prop }">
-              <el-radio v-model="data[prop]" label="1">备选项</el-radio>
-            </template>
             <template #itemLevel="{ row, $index }">
               <div>这是插槽{{ $index }}h</div>
             </template>
