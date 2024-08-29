@@ -1026,7 +1026,7 @@ export default {
         display: table-cell;
         border-bottom: 1px solid #ebeef5;
         background-color: #fff;
-        padding: 12px 20px;
+        padding: 14px 20px;
         margin: 0;
         vertical-align: top;
         box-sizing: border-box;
@@ -1085,9 +1085,9 @@ export default {
           margin-bottom: 0;
         }
 
-        &__error {
-          padding-top: 1px;
-        }
+        // &__error {
+        //   padding-top: 1px;
+        // }
       }
     }
   }
