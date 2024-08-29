@@ -481,7 +481,14 @@ export default {
     addInitValue(params) {
       const obj = params || { ...this.defaultValues };
       this.options.forEach((v) => {
-        obj[v.prop] = cloneDeep(this.getInitValueByKey(v.prop, obj, v));
+        // 如果是折叠面板
+        if (kebabCase(v.element) === "versa-form-collapse") {
+          v.options.forEach((o) => {
+            obj[o.prop] = cloneDeep(this.getInitValueByKey(o.prop, obj, o));
+          });
+        } else {
+          obj[v.prop] = cloneDeep(this.getInitValueByKey(v.prop, obj, v));
+        }
       });
 
       this.model = {

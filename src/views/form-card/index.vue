@@ -91,15 +91,16 @@ export default {
                   prop: "checkbox-group",
                   element: "versa-checkbox-group",
                   // button: true,
-                  labelInValue: {
-                    label: "name",
-                    value: "code",
-                  },
+                  // labelInValue: {
+                  //   label: "name",
+                  //   value: "code",
+                  // },
                   mapSource: {
                     test1: "测试1",
                     test2: "测试2",
                     test3: "测试3",
                   },
+                  initValue: ["test1"],
                   tips: "测试",
                   tooltip: "我我我我我我嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄",
                   rules: [{ required: true }],
