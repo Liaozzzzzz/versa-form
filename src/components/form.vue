@@ -10,7 +10,7 @@
     ]"
   >
     <ElRow v-if="layout" :gutter="20">
-      <ElSpace
+      <ElCol
         v-for="item in deployOptions"
         :key="item.prop"
         :span="item.colSpan"
@@ -44,7 +44,7 @@
             </template>
           </component>
         </VersaFormItem>
-      </ElSpace>
+      </ElCol>
     </ElRow>
     <template v-else v-for="item in deployOptions" :key="item.prop">
       <VersaFormCollapse
@@ -126,8 +126,8 @@ import TinyEmitter from "tiny-emitter";
 import omit from "lodash/omit";
 import cloneDeep from "lodash/cloneDeep";
 import kebabCase from "lodash/kebabCase";
-import { ElSpace, ElRow } from "element-plus";
-import "element-plus/theme-chalk/src/space.scss";
+import { ElRow, ElCol } from "element-plus";
+import "element-plus/theme-chalk/src/col.scss";
 import "element-plus/theme-chalk/src/row.scss";
 import VersaSelect from "./select.vue";
 import VersaFormItem from "./item.vue";
@@ -154,7 +154,7 @@ export default {
   name: "versa-form",
   components: {
     ElRow,
-    ElSpace,
+    ElCol,
     VersaSelect,
     VersaFormItem,
     VersaRadioGroup,
