@@ -321,7 +321,7 @@ export default {
         VersaRepeater: [
           {
             "radio-group": "test2",
-            telphone: 15527137531,
+            telphone: 13328138531,
           },
         ],
       },

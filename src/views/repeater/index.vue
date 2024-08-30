@@ -17,10 +17,10 @@ export default {
     return {
       repeatProps,
       formValues: [
-        { id: 1, "radio-group": "test1", telphone: 15527137531 },
+        { id: 1, "radio-group": "test1", telphone: 13328138531 },
         {
           "radio-group": "test2",
-          telphone: 15527137531,
+          telphone: 13328138531,
         },
       ],
       asyncHandler: {
