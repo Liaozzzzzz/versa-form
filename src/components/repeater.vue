@@ -314,7 +314,11 @@ export default {
   computed: {
     /** 是否展示新增按钮 */
     wheatherShowAddBtn() {
-      return this.status === "edit" && this.hasAdd;
+      return (
+        this.status === "edit" &&
+        this.hasAdd &&
+        this.formList.length < this.maxLength
+      );
     },
     /** 是否受控 */
     isControl() {
