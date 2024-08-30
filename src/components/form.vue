@@ -273,10 +273,16 @@ export default {
         return option.when === undefined ? true : option.when;
       };
       return this.options?.filter(makeFilter).map((item) => {
-        const element = kebabCase(item.element);
+        const element =
+          typeof item.element === "string"
+            ? kebabCase(item.element)
+            : item.element;
 
         const makeOption = (option) => {
-          const optionElement = kebabCase(option.element);
+          const optionElement =
+            typeof option.element === "string"
+              ? kebabCase(option.element)
+              : option.element;
           return {
             ...option,
             element: ElementMap[optionElement] || optionElement,
