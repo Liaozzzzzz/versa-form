@@ -7,31 +7,33 @@
     :before-close="beforeClose"
     v-if="dialogVisible"
   >
-    <VersaForm
-      v-bind="mergedFormProps"
-      :class="['versa-modal__form', { 'is-scrollable': !!scrollStyles }]"
+    <div
       v-loading="loading"
-      ref="formRef"
+      :class="{ 'is-scrollable': !!scrollStyles }"
       :style="scrollStyles"
-      :autoInitValue="false"
-      v-model="formValues"
     >
-      <template #footer="footerProps">
-        <slot
-          name="modalFooter"
-          v-bind="{ ...footerProps, loading, refresh: initForm }"
-        >
-        </slot>
-      </template>
-      <template
-        v-for="slotName in Object.keys($slots).filter(
-          (item) => item !== 'footer'
-        )"
-        v-slot:[slotName]="attrs"
+      <VersaForm
+        v-if="useForm"
+        v-bind="mergedFormProps"
+        class="versa-modal__form"
+        ref="formRef"
+        :autoInitValue="false"
+        v-model="formValues"
       >
-        <slot :name="slotName" v-bind="attrs"></slot>
-      </template>
-    </VersaForm>
+        <template
+          v-for="slotName in Object.keys($slots).filter(
+            (item) => item !== 'modalFooter'
+          )"
+          v-slot:[slotName]="attrs"
+        >
+          <slot :name="slotName" v-bind="attrs"></slot>
+        </template>
+      </VersaForm>
+      <slot
+        v-bind="{ model: formValues, actionType, loading, refresh: initForm }"
+      >
+      </slot>
+    </div>
     <ElSpace :size="20" class="versa-modal__footer" v-if="dialogActions.length">
       <template v-for="action in dialogActions" :key="action.actionType">
         <component
@@ -223,6 +225,10 @@ export default {
           }
         : validValue;
     },
+    useForm() {
+      console.log("mergedFormProps", this.mergedFormProps, this.undefProps);
+      return this.mergedFormProps.options?.length > 0;
+    },
   },
   watch: {
     dialogVisible: {
@@ -249,7 +255,11 @@ export default {
         } catch (error) {}
       }
       this.loading = false;
-      this.$refs.formRef?.addInitValue(results);
+      if (this.useForm) {
+        this.$refs.formRef?.addInitValue(results);
+      } else {
+        this.formValues = results;
+      }
     },
     /** 操作按钮回调函数 */
     async onAction(action, instance) {
@@ -267,6 +277,7 @@ export default {
         default:
           const validated =
             !action.validate ||
+            !this.useForm ||
             (await this.$refs.formRef?.validate().catch(() => false));
           if (!validated) {
             return;
@@ -282,7 +293,9 @@ export default {
     async onConfirm(instance) {
       try {
         instance.isLoading = true;
-        await this.$refs.formRef?.validate();
+        if (this.useForm) {
+          await this.$refs.formRef?.validate();
+        }
         await this.onOk?.(this.formValues);
         instance.isLoading = false;
         this.dialogVisible = false;
@@ -361,12 +374,8 @@ export default {
     padding: 0;
   }
 
-  &__form {
-    flex: 1;
-
-    &.is-scrollable {
-      margin-bottom: 20px;
-    }
+  .is-scrollable {
+    margin-bottom: 20px;
 
     &::-webkit-scrollbar {
       height: 8px;
@@ -399,6 +408,10 @@ export default {
     &:hover::-webkit-scrollbar-thumb {
       visibility: visible;
     }
+  }
+
+  &__form {
+    flex: 1;
   }
 }
 </style>

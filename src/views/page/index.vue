@@ -24,7 +24,7 @@
       <template #itemLevel="{ row, $index }">
         <div>这是插槽{{ $index }}</div>
       </template>
-      <template #modal-modalFooter="{ model, actionType }">
+      <template #modal-default="{ model, actionType }">
         <template v-if="actionType === 'detail21212'">
           <versa-table
             :options="[
