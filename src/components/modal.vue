@@ -22,7 +22,7 @@
       >
         <template
           v-for="slotName in Object.keys($slots).filter(
-            (item) => item !== 'modalFooter'
+            (item) => item !== 'default'
           )"
           v-slot:[slotName]="attrs"
         >

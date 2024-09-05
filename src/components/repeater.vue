@@ -317,7 +317,7 @@ export default {
       return (
         this.status === "edit" &&
         this.hasAdd &&
-        this.formList.length < this.maxLength
+        (!this.maxLength || this.formList.length < this.maxLength)
       );
     },
     /** 是否受控 */
@@ -938,7 +938,6 @@ export default {
   color: #606266;
 
   &__add.versa-button {
-    margin: 16px 0 0;
     height: 14px;
   }
 
