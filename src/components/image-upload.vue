@@ -48,6 +48,7 @@ import ceil from "lodash/ceil";
 import { ElIcon, ElImage } from "element-plus";
 import "element-plus/theme-chalk/src/icon.scss";
 import "element-plus/theme-chalk/src/image.scss";
+import "element-plus/theme-chalk/src/image-viewer.scss";
 import { injectedConfig } from "./mixins/config";
 
 export default {
