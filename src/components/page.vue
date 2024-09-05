@@ -197,13 +197,6 @@ export default {
           });
         }
       });
-      console.log(
-        "======================",
-        Object.keys(this.$slots),
-        modal,
-        table,
-        filter
-      );
       return {
         modal,
         table,

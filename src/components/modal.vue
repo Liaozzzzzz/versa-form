@@ -226,7 +226,6 @@ export default {
         : validValue;
     },
     useForm() {
-      console.log("mergedFormProps", this.mergedFormProps, this.undefProps);
       return this.mergedFormProps.options?.length > 0;
     },
   },
