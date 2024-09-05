@@ -75,8 +75,9 @@ export const formOptions = [
                 tooltip: '我我我我我我嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄嚄'
             },
             {
-                label: '输入框',
-                prop: 'telphone',
+                label: '输入框1',
+                prop: 'telphone1',
+                slotName: 'telphone1',
                 sensitive: true,
                 element: 'el-input',
                 placeholder: '请输入',

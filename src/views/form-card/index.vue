@@ -9,7 +9,7 @@
       v-model="formValue"
       @validate="onValidated"
     >
-      <template #telphone1="{ data, prop }">
+      <template #basic-telphone1="{ data, prop }">
         <el-input v-model="data[prop]" />
       </template>
       <template #basic-slotTitle> fafiowahfaufiweh </template>
@@ -145,6 +145,7 @@ export default {
             {
               label: "输入框",
               prop: "telphone",
+              slotName: "telphone1",
               sensitive: true,
               element: "el-input",
               placeholder: "请输入",

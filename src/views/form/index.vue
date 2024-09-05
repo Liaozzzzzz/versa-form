@@ -12,6 +12,7 @@
       <template #telphone1="{ data, prop }">
         <el-input v-model="data[prop]" />
       </template>
+      <template #telphone-prefix>prefix</template>
     </versa-form>
     <el-button @click="onChangeFormStatus('preview')">切换到预览</el-button>
     <el-button @click="onChangeFormStatus('edit')">切换到编辑</el-button>

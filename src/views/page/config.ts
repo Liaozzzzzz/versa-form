@@ -646,6 +646,13 @@ export const detailProps: ModalProps<Row, any> = {
         //     prop: 'datetimerange',
         //     element: 'el-date-picker',
         //     type: 'datetimerange'
-        // }
+        // },
+        {
+            label: "输入框插槽",
+            prop: "inputSlot",
+            slotName: 'inputslot',
+            sensitive: true,
+            element: "el-input",
+        },
     ],
 };

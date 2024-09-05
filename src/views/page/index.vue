@@ -24,7 +24,7 @@
       <template #itemLevel="{ row, $index }">
         <div>这是插槽{{ $index }}</div>
       </template>
-      <template #modalFooter="{ model, actionType }">
+      <template #modal-modalFooter="{ model, actionType }">
         <template v-if="actionType === 'detail21212'">
           <versa-table
             :options="[
@@ -56,15 +56,12 @@
           </versa-page>
         </template>
       </template>
-      <template #tools>
-        <div>这是工具栏插槽</div>
+      <template #modal-inputslot="{ row, $index }">
+        <div>这是输入插槽</div>
       </template>
-      <template #footer>
-        <div>这是列表底部插槽</div>
+      <template #filter-btns>
+        <el-button>插槽按钮</el-button>
       </template>
-      <!-- <template #btns="a">
-                <div @click="onTTT(a)">12312{{ a.filterValues }}</div>
-            </template> -->
     </versa-page>
     <VersaButton
       popconfirm="有了这些知识，我们现在可以完成我们最开始想实现的组件"
@@ -116,7 +113,7 @@ export default {
             actionType: "create",
             actionName: "新建",
             disabled: (formValues, instance) => {
-              return true;
+              return false;
             },
             actions: (values) => {
               console.error(values);

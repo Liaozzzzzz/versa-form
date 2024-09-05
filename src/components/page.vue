@@ -11,8 +11,11 @@
       @onFilterChange="onFilterChange"
       v-on="filterListeners"
     >
-      <template #btns="attrs">
-        <slot name="btns" v-bind="attrs"></slot>
+      <template
+        v-for="slotName in parsedSlots.filter"
+        v-slot:[slotName.target]="attrs"
+      >
+        <slot :name="slotName.source" v-bind="attrs"></slot>
       </template>
     </VersaFilter>
     <VersaTable
@@ -24,18 +27,18 @@
       v-on="tableListeners"
     >
       <template
-        v-for="slotName in Object.keys($slots)"
-        v-slot:[slotName]="attrs"
+        v-for="slotName in parsedSlots.table"
+        v-slot:[slotName.target]="attrs"
       >
-        <slot :name="slotName" v-bind="attrs"></slot>
+        <slot :name="slotName.source" v-bind="attrs"></slot>
       </template>
     </VersaTable>
     <VersaModal v-bind="modalProps" v-model:visible="panelVisible">
       <template
-        v-for="slotName in Object.keys($slots)"
-        v-slot:[slotName]="attrs"
+        v-for="slotName in parsedSlots.modal"
+        v-slot:[slotName.target]="attrs"
       >
-        <slot :name="slotName" v-bind="attrs"></slot>
+        <slot :name="slotName.source" v-bind="attrs"></slot>
       </template>
     </VersaModal>
   </div>
@@ -169,6 +172,43 @@ export default {
         return this.formatFilter(formated);
       };
       return results;
+    },
+    parsedSlots() {
+      const modal = [];
+      const table = [];
+      const filter = [];
+      const modalReg = /^modal-/;
+      const filterReg = /^filter-/;
+      Object.keys(this.$slots).forEach((item) => {
+        if (modalReg.test(item)) {
+          modal.push({
+            source: item,
+            target: item.replace(modalReg, ""),
+          });
+        } else if (filterReg.test(item)) {
+          filter.push({
+            source: item,
+            target: item.replace(filterReg, ""),
+          });
+        } else {
+          table.push({
+            source: item,
+            target: item.replace(table, ""),
+          });
+        }
+      });
+      console.log(
+        "======================",
+        Object.keys(this.$slots),
+        modal,
+        table,
+        filter
+      );
+      return {
+        modal,
+        table,
+        filter,
+      };
     },
     /** 列表组件通用属性透传 */
     filterProps() {

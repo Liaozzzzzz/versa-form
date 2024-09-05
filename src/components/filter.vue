@@ -19,7 +19,7 @@
     >
       <template
         v-for="slotName in Object.keys($slots).filter(
-          (item) => item !== 'footer'
+          (item) => !['footer', 'btns'].includes(item)
         )"
         v-slot:[slotName]="attrs"
       >

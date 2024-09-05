@@ -140,7 +140,7 @@ export const formOptions: FormOption<any>[] = [
     },
     {
         label: '插槽文本框',
-        // slotName: 'telphone1',
+        slotName: 'telphone1',
         prop: 'telphone1',
         sensitive: true,
         element: 'el-input',
