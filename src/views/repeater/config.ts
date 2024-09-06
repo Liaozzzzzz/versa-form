@@ -87,7 +87,6 @@ export const repeatProps: RepeaterProps<any> = {
             sensitive: true,
             width: 160,
             element: 'el-input',
-            placeholder: '请输入',
             rules: [{ required: true, trigger: 'change', message: '必填噢' }]
         },
         {
@@ -95,14 +94,12 @@ export const repeatProps: RepeaterProps<any> = {
             prop: 'el-input-textarea',
             type: 'textarea',
             element: 'el-input',
-            placeholder: '请输入',
             width: 240,
         },
         {
             label: '计数器',
             prop: 'el-input-number',
             element: 'el-input-number',
-            placeholder: '请输入',
         },
         {
             label: 'Switch 开关',

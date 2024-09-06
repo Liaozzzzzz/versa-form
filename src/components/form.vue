@@ -562,13 +562,13 @@ export default {
 
       if (typeof item.element === "string" && /select/i.test(item.element)) {
         Object.assign(obj, {
-          placeholder: `请选择${item.label || ""}`,
+          placeholder: `请选择${item.label || item.__label || ""}`,
         });
       }
 
       if (typeof item.element === "string" && /input/i.test(item.element)) {
         Object.assign(obj, {
-          placeholder: `请输入${item.label || ""}`,
+          placeholder: `请输入${item.label || item.__label || ""}`,
         });
       }
 
