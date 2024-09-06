@@ -1,10 +1,18 @@
-import type { DefineComponent } from "vue";
+import type {
+    ComputedOptions,
+    DefineComponent,
+    MethodOptions,
+} from "vue";
 import type { TableBaseProps, TableProps } from "./VersaTable";
 import type { FilterBaseProps, FilterProps } from "./VersaFilter";
 import type { FormValues } from "./VersaForm";
 import type { ModalProps } from "./VersaModal";
 
-export type PageProvide<Q extends FormValues, F extends FormValues, R extends FormValues> = {
+export type PageProvide<
+    Q extends FormValues,
+    F extends FormValues,
+    R extends FormValues
+> = {
     queryParams: Q;
     filterValues: F;
     selectionValues: R[];
@@ -42,10 +50,20 @@ export type PageProps<
         onRemove?: Function;
     };
 
+export type PageMethods<T extends FormValues> = MethodOptions & {
+    refresh: (params?: T) => void
+};
+
 export type VersaPage<
     R extends FormValues,
     F extends FormValues,
     D extends FormValues
-> = DefineComponent<PageProps<R, F, D>>;
+> = DefineComponent<
+    PageProps<R, F, D>,
+    {},
+    {},
+    ComputedOptions,
+    PageMethods<R>
+>;
 
 export declare const VersaPage: VersaPage<FormValues, FormValues, FormValues>;
