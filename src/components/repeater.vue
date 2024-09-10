@@ -1017,7 +1017,7 @@ export default {
         font-family: Source Han Sans CN, Source Han Sans CN;
         font-size: 14px;
         font-weight: 400;
-        padding: 8px 20px;
+        padding: 8px 14px;
         position: relative;
         text-align: left;
         white-space: pre;
@@ -1029,7 +1029,7 @@ export default {
         display: table-cell;
         border-bottom: 1px solid #ebeef5;
         background-color: #fff;
-        padding: 14px 20px;
+        padding: 14px;
         margin: 0;
         vertical-align: top;
         box-sizing: border-box;
