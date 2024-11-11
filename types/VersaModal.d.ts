@@ -1,7 +1,7 @@
 import type { DefineComponent } from "vue";
 import type {
     FormBaseProps,
-    FormProps,
+    VersaFormProps,
     FormValues,
 } from "./VersaForm";
 import type { OneOf } from "./common";
@@ -26,7 +26,7 @@ export type ModalAction<R> = OneOf<
     ComponentAction
 >;
 
-export type ModalProps<
+export type VersaModalProps<
     R extends FormValues,
     D extends FormValues
 > = FormBaseProps<D> & {
@@ -57,7 +57,7 @@ export type ModalProps<
         done: () => void
     ) => Promise<D | unknown>;
     /** 表单配置属性 */
-    formProps?: Partial<FormProps<D>>;
+    formProps?: Partial<VersaFormProps<D>>;
     /** 指定内容区域是否滚动 */
     maxHeight?: number | string;
     [extra: string]: unknown;
@@ -66,6 +66,6 @@ export type ModalProps<
 export type VersaModal<
     R extends FormValues,
     D extends FormValues
-> = DefineComponent<ModalProps<R, D>>;
+> = DefineComponent<VersaModalProps<R, D>>;
 
 export declare const VersaModal: VersaModal<FormValues, FormValues>;

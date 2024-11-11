@@ -68,6 +68,7 @@ export type FormOption<T extends FormValues> = {
     formItemProps?: {
         [extra: string]: any;
     };
+    when?: (formValue: T) => boolean;
     /** 其它额外属性 */
     [extra: string | number]: any;
 };
@@ -104,7 +105,7 @@ export type FormBaseProps<T extends FormValues> = {
      */
     options?: FormOption<T>[];
     /** 默认值 */
-    defaultValues?: T;
+    defaultValues?: Partial<T>;
     /**
      * 一行多列
      * @default 1
@@ -126,7 +127,7 @@ export type FormBaseProps<T extends FormValues> = {
 };
 
 /** 表单全部配置 */
-export type FormProps<T extends FormValues> = FormBaseProps<T> & {
+export type VersaFormProps<T extends FormValues> = FormBaseProps<T> & {
     /**
      * 初始化时自动处理初始值
      * @default true
@@ -219,7 +220,7 @@ type EmitOptions<T> = {
 };
 
 export type VersaForm<T extends FormValues> = DefineComponent<
-    FormProps<T>,
+    VersaFormProps<T>,
     {},
     {},
     ComputedOptions,

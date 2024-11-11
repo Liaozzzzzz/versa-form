@@ -47,7 +47,7 @@ export type HasActionFn<T extends FormValues> = (
     row: T,
     index: number,
     options: {
-        globalStatus: RepeaterProps<T>["status"];
+        globalStatus: VersaRepeaterProps<T>["status"];
     }
 ) => boolean;
 
@@ -57,7 +57,7 @@ export type AsyncHandlerResult<T> =
     | undefined;
 
 /** 表单全部配置 */
-export type RepeaterProps<T extends FormValues> = {
+export type VersaRepeaterProps<T extends FormValues> = {
     /**
      * 增删查改模型：sync - 行内编辑； inline - 表格内编辑、保存； dialog - 弹窗类型
      * @default 'sync'
@@ -89,7 +89,7 @@ export type RepeaterProps<T extends FormValues> = {
         row: T,
         index: number,
         options: {
-            globalStatus: RepeaterProps<T>["status"];
+            globalStatus: VersaRepeaterProps<T>["status"];
         }
     ) => (RepeaterAction<T> | string | undefined | null)[]);
     /**
@@ -155,7 +155,7 @@ export type RepeaterProps<T extends FormValues> = {
 };
 
 export type VersaRepeater<T extends FormValues> = DefineComponent<
-    RepeaterProps<T>
+    VersaRepeaterProps<T>
 >;
 
 export declare const VersaRepeater: VersaRepeater<FormValues>;

@@ -3,7 +3,7 @@
     "version": "0.0.28",
     "main": "lib/index.umd.js",
     "module": "lib/index.es.js",
-    "types": "index.d.ts",
+    "types": "types/index.d.ts",
     "description": "a configable form for vue3 and element-ui",
     "files": [
         "lib",

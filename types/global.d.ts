@@ -1,4 +1,3 @@
-import type { App } from "vue";
 import { VersaPage } from "./VersaPage";
 import { FormValues, VersaForm } from "./VersaForm";
 import { VersaTable } from "./VersaTable";
@@ -32,26 +31,3 @@ declare module "vue" {
     VersaMessageBox: VersaMessageBox;
   }
 }
-
-declare const installer: {
-  install: (app: App) => void;
-};
-
-export {
-  VersaPage,
-  VersaForm,
-  VersaTable,
-  VersaButton,
-  VersaFilter,
-  VersaCard,
-  VersaModal,
-  VersaRepeater,
-  VersaCheckboxGroup,
-  VersaDropdown,
-  VersaImageUpload,
-  VersaRadioGroup,
-  VersaSelect,
-  VersaMessageBox,
-};
-
-export default installer;

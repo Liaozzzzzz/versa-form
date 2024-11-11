@@ -3,10 +3,10 @@ import type {
     DefineComponent,
     MethodOptions,
 } from "vue";
-import type { TableBaseProps, TableProps } from "./VersaTable";
-import type { FilterBaseProps, FilterProps } from "./VersaFilter";
+import type { TableBaseProps, VersaTableProps } from "./VersaTable";
+import type { FilterBaseProps, VersaFilterProps } from "./VersaFilter";
 import type { FormValues } from "./VersaForm";
-import type { ModalProps } from "./VersaModal";
+import type { VersaModalProps } from "./VersaModal";
 
 export type PageProvide<
     Q extends FormValues,
@@ -18,18 +18,18 @@ export type PageProvide<
     selectionValues: R[];
 };
 
-export type PageProps<
+export type VersaPageProps<
     R extends FormValues,
     F extends FormValues,
     D extends FormValues
 > = FilterBaseProps<F> &
     TableBaseProps<R> & {
         /** 搜索配置项 */
-        filterOptions?: FilterProps<F>["options"];
+        filterOptions?: VersaFilterProps<F>["options"];
         /** 列表配置项 */
-        tableOptions?: TableProps<R, F>["options"];
+        tableOptions?: VersaTableProps<R, F>["options"];
         /** 弹窗配置项 */
-        detailProps?: ModalProps<R, R & D>;
+        detailProps?: VersaModalProps<R, R & D>;
         /** filter 字段映射 */
         keyMap?: Record<string, any>;
         /**
@@ -59,7 +59,7 @@ export type VersaPage<
     F extends FormValues,
     D extends FormValues
 > = DefineComponent<
-    PageProps<R, F, D>,
+    VersaPageProps<R, F, D>,
     {},
     {},
     ComputedOptions,

@@ -94,7 +94,7 @@ export type TableOption<R extends FormValues> = Partial<TableColumnCtx<R>> & {
     | ((row: R) => (TableOptionAction<R> | string | undefined | null)[]);
 };
 
-export type TableProps<
+export type VersaTableProps<
     R extends FormValues,
     F extends FormValues
 > = TableBaseProps<R> & {
@@ -114,6 +114,6 @@ export type TableProps<
 export type VersaTable<
     R extends FormValues,
     F extends FormValues
-> = DefineComponent<TableProps<R, F>>;
+> = DefineComponent<VersaTableProps<R, F>>;
 
 export declare const VersaTable: VersaTable<FormValues, FormValues>;

@@ -54,10 +54,10 @@ export type FilterBaseProps<T extends FormValues> = {
     labelSuffix?: string;
 };
 
-export type FilterProps<T extends FormValues> = FilterBaseProps<T> & {
+export type VersaFilterProps<T extends FormValues> = FilterBaseProps<T> & {
     options: FormOption<T>[];
 };
 
-export type VersaFilter = DefineComponent<FilterProps<FormValues>>;
+export type VersaFilter = DefineComponent<VersaFilterProps<FormValues>>;
 
 export declare const VersaFilter: VersaFilter;

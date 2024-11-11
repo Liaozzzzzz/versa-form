@@ -3,7 +3,7 @@ import type { OneOf } from "./common";
 import type { PageProvide } from "./VersaPage";
 import type { FormValues } from "./VersaForm";
 
-export type ButtonProps = {
+export type VersaButtonProps = {
     /**
      * 防抖时间
      * @default 200
@@ -36,7 +36,7 @@ export type ComponentAction = {
     [extra: string]: any;
 };
 
-export type BaseAction = Omit<ButtonProps, "buttonText"> & {
+export type BaseAction = Omit<VersaButtonProps, "buttonText"> & {
     actionName: string;
     actionType: string;
     /** 嵌套在VersaPage下时，点击是否使用内置弹窗 */
@@ -49,7 +49,7 @@ export type BaseAction = Omit<ButtonProps, "buttonText"> & {
 export type Action = OneOf<ComponentAction, BaseAction>;
 
 export type VersaButton = DefineComponent<
-    ButtonProps,
+    VersaButtonProps,
     {},
     { isLoading: boolean; text: string }
 >;
