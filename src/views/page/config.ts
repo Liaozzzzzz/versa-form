@@ -1,7 +1,7 @@
 import { VersaFilterProps } from "@root/types/VersaFilter";
 import { FormStatus, FormValues } from "@root/types/VersaForm";
 import { VersaModalProps } from "@root/types/VersaModal";
-import { VersaTableProps } from "@root/types/VersaTable";
+import { TableOption, VersaTableProps } from "@root/types/VersaTable";
 
 export const statusMap = {
     T: "启用",
@@ -136,6 +136,7 @@ export const actions: VersaFilterProps<FormValues>["actions"] = (filterValues) =
             actionType: "测试",
             popconfirm: "测试",
             actionName: "测试",
+            usePageModal: false,
             action: (formValues, instance) => {
                 instance.isLoading = true;
                 setTimeout(() => {
@@ -205,7 +206,7 @@ export const toolOptions: VersaTableProps<{ a: 1 }, { b: 1 }>["toolOptions"] = [
 //     { b: 1 }
 // >["options"]
 
-export const tableOptions = [
+export const tableOptions: TableOption<any>[] = [
     {
         type: "selection",
         fixed: "left",
@@ -351,6 +352,7 @@ export const tableOptions = [
             {
                 actionType: "edit",
                 actionName: "编辑1",
+                // usePageModal: '1',
                 "append-to-body": true,
                 disabled: () => false,
                 actions: (values) => {

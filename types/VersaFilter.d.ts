@@ -20,7 +20,9 @@ export type FilterAction<R extends FormValues> = OneOf<
         ) => boolean);
     },
     ComponentAction
->;
+> & {
+    [k: string]: any
+};
 
 export type FilterBaseProps<T extends FormValues> = {
     /** 默认筛选项 */

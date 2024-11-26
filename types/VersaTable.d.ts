@@ -21,7 +21,9 @@ export type TableToolAction<R> = OneOf<
         ) => boolean);
     },
     ComponentAction
->;
+> & {
+    [k: string]: any
+};
 
 export type TableOptionAction<R> = OneOf<
     Omit<BaseAction, 'action' | 'disabled'> & {
@@ -40,7 +42,9 @@ export type TableOptionAction<R> = OneOf<
         ) => boolean);
     },
     ComponentAction
->;
+> & {
+    [k: string]: any
+};
 
 export type TableBaseProps<R extends FormValues> = {
     /**

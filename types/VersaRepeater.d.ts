@@ -41,7 +41,9 @@ export type RepeaterAction<R> = OneOf<
         ) => boolean);
     },
     ComponentAction
->;
+> & {
+    [k: string]: any
+};
 
 export type HasActionFn<T extends FormValues> = (
     row: T,

@@ -33,7 +33,6 @@ export type VersaButtonProps = {
 
 export type ComponentAction = {
     is: string | Component;
-    [extra: string]: any;
 };
 
 export type BaseAction = Omit<VersaButtonProps, "buttonText"> & {
@@ -43,10 +42,11 @@ export type BaseAction = Omit<VersaButtonProps, "buttonText"> & {
     usePageModal?: boolean;
     /** 点击回调函数 */
     aciton?: (e: Event, instance: InstanceType<VersaButton>) => void;
-    [k: string]: unknown;
 };
 
-export type Action = OneOf<ComponentAction, BaseAction>;
+export type Action = OneOf<ComponentAction, BaseAction> & {
+    [k: string]: any
+};
 
 export type VersaButton = DefineComponent<
     VersaButtonProps,

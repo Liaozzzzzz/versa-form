@@ -24,7 +24,9 @@ export type ModalAction<R> = OneOf<
         ) => boolean);
     },
     ComponentAction
->;
+> & {
+    [k: string]: any
+};
 
 export type VersaModalProps<
     R extends FormValues,
