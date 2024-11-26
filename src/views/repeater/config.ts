@@ -1,11 +1,11 @@
-import { RepeaterProps } from "@root/types/VersaRepeater"
+import { VersaRepeaterProps } from "@root/types/VersaRepeater"
 
 export const statusMap = {
     T: '启用',
     F: '停用'
 }
 
-export const repeatProps: RepeaterProps<any> = {
+export const repeatProps: VersaRepeaterProps<any> = {
     // rowStatus: (formValues) => {
     //     console.error(formValues);
     //     return formValues.id ? 'preview' : 'edit';

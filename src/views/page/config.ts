@@ -1,14 +1,14 @@
-import { FilterProps } from "@root/types/VersaFilter";
-import { FormValues } from "@root/types/VersaForm";
-import { ModalProps } from "@root/types/VersaModal";
-import { TableProps } from "@root/types/VersaTable";
+import { VersaFilterProps } from "@root/types/VersaFilter";
+import { FormStatus, FormValues } from "@root/types/VersaForm";
+import { VersaModalProps } from "@root/types/VersaModal";
+import { VersaTableProps } from "@root/types/VersaTable";
 
 export const statusMap = {
     T: "启用",
     F: "停用",
 };
 
-export const filterOptions: () => FilterProps<{
+export const filterOptions: () => VersaFilterProps<{
     typeCode: number;
     status: string;
     date: string;
@@ -109,7 +109,7 @@ type AA = {
 //     () => { }
 // ]
 
-export const actions: FilterProps<FormValues>["actions"] = (filterValues) => {
+export const actions: VersaFilterProps<FormValues>["actions"] = (filterValues) => {
     return [
         filterValues.typeCode ? "reset" : null,
         "search",
@@ -149,7 +149,7 @@ export const actions: FilterProps<FormValues>["actions"] = (filterValues) => {
     ];
 };
 
-export const toolOptions: TableProps<{ a: 1 }, { b: 1 }>["toolOptions"] = [
+export const toolOptions: VersaTableProps<{ a: 1 }, { b: 1 }>["toolOptions"] = [
     {
         actionType: "create",
         actionName: "新建",
@@ -190,7 +190,7 @@ export const toolOptions: TableProps<{ a: 1 }, { b: 1 }>["toolOptions"] = [
     },
 ];
 
-// TableProps<
+// VersaTableProps<
 //     {
 //         typeCode1: string;
 //         typeCode: string;
@@ -433,12 +433,12 @@ export const tableOptions = [
         width: 400,
     },
 ];
-// ModalProps
+// VersaModalProps
 type Row = {
     a: string;
     b: number;
 };
-export const detailProps: ModalProps<Row, any> = {
+export const detailProps: VersaModalProps<Row, any> = {
     // columns: 2,
     formatBefore: (row) => {
         return new Promise((resolve) => {
@@ -470,16 +470,22 @@ export const detailProps: ModalProps<Row, any> = {
             label: "菜单级别",
             prop: "menuLevel",
             element: "versa-radio-group",
+            // status: (
+            //     formValues,
+            //     _: unknown,
+            //     { actionType }: { actionType: string }
+            // ) => {
+            //     if (actionType !== "detail") {
+            //         return formValues.children?.length > 0 ? "disabled" : "edit";
+            //     }
+            //     return "preview";
+            // },
+
             status: (
-                formValues,
-                _: unknown,
-                { actionType }: { actionType: string }
-            ) => {
-                if (actionType !== "detail") {
-                    return formValues.children?.length > 0 ? "disabled" : "edit";
-                }
-                return "preview";
-            },
+                _row,
+                _option,
+                { actionType, globalStatus }: { actionType: string, globalStatus: FormStatus }
+            ) => (actionType === 'auth' ? 'edit' : globalStatus),
             button: true,
             rules: [{ required: true, message: "请选择菜单级别" }],
         },

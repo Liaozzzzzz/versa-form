@@ -1,7 +1,7 @@
 import type { App } from "vue";
 
 export { VersaPage, VersaPageProps } from "./VersaPage";
-export { VersaForm, VersaFormProps, FormValues, ActionType, FormOption } from "./VersaForm";
+export { VersaForm, VersaFormProps, FormValues, FormStatus, ActionType, FormOption } from "./VersaForm";
 export { VersaTable, VersaTableProps, TableOption } from "./VersaTable";
 export { VersaButton, VersaButtonProps } from "./VersaButton";
 export { VersaFilter, VersaFilterProps } from "./VersaFilter";
