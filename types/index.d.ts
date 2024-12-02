@@ -14,6 +14,7 @@ export { VersaImageUpload, VersaImageUploadProps } from "./VersaImageUpload";
 export { VersaRadioGroup, VersaRadioGroupProps } from "./VersaRadioGroup";
 export { VersaSelect, VersaSelectProps } from "./VersaSelect";
 export { VersaMessageBox, VersaMessageBoxProps } from "./VersaMessageBox";
+export { BaseOptions } from './common'
 
 declare const installer: {
     install: (app: App) => void;
