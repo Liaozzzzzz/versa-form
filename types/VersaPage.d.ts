@@ -50,9 +50,14 @@ export type VersaPageProps<
         onRemove?: Function;
     };
 
-export type PageMethods<T extends FormValues> = MethodOptions & {
-    refresh: (params?: T) => void
-};
+export type PageMethods<R extends FormValues,
+    F extends FormValues,
+    D extends FormValues> = MethodOptions & {
+        /** 刷新列表 */
+        refresh: (params?: F) => void;
+        /** 手动触发操作者 */
+        onAction: (action: string, options: VersaPageProps<R, F, D>['detailProps']) => void;
+    };
 
 export type VersaPage<
     R extends FormValues,
@@ -63,7 +68,7 @@ export type VersaPage<
     {},
     {},
     ComputedOptions,
-    PageMethods<R>
+    PageMethods<R, F, D>
 >;
 
 export declare const VersaPage: VersaPage<FormValues, FormValues, FormValues>;
